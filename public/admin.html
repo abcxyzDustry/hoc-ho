@@ -169,7 +169,8 @@ tr:hover td{background:rgba(22,163,74,.04)}
       <div class="nav-item" onclick="showPage('partners-approval')" id="nav-partners-approval"><span class="nav-icon">⏳</span> Chờ duyệt <span class="nav-badge" id="pendingBadge">0</span></div>
       <div class="nav-item" onclick="showPage('partners')" id="nav-partners"><span class="nav-icon">👥</span> Đối tác</div>
       <div class="nav-item" onclick="showPage('orders')" id="nav-orders"><span class="nav-icon">📚</span> Đơn hàng</div>
-      <div class="nav-item" onclick="showPage('payments')" id="nav-payments"><span class="nav-icon">💰</span> Thanh toán</div>
+      <div class="nav-item" onclick="showPage('payments')" id="nav-payments"><span class="nav-icon">💰</span> Thanh toán ĐK</div>
+      <div class="nav-item" onclick="showPage('withdrawals')" id="nav-withdrawals"><span class="nav-icon">🏧</span> Rút tiền <span class="nav-badge" id="withdrawBadge" style="display:none">0</span></div>
     </div>
 
     <!-- MAIN -->
@@ -220,6 +221,23 @@ tr:hover td{background:rgba(22,163,74,.04)}
         <div id="ordersList"><div class="loading"><div class="spinner"></div>Đang tải...</div></div>
       </div>
 
+      <!-- WITHDRAWALS -->
+      <div class="page" id="page-withdrawals">
+        <div class="page-title">Rút tiền đối tác</div>
+        <div class="page-sub">Quản lý yêu cầu rút tiền · Số dư tài khoản đối tác</div>
+        <div class="filter-bar">
+          <button class="filter-btn active" onclick="filterWithdrawals('',this)">Tất cả</button>
+          <button class="filter-btn" onclick="filterWithdrawals('pending',this)">⏳ Chờ duyệt</button>
+          <button class="filter-btn" onclick="filterWithdrawals('approved',this)">✅ Đã duyệt</button>
+          <button class="filter-btn" onclick="filterWithdrawals('rejected',this)">❌ Từ chối</button>
+        </div>
+        <div id="withdrawalsList"><div class="loading"><div class="spinner"></div>Đang tải...</div></div>
+        <br>
+        <div class="page-title" style="font-size:1.2rem;margin-top:8px">Số dư đối tác</div>
+        <div class="page-sub">Số dư chưa rút của từng đối tác active</div>
+        <div id="balanceList"><div class="loading"><div class="spinner"></div>Đang tải...</div></div>
+      </div>
+
       <!-- PAYMENTS -->
       <div class="page" id="page-payments">
         <div class="page-title">Quản lý thanh toán</div>
@@ -234,7 +252,7 @@ tr:hover td{background:rgba(22,163,74,.04)}
 <div class="toast" id="toast"></div>
 
 <script>
-const ADMIN_SECRET = 'hocho2024admin';
+const ADMIN_SECRET = 'crabor2024admin';
 const API_BASE = '';
 
 let allPartners = [], allOrders = [];
@@ -281,6 +299,7 @@ function loadCurrentPage() {
     partners: () => loadPartners(''),
     orders: () => loadOrders(''),
     payments: loadPayments,
+    withdrawals: () => loadWithdrawals(''),
   };
   if (loaders[currentPage]) loaders[currentPage]();
 }
@@ -294,37 +313,42 @@ async function loadDashboard() {
     const { partners, orders, revenue } = d.data;
 
     document.getElementById('pendingBadge').textContent = partners.pending_approval;
+    const withdrawals = d.data.withdrawals || {};
+    if (withdrawals.pending_count > 0) {
+      document.getElementById('withdrawBadge').textContent = withdrawals.pending_count;
+      document.getElementById('withdrawBadge').style.display = 'inline';
+    }
 
     document.getElementById('statsGrid').innerHTML = `
       <div class="stat-tile green">
         <div class="stat-label">Đối tác hoạt động</div>
         <div class="stat-val green">${partners.active}</div>
-        <div class="stat-sub">Online: ${partners.online_now} · Tổng: ${partners.total}</div>
+        <div class="stat-sub">🟢 Online: ${partners.online_now} · Tổng: ${partners.total}</div>
       </div>
       <div class="stat-tile gold">
-        <div class="stat-label">Chờ duyệt</div>
+        <div class="stat-label">Chờ duyệt hồ sơ</div>
         <div class="stat-val gold">${partners.pending_approval}</div>
         <div class="stat-sub">Chờ thanh toán: ${partners.pending_payment}</div>
       </div>
       <div class="stat-tile blue">
         <div class="stat-label">Đơn hàng</div>
         <div class="stat-val" style="color:#60a5fa">${orders.total}</div>
-        <div class="stat-sub">Hoàn thành: ${orders.completed} · Đang làm: ${orders.in_progress}</div>
+        <div class="stat-sub">✅ Hoàn thành: ${orders.completed} · 🔄 Đang làm: ${orders.in_progress||0}</div>
       </div>
       <div class="stat-tile coral">
         <div class="stat-label">Doanh thu platform</div>
         <div class="stat-val coral">${fmtMoney(revenue.platform_orders)}</div>
-        <div class="stat-sub">Phí đăng ký: ${fmtMoney(revenue.registration)}</div>
-      </div>
-      <div class="stat-tile green">
-        <div class="stat-label">Tổng thu</div>
-        <div class="stat-val green">${fmtMoney(revenue.total)}</div>
-        <div class="stat-sub">Đối tác nhận: ${fmtMoney(revenue.partner_earnings)}</div>
+        <div class="stat-sub">Phí ĐK: ${fmtMoney(revenue.registration)} · Tổng: ${fmtMoney(revenue.total)}</div>
       </div>
       <div class="stat-tile gold">
-        <div class="stat-label">Đơn chờ</div>
-        <div class="stat-val gold">${orders.waiting}</div>
-        <div class="stat-sub">Đã huỷ: ${orders.cancelled}</div>
+        <div class="stat-label">Yêu cầu rút tiền</div>
+        <div class="stat-val gold">${withdrawals.pending_count||0}</div>
+        <div class="stat-sub">Số tiền đang chờ: ${fmtMoney(withdrawals.pending_amount||0)}</div>
+      </div>
+      <div class="stat-tile green">
+        <div class="stat-label">Tổng số dư đối tác</div>
+        <div class="stat-val green">${fmtMoney(withdrawals.total_balance||0)}</div>
+        <div class="stat-sub">Đã rút tổng: ${fmtMoney(withdrawals.total_withdrawn||0)}</div>
       </div>
     `;
   } catch(e) { showToast('❌ Lỗi tải dashboard'); }
@@ -543,6 +567,125 @@ function showToast(msg, dur=3000) {
   el.textContent = msg; el.classList.add('show');
   setTimeout(() => el.classList.remove('show'), dur);
 }
+
+// ── WITHDRAWALS ──
+async function loadWithdrawals(status) {
+  document.getElementById('withdrawalsList').innerHTML = '<div class="loading"><div class="spinner"></div>Đang tải...</div>';
+  document.getElementById('balanceList').innerHTML = '<div class="loading"><div class="spinner"></div>Đang tải...</div>';
+  try {
+    const qs = status ? `status=${status}` : '';
+    const d = await adminFetch(`${API_BASE}/api/admin/withdrawals` + (qs ? '?' + qs : ''));
+    if (!d.success) return;
+
+    if (!d.data.length) {
+      document.getElementById('withdrawalsList').innerHTML = '<div class="loading">✅ Không có yêu cầu rút tiền nào</div>';
+    } else {
+      document.getElementById('withdrawalsList').innerHTML = `
+      <div class="table-wrap">
+        <div class="table-header">
+          <div class="table-title">🏧 Yêu cầu rút tiền</div>
+          <div class="table-count">${d.data.length} yêu cầu</div>
+        </div>
+        <div style="overflow-x:auto">
+        <table>
+          <thead><tr>
+            <th>Đối tác</th><th>SĐT</th><th>Số tiền</th>
+            <th>Ngân hàng</th><th>Số TK</th><th>Chủ TK</th>
+            <th>Trạng thái</th><th>Ngày gửi</th><th>Hành động</th>
+          </tr></thead>
+          <tbody>
+            ${d.data.map(w => `
+              <tr>
+                <td style="font-weight:900">${w.partner_name||''}</td>
+                <td class="mono">${w.partner_phone||''}</td>
+                <td style="color:var(--lime);font-weight:900;font-size:1rem">${fmtMoney(w.amount)}</td>
+                <td style="font-weight:800">${w.bank_name||''}</td>
+                <td class="mono">${w.bank_account||''}</td>
+                <td style="font-weight:800">${w.bank_owner||''}</td>
+                <td><span class="badge badge-${w.status}">${withdrawStatusLabel(w.status)}</span></td>
+                <td style="font-size:.78rem;color:var(--muted)">${fmtDate(w.createdAt)}</td>
+                <td style="display:flex;gap:6px;flex-wrap:wrap">
+                  ${w.status === 'pending' ? `
+                    <button class="btn-approve" onclick="approveWithdrawal('${w._id}','${w.partner_name}','${w.amount}')">✓ Duyệt</button>
+                    <button class="btn-reject"  onclick="rejectWithdrawal('${w._id}','${w.partner_name}')">✗ Từ chối</button>
+                  ` : `<span style="color:var(--muted);font-size:.78rem">${w.admin_note||'—'}</span>`}
+                </td>
+              </tr>`).join('')}
+          </tbody>
+        </table>
+        </div>
+      </div>`;
+    }
+
+    // Load balance list
+    const db = await adminFetch(`${API_BASE}/api/admin/partners?status=active`);
+    if (db.success && db.data.length) {
+      const sorted = db.data.sort((a,b) => (b.balance||0) - (a.balance||0));
+      document.getElementById('balanceList').innerHTML = `
+      <div class="table-wrap">
+        <div class="table-header">
+          <div class="table-title">💼 Số dư đối tác</div>
+          <div class="table-count">${sorted.length} đối tác active</div>
+        </div>
+        <div style="overflow-x:auto">
+        <table>
+          <thead><tr>
+            <th>Đối tác</th><th>SĐT</th><th>Trường</th>
+            <th>Số dư hiện tại</th><th>Tổng đã kiếm</th><th>Đã rút</th><th>Đơn hoàn thành</th>
+          </tr></thead>
+          <tbody>
+            ${sorted.map(p => `
+              <tr>
+                <td style="font-weight:900">${p.full_name||''}</td>
+                <td class="mono">${p.phone||''}</td>
+                <td style="font-size:.8rem">${p.university||''}</td>
+                <td style="color:var(--lime);font-weight:900;font-size:.95rem">${fmtMoney(p.balance||0)}</td>
+                <td style="color:var(--gold);font-weight:800">${fmtMoney(p.earnings_total||0)}</td>
+                <td style="color:var(--muted)">${fmtMoney(p.withdrawn_total||0)}</td>
+                <td style="text-align:center">${p.completed_orders||0}</td>
+              </tr>`).join('')}
+          </tbody>
+        </table>
+        </div>
+      </div>`;
+    } else {
+      document.getElementById('balanceList').innerHTML = '<div class="loading">Chưa có đối tác active nào</div>';
+    }
+  } catch(e) {
+    console.error(e);
+    document.getElementById('withdrawalsList').innerHTML = '<div class="loading">❌ Lỗi tải dữ liệu</div>';
+  }
+}
+
+function filterWithdrawals(status, btn) {
+  document.querySelectorAll('#page-withdrawals .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  loadWithdrawals(status);
+}
+
+async function approveWithdrawal(id, name, amount) {
+  if (!confirm(`Xác nhận đã chuyển ${fmtMoney(amount)} cho ${name}?`)) return;
+  const d = await adminFetch(`${API_BASE}/api/admin/approve-withdrawal`, {
+    method: 'POST', body: JSON.stringify({ request_id: id, admin_note: 'Đã chuyển khoản' })
+  });
+  showToast(d.success ? '✅ ' + d.message : '❌ ' + d.message);
+  if (d.success) loadWithdrawals('');
+}
+
+async function rejectWithdrawal(id, name) {
+  const note = prompt(`Lý do từ chối yêu cầu của ${name}:`);
+  if (note === null) return;
+  const d = await adminFetch(`${API_BASE}/api/admin/reject-withdrawal`, {
+    method: 'POST', body: JSON.stringify({ request_id: id, admin_note: note || 'Không hợp lệ' })
+  });
+  showToast(d.success ? '✅ Đã từ chối & hoàn số dư' : '❌ ' + d.message);
+  if (d.success) loadWithdrawals('');
+}
+
+function withdrawStatusLabel(s) {
+  return {pending:'⏳ Chờ duyệt', approved:'✅ Đã duyệt', rejected:'❌ Từ chối'}[s] || s;
+}
+
 </script>
 </body>
 </html>
