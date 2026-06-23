@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>hocho.com — Admin Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --green:#16a34a;--green2:#15803d;--lime:#84cc16;
+  --bg:#0a0f0a;--card:#111811;--card2:#161e16;--border:rgba(132,204,22,.12);
+  --cream:#f0fdf4;--muted:rgba(240,253,244,.5);
+  --coral:#E8504A;--gold:#F0B429;
+  --font:'Nunito',sans-serif;--mono:'JetBrains Mono',monospace;
+}
+body{font-family:var(--font);background:var(--bg);color:var(--cream);min-height:100vh;display:flex;flex-direction:column}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 10% 5%,rgba(22,163,74,.12) 0%,transparent 70%);pointer-events:none;z-index:0}
+
+/* ── LOGIN ── */
+#loginScreen{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:999;padding:24px}
+.login-card{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:40px;width:100%;max-width:380px;text-align:center}
+.login-logo{font-family:'Fredoka One',cursive;font-size:2rem;color:var(--cream);margin-bottom:4px}
+.login-logo span{color:var(--lime)}
+.login-sub{font-size:.85rem;color:var(--muted);font-weight:700;margin-bottom:28px}
+.login-input{width:100%;background:rgba(255,255,255,.05);border:1.5px solid var(--border);border-radius:12px;padding:14px 16px;color:var(--cream);font-family:var(--font);font-size:.95rem;font-weight:700;outline:none;margin-bottom:14px;transition:.2s}
+.login-input:focus{border-color:rgba(22,163,74,.5)}
+.login-input::placeholder{color:rgba(240,253,244,.25)}
+.btn-login{width:100%;background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;border:none;border-radius:14px;padding:15px;font-family:var(--font);font-size:1rem;font-weight:900;cursor:pointer;transition:.2s}
+.btn-login:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(22,163,74,.35)}
+.login-err{color:var(--coral);font-size:.82rem;font-weight:800;margin-top:8px;display:none}
+
+/* ── TOP BAR ── */
+.topbar{background:rgba(10,15,10,.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 24px;position:sticky;top:0;z-index:100}
+.topbar-inner{max-width:1300px;margin:0 auto;height:60px;display:flex;align-items:center;justify-content:space-between}
+.topbar-logo{font-family:'Fredoka One',cursive;font-size:1.3rem;color:var(--cream)}
+.topbar-logo span{color:var(--lime)}
+.topbar-right{display:flex;align-items:center;gap:16px}
+.admin-badge{background:rgba(22,163,74,.15);border:1px solid rgba(22,163,74,.3);border-radius:50px;padding:5px 14px;font-size:.78rem;font-weight:900;color:var(--lime)}
+.btn-logout{background:rgba(232,80,74,.1);border:1px solid rgba(232,80,74,.25);border-radius:8px;padding:6px 14px;font-size:.8rem;font-weight:800;color:var(--coral);cursor:pointer;font-family:var(--font)}
+.btn-logout:hover{background:rgba(232,80,74,.2)}
+
+/* ── LAYOUT ── */
+.app-body{display:flex;flex:1;max-width:1300px;margin:0 auto;width:100%;position:relative;z-index:1}
+
+/* ── SIDEBAR ── */
+.sidebar{width:220px;flex-shrink:0;padding:20px 12px;border-right:1px solid var(--border)}
+.nav-item{display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:12px;cursor:pointer;transition:.2s;font-size:.9rem;font-weight:800;color:var(--muted);margin-bottom:4px}
+.nav-item:hover{background:rgba(22,163,74,.08);color:var(--cream)}
+.nav-item.active{background:rgba(22,163,74,.15);color:var(--lime);border:1px solid rgba(22,163,74,.2)}
+.nav-icon{font-size:1.1rem;width:20px;text-align:center}
+.nav-badge{margin-left:auto;background:var(--coral);color:#fff;border-radius:50px;padding:1px 7px;font-size:.7rem;font-weight:900}
+
+/* ── MAIN ── */
+.main{flex:1;padding:24px;overflow:hidden}
+.page{display:none}
+.page.active{display:block}
+.page-title{font-family:'Fredoka One',cursive;font-size:1.6rem;color:var(--cream);margin-bottom:4px}
+.page-sub{font-size:.85rem;color:var(--muted);font-weight:600;margin-bottom:24px}
+
+/* ── STAT TILES ── */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:28px}
+.stat-tile{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:20px;position:relative;overflow:hidden}
+.stat-tile::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.stat-tile.green::before{background:linear-gradient(90deg,var(--green),var(--lime))}
+.stat-tile.coral::before{background:linear-gradient(90deg,var(--coral),#f87171)}
+.stat-tile.gold::before{background:linear-gradient(90deg,var(--gold),#fbbf24)}
+.stat-tile.blue::before{background:linear-gradient(90deg,#3b82f6,#60a5fa)}
+.stat-label{font-size:.75rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.stat-val{font-family:'Fredoka One',cursive;font-size:2rem;color:var(--cream)}
+.stat-val.green{color:var(--lime)}
+.stat-val.coral{color:var(--coral)}
+.stat-val.gold{color:var(--gold)}
+.stat-sub{font-size:.75rem;color:var(--muted);font-weight:700;margin-top:4px}
+
+/* ── FILTER BAR ── */
+.filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.filter-btn{background:var(--card);border:1px solid var(--border);border-radius:50px;padding:7px 16px;font-size:.8rem;font-weight:800;color:var(--muted);cursor:pointer;transition:.2s;font-family:var(--font)}
+.filter-btn:hover,.filter-btn.active{background:rgba(22,163,74,.15);border-color:rgba(22,163,74,.35);color:var(--lime)}
+
+/* ── TABLE ── */
+.table-wrap{background:var(--card);border:1px solid var(--border);border-radius:18px;overflow:hidden}
+.table-header{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid var(--border)}
+.table-title{font-weight:900;font-size:.95rem;color:var(--cream)}
+.table-count{font-size:.8rem;color:var(--muted);font-weight:700}
+table{width:100%;border-collapse:collapse}
+th{padding:11px 16px;text-align:left;font-size:.75rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border);white-space:nowrap}
+td{padding:13px 16px;font-size:.85rem;font-weight:700;color:var(--cream);border-bottom:1px solid rgba(132,204,22,.06);vertical-align:middle}
+tr:last-child td{border:none}
+tr:hover td{background:rgba(22,163,74,.04)}
+.mono{font-family:var(--mono);font-size:.78rem;color:var(--lime)}
+
+/* STATUS BADGES */
+.badge{display:inline-flex;align-items:center;gap:5px;border-radius:50px;padding:4px 10px;font-size:.74rem;font-weight:900;white-space:nowrap}
+.badge-pending_payment{background:rgba(240,180,41,.12);color:var(--gold);border:1px solid rgba(240,180,41,.25)}
+.badge-pending_approval{background:rgba(132,204,22,.1);color:var(--lime);border:1px solid rgba(132,204,22,.2)}
+.badge-active{background:rgba(22,163,74,.15);color:#4ade80;border:1px solid rgba(22,163,74,.3)}
+.badge-rejected{background:rgba(232,80,74,.1);color:var(--coral);border:1px solid rgba(232,80,74,.2)}
+.badge-suspended{background:rgba(255,255,255,.06);color:var(--muted);border:1px solid var(--border)}
+.badge-waiting{background:rgba(240,180,41,.1);color:var(--gold);border:1px solid rgba(240,180,41,.2)}
+.badge-matching,.badge-accepted,.badge-in_progress{background:rgba(132,204,22,.1);color:var(--lime);border:1px solid rgba(132,204,22,.2)}
+.badge-completed{background:rgba(22,163,74,.15);color:#4ade80;border:1px solid rgba(22,163,74,.3)}
+.badge-cancelled{background:rgba(232,80,74,.1);color:var(--coral);border:1px solid rgba(232,80,74,.2)}
+.badge-unpaid{background:rgba(240,180,41,.1);color:var(--gold);border:1px solid rgba(240,180,41,.2)}
+.badge-paid{background:rgba(22,163,74,.12);color:#4ade80;border:1px solid rgba(22,163,74,.25)}
+.badge-pending{background:rgba(132,204,22,.1);color:var(--lime);border:1px solid rgba(132,204,22,.2)}
+
+/* ACTION BTNS */
+.btn-approve{background:rgba(22,163,74,.15);color:#4ade80;border:1px solid rgba(22,163,74,.3);border-radius:8px;padding:5px 12px;font-size:.76rem;font-weight:800;cursor:pointer;font-family:var(--font);transition:.2s}
+.btn-approve:hover{background:rgba(22,163,74,.3)}
+.btn-reject{background:rgba(232,80,74,.1);color:var(--coral);border:1px solid rgba(232,80,74,.25);border-radius:8px;padding:5px 12px;font-size:.76rem;font-weight:800;cursor:pointer;font-family:var(--font);transition:.2s}
+.btn-reject:hover{background:rgba(232,80,74,.2)}
+.btn-confirm{background:rgba(132,204,22,.1);color:var(--lime);border:1px solid rgba(132,204,22,.25);border-radius:8px;padding:5px 12px;font-size:.76rem;font-weight:800;cursor:pointer;font-family:var(--font);transition:.2s}
+.btn-confirm:hover{background:rgba(132,204,22,.2)}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;background:#1a2a1a;color:var(--cream);border:1px solid rgba(22,163,74,.3);border-radius:14px;padding:13px 20px;font-weight:800;font-size:.85rem;z-index:9999;transform:translateY(80px);transition:transform .3s;max-width:320px}
+.toast.show{transform:translateY(0)}
+
+/* LOADING */
+.loading{text-align:center;padding:40px;color:var(--muted);font-weight:700}
+.spinner{width:28px;height:28px;border:2px solid rgba(132,204,22,.2);border-top-color:var(--lime);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 12px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* REFRESH BTN */
+.btn-refresh{background:rgba(22,163,74,.1);border:1px solid rgba(22,163,74,.25);border-radius:10px;padding:8px 16px;font-size:.82rem;font-weight:800;color:var(--lime);cursor:pointer;font-family:var(--font);transition:.2s}
+.btn-refresh:hover{background:rgba(22,163,74,.2)}
+
+@media(max-width:768px){
+  .sidebar{display:none}
+  .stats-grid{grid-template-columns:1fr 1fr}
+  td,th{padding:10px 10px;font-size:.78rem}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="login-logo">hocho<span>.com</span></div>
+    <div class="login-sub">🔐 Admin Dashboard · Đăng nhập</div>
+    <input type="password" class="login-input" id="secretInput" placeholder="Nhập mật khẩu admin" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="btn-login" onclick="doLogin()">Đăng nhập</button>
+    <div class="login-err" id="loginErr">❌ Sai mật khẩu. Thử lại!</div>
+  </div>
+</div>
+
+<!-- APP (hidden until login) -->
+<div id="appWrap" style="display:none;flex-direction:column;min-height:100vh">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-logo">hocho<span>.com</span> <span style="font-size:.8rem;color:var(--muted);font-family:var(--font);font-weight:700">Admin</span></div>
+      <div class="topbar-right">
+        <div class="admin-badge">⚡ Admin</div>
+        <button class="btn-refresh" onclick="loadCurrentPage()">↺ Làm mới</button>
+        <button class="btn-logout" onclick="logout()">Đăng xuất</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-body">
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="nav-item active" onclick="showPage('dashboard')" id="nav-dashboard"><span class="nav-icon">📊</span> Dashboard</div>
+      <div class="nav-item" onclick="showPage('partners-approval')" id="nav-partners-approval"><span class="nav-icon">⏳</span> Chờ duyệt <span class="nav-badge" id="pendingBadge">0</span></div>
+      <div class="nav-item" onclick="showPage('partners')" id="nav-partners"><span class="nav-icon">👥</span> Đối tác</div>
+      <div class="nav-item" onclick="showPage('orders')" id="nav-orders"><span class="nav-icon">📚</span> Đơn hàng</div>
+      <div class="nav-item" onclick="showPage('payments')" id="nav-payments"><span class="nav-icon">💰</span> Thanh toán</div>
+    </div>
+
+    <!-- MAIN -->
+    <div class="main">
+
+      <!-- DASHBOARD -->
+      <div class="page active" id="page-dashboard">
+        <div class="page-title">Tổng quan</div>
+        <div class="page-sub" id="dashDate">Đang tải...</div>
+        <div class="stats-grid" id="statsGrid">
+          <div class="loading"><div class="spinner"></div>Đang tải...</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px" id="dashTables"></div>
+      </div>
+
+      <!-- PARTNERS APPROVAL -->
+      <div class="page" id="page-partners-approval">
+        <div class="page-title">Chờ duyệt hồ sơ</div>
+        <div class="page-sub">Đối tác đã nộp phí · Cần xem xét và duyệt</div>
+        <div id="approvalList"><div class="loading"><div class="spinner"></div>Đang tải...</div></div>
+      </div>
+
+      <!-- ALL PARTNERS -->
+      <div class="page" id="page-partners">
+        <div class="page-title">Tất cả đối tác</div>
+        <div class="page-sub">Quản lý toàn bộ đối tác trên nền tảng</div>
+        <div class="filter-bar">
+          <button class="filter-btn active" onclick="filterPartners('',this)">Tất cả</button>
+          <button class="filter-btn" onclick="filterPartners('active',this)">✅ Active</button>
+          <button class="filter-btn" onclick="filterPartners('pending_approval',this)">🔄 Chờ duyệt</button>
+          <button class="filter-btn" onclick="filterPartners('pending_payment',this)">⏳ Chờ TT</button>
+          <button class="filter-btn" onclick="filterPartners('rejected',this)">❌ Từ chối</button>
+        </div>
+        <div id="partnersList"><div class="loading"><div class="spinner"></div>Đang tải...</div></div>
+      </div>
+
+      <!-- ORDERS -->
+      <div class="page" id="page-orders">
+        <div class="page-title">Đơn hàng</div>
+        <div class="page-sub">Theo dõi tất cả đơn học hộ</div>
+        <div class="filter-bar">
+          <button class="filter-btn active" onclick="filterOrders('',this)">Tất cả</button>
+          <button class="filter-btn" onclick="filterOrders('waiting',this)">⏳ Chờ</button>
+          <button class="filter-btn" onclick="filterOrders('accepted',this)">✅ Đang làm</button>
+          <button class="filter-btn" onclick="filterOrders('completed',this)">🎉 Hoàn thành</button>
+          <button class="filter-btn" onclick="filterOrders('cancelled',this)">❌ Huỷ</button>
+        </div>
+        <div id="ordersList"><div class="loading"><div class="spinner"></div>Đang tải...</div></div>
+      </div>
+
+      <!-- PAYMENTS -->
+      <div class="page" id="page-payments">
+        <div class="page-title">Quản lý thanh toán</div>
+        <div class="page-sub">Xác nhận phí kích hoạt đối tác · SeaPay</div>
+        <div id="paymentsList"><div class="loading"><div class="spinner"></div>Đang tải...</div></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const ADMIN_SECRET = 'hocho2024admin';
+const API_PARTNER = 'https://superagent-baa1512a.base44.app/functions/partnerApi';
+const API_ORDER   = 'https://superagent-baa1512a.base44.app/functions/orderApi';
+const API_ADMIN   = 'https://superagent-baa1512a.base44.app/functions/adminApi';
+
+let allPartners = [], allOrders = [];
+
+// ── LOGIN ──
+function doLogin() {
+  const val = document.getElementById('secretInput').value;
+  if (val === ADMIN_SECRET) {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('appWrap').style.display = 'flex';
+    loadDashboard();
+  } else {
+    document.getElementById('loginErr').style.display = 'block';
+  }
+}
+function logout() {
+  document.getElementById('appWrap').style.display = 'none';
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('secretInput').value = '';
+}
+
+function adminFetch(url, opts={}) {
+  return fetch(url, {
+    ...opts,
+    headers: { 'Content-Type': 'application/json', 'X-Admin-Secret': ADMIN_SECRET, ...(opts.headers||{}) }
+  }).then(r => r.json());
+}
+
+// ── NAV ──
+let currentPage = 'dashboard';
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.getElementById('nav-'+id).classList.add('active');
+  currentPage = id;
+  loadCurrentPage();
+}
+
+function loadCurrentPage() {
+  const loaders = {
+    dashboard: loadDashboard,
+    'partners-approval': loadApproval,
+    partners: () => loadPartners(''),
+    orders: () => loadOrders(''),
+    payments: loadPayments,
+  };
+  if (loaders[currentPage]) loaders[currentPage]();
+}
+
+// ── DASHBOARD ──
+async function loadDashboard() {
+  document.getElementById('dashDate').textContent = 'Cập nhật: ' + new Date().toLocaleString('vi-VN');
+  try {
+    const d = await adminFetch(API_ADMIN + '?action=dashboard&secret=' + ADMIN_SECRET);
+    if (!d.success) return;
+    const { partners, orders, revenue } = d.data;
+
+    document.getElementById('pendingBadge').textContent = partners.pending_approval;
+
+    document.getElementById('statsGrid').innerHTML = `
+      <div class="stat-tile green">
+        <div class="stat-label">Đối tác hoạt động</div>
+        <div class="stat-val green">${partners.active}</div>
+        <div class="stat-sub">Online: ${partners.online_now} · Tổng: ${partners.total}</div>
+      </div>
+      <div class="stat-tile gold">
+        <div class="stat-label">Chờ duyệt</div>
+        <div class="stat-val gold">${partners.pending_approval}</div>
+        <div class="stat-sub">Chờ thanh toán: ${partners.pending_payment}</div>
+      </div>
+      <div class="stat-tile blue">
+        <div class="stat-label">Đơn hàng</div>
+        <div class="stat-val" style="color:#60a5fa">${orders.total}</div>
+        <div class="stat-sub">Hoàn thành: ${orders.completed} · Đang làm: ${orders.in_progress}</div>
+      </div>
+      <div class="stat-tile coral">
+        <div class="stat-label">Doanh thu platform</div>
+        <div class="stat-val coral">${fmtMoney(revenue.platform_orders)}</div>
+        <div class="stat-sub">Phí đăng ký: ${fmtMoney(revenue.registration)}</div>
+      </div>
+      <div class="stat-tile green">
+        <div class="stat-label">Tổng thu</div>
+        <div class="stat-val green">${fmtMoney(revenue.total)}</div>
+        <div class="stat-sub">Đối tác nhận: ${fmtMoney(revenue.partner_earnings)}</div>
+      </div>
+      <div class="stat-tile gold">
+        <div class="stat-label">Đơn chờ</div>
+        <div class="stat-val gold">${orders.waiting}</div>
+        <div class="stat-sub">Đã huỷ: ${orders.cancelled}</div>
+      </div>
+    `;
+  } catch(e) { showToast('❌ Lỗi tải dashboard'); }
+}
+
+// ── APPROVAL ──
+async function loadApproval() {
+  document.getElementById('approvalList').innerHTML = '<div class="loading"><div class="spinner"></div>Đang tải...</div>';
+  try {
+    const d = await adminFetch(API_ADMIN + '?action=partners&status=pending_approval&secret=' + ADMIN_SECRET);
+    if (!d.success || d.data.length === 0) {
+      document.getElementById('approvalList').innerHTML = '<div class="loading">✅ Không có hồ sơ nào chờ duyệt</div>';
+      return;
+    }
+    document.getElementById('approvalList').innerHTML = buildPartnersTable(d.data, true);
+  } catch(e) { document.getElementById('approvalList').innerHTML = '<div class="loading">❌ Lỗi tải dữ liệu</div>'; }
+}
+
+// ── PARTNERS ──
+async function loadPartners(status) {
+  document.getElementById('partnersList').innerHTML = '<div class="loading"><div class="spinner"></div>Đang tải...</div>';
+  try {
+    const qs = status ? `&status=${status}` : '';
+    const d = await adminFetch(API_ADMIN + '?action=partners' + qs + '&secret=' + ADMIN_SECRET);
+    if (!d.success) return;
+    allPartners = d.data;
+    document.getElementById('partnersList').innerHTML = buildPartnersTable(d.data, false);
+  } catch(e) { document.getElementById('partnersList').innerHTML = '<div class="loading">❌ Lỗi</div>'; }
+}
+
+function filterPartners(status, btn) {
+  document.querySelectorAll('#page-partners .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  loadPartners(status);
+}
+
+function buildPartnersTable(data, showApprove) {
+  if (!data.length) return '<div class="loading">Không có dữ liệu</div>';
+  return `
+  <div class="table-wrap">
+    <div class="table-header">
+      <div class="table-title">👥 Danh sách đối tác</div>
+      <div class="table-count">${data.length} đối tác</div>
+    </div>
+    <div style="overflow-x:auto">
+    <table>
+      <thead><tr>
+        <th>Họ tên</th><th>SĐT</th><th>Trường</th>
+        <th>Trạng thái</th><th>Thanh toán</th>
+        <th>⭐</th><th>Đơn</th>
+        ${showApprove ? '<th>Hành động</th>' : ''}
+      </tr></thead>
+      <tbody>
+        ${data.map(p => `
+          <tr>
+            <td><div style="font-weight:900">${p.full_name}</div><div style="font-size:.75rem;color:var(--muted)">${p.register_id||''}</div></td>
+            <td class="mono">${p.phone||''}</td>
+            <td style="max-width:160px;font-size:.8rem">${p.university||''}</td>
+            <td><span class="badge badge-${p.status}">${statusLabel(p.status)}</span></td>
+            <td><span class="badge badge-${p.payment_status}">${payLabel(p.payment_status)}</span></td>
+            <td>${p.rating||5}</td>
+            <td>${p.completed_orders||0}/${p.total_orders||0}</td>
+            ${showApprove ? `
+              <td style="display:flex;gap:6px;flex-wrap:wrap">
+                <button class="btn-approve" onclick="approvePartner('${p.id}','${p.full_name}')">✓ Duyệt</button>
+                <button class="btn-reject" onclick="rejectPartner('${p.id}','${p.full_name}')">✗ Từ chối</button>
+              </td>` : ''}
+          </tr>`).join('')}
+      </tbody>
+    </table>
+    </div>
+  </div>`;
+}
+
+// ── ORDERS ──
+async function loadOrders(status) {
+  document.getElementById('ordersList').innerHTML = '<div class="loading"><div class="spinner"></div>Đang tải...</div>';
+  try {
+    const qs = status ? `&status=${status}` : '';
+    const d = await adminFetch(API_ADMIN + '?action=orders' + qs + '&secret=' + ADMIN_SECRET);
+    if (!d.success) return;
+    allOrders = d.data;
+    if (!d.data.length) { document.getElementById('ordersList').innerHTML = '<div class="loading">Không có đơn nào</div>'; return; }
+    document.getElementById('ordersList').innerHTML = `
+    <div class="table-wrap">
+      <div class="table-header">
+        <div class="table-title">📚 Danh sách đơn hàng</div>
+        <div class="table-count">${d.data.length} đơn</div>
+      </div>
+      <div style="overflow-x:auto">
+      <table>
+        <thead><tr>
+          <th>Mã đơn</th><th>Khách</th><th>Trường</th>
+          <th>Phòng</th><th>Trạng thái</th><th>TT tiền</th>
+          <th>Giá</th><th>Ngày đặt</th>
+        </tr></thead>
+        <tbody>
+          ${d.data.map(o => `
+            <tr>
+              <td class="mono">${o.order_code||''}</td>
+              <td><div style="font-weight:900">${o.customer_name||''}</div><div style="font-size:.75rem;color:var(--muted)">${o.customer_phone||''}</div></td>
+              <td style="font-size:.8rem;max-width:140px">${o.university||''}</td>
+              <td style="font-size:.82rem">${o.building||''} ${o.floor ? 'T'+o.floor : ''} P${o.room_number||''}</td>
+              <td><span class="badge badge-${o.status}">${orderStatusLabel(o.status)}</span></td>
+              <td><span class="badge badge-${o.payment_status}">${payLabel(o.payment_status)}</span></td>
+              <td style="color:var(--lime);font-weight:900">${fmtMoney(o.price||200000)}</td>
+              <td style="font-size:.78rem;color:var(--muted)">${fmtDate(o.created_date)}</td>
+            </tr>`).join('')}
+        </tbody>
+      </table>
+      </div>
+    </div>`;
+  } catch(e) { document.getElementById('ordersList').innerHTML = '<div class="loading">❌ Lỗi</div>'; }
+}
+
+function filterOrders(status, btn) {
+  document.querySelectorAll('#page-orders .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  loadOrders(status);
+}
+
+// ── PAYMENTS ──
+async function loadPayments() {
+  document.getElementById('paymentsList').innerHTML = '<div class="loading"><div class="spinner"></div>Đang tải...</div>';
+  try {
+    // Load đối tác có payment_status = pending (đã chuyển khoản, chờ xác nhận)
+    const d = await adminFetch(API_ADMIN + '?action=partners&status=pending_approval&secret=' + ADMIN_SECRET);
+    const d2 = await adminFetch(API_ADMIN + '?action=partners&status=pending_payment&secret=' + ADMIN_SECRET);
+    const combined = [...(d.data||[]), ...(d2.data||[])].filter(p => p.payment_status !== 'paid');
+
+    if (!combined.length) {
+      document.getElementById('paymentsList').innerHTML = '<div class="loading">✅ Không có thanh toán nào chờ xử lý</div>';
+      return;
+    }
+
+    document.getElementById('paymentsList').innerHTML = `
+    <div style="background:rgba(240,180,41,.08);border:1px solid rgba(240,180,41,.2);border-radius:14px;padding:14px 18px;margin-bottom:16px;font-size:.85rem;color:rgba(240,180,41,.9);font-weight:700">
+      ⚠️ Kiểm tra chuyển khoản SeaPay · TK VIB <strong>068394585</strong> trước khi xác nhận
+    </div>
+    <div class="table-wrap">
+      <div class="table-header">
+        <div class="table-title">💰 Chờ xác nhận thanh toán</div>
+        <div class="table-count">${combined.length} hồ sơ</div>
+      </div>
+      <div style="overflow-x:auto">
+      <table>
+        <thead><tr><th>Họ tên</th><th>SĐT</th><th>Mã hồ sơ</th><th>Trạng thái TT</th><th>Phí</th><th>Ngày đăng ký</th><th>Xác nhận</th></tr></thead>
+        <tbody>
+          ${combined.map(p => `
+            <tr>
+              <td style="font-weight:900">${p.full_name}</td>
+              <td class="mono">${p.phone||''}</td>
+              <td class="mono">${p.register_id||''}</td>
+              <td><span class="badge badge-${p.payment_status}">${payLabel(p.payment_status)}</span></td>
+              <td style="color:var(--lime);font-weight:900">200.000đ</td>
+              <td style="font-size:.78rem;color:var(--muted)">${fmtDate(p.created_date)}</td>
+              <td>
+                ${p.payment_status !== 'paid'
+                  ? `<button class="btn-confirm" onclick="confirmPayment('${p.id}','${p.full_name}')">✓ Xác nhận đã nhận tiền</button>`
+                  : '<span style="color:var(--lime);font-size:.8rem">✅ Đã xác nhận</span>'}
+              </td>
+            </tr>`).join('')}
+        </tbody>
+      </table>
+      </div>
+    </div>`;
+  } catch(e) { document.getElementById('paymentsList').innerHTML = '<div class="loading">❌ Lỗi</div>'; }
+}
+
+// ── ACTIONS ──
+async function approvePartner(id, name) {
+  if (!confirm(`Duyệt đối tác "${name}"?`)) return;
+  try {
+    const d = await adminFetch(API_ADMIN + '?action=approve_partner&secret=' + ADMIN_SECRET, {
+      method: 'POST', body: JSON.stringify({ partner_id: id })
+    });
+    showToast(d.success ? `✅ ${d.message}` : `❌ ${d.message}`);
+    if (d.success) { loadApproval(); loadDashboard(); }
+  } catch(e) { showToast('❌ Lỗi kết nối'); }
+}
+
+async function rejectPartner(id, name) {
+  if (!confirm(`Từ chối đối tác "${name}"?`)) return;
+  try {
+    const d = await adminFetch(API_ADMIN + '?action=reject_partner&secret=' + ADMIN_SECRET, {
+      method: 'POST', body: JSON.stringify({ partner_id: id })
+    });
+    showToast(d.success ? `✅ ${d.message}` : `❌ ${d.message}`);
+    if (d.success) { loadApproval(); loadDashboard(); }
+  } catch(e) { showToast('❌ Lỗi kết nối'); }
+}
+
+async function confirmPayment(id, name) {
+  if (!confirm(`Xác nhận đã nhận 200.000đ từ "${name}"?`)) return;
+  try {
+    const d = await adminFetch(API_ADMIN + '?action=confirm_payment&secret=' + ADMIN_SECRET, {
+      method: 'POST', body: JSON.stringify({ partner_id: id })
+    });
+    showToast(d.success ? `✅ ${d.message}` : `❌ ${d.message}`);
+    if (d.success) loadPayments();
+  } catch(e) { showToast('❌ Lỗi kết nối'); }
+}
+
+// ── HELPERS ──
+function fmtMoney(n) { return (n||0).toLocaleString('vi-VN') + 'đ'; }
+function fmtDate(d) { if(!d) return '—'; return new Date(d).toLocaleDateString('vi-VN'); }
+function statusLabel(s) {
+  return {pending_payment:'⏳ Chờ TT', pending_approval:'🔄 Chờ duyệt', active:'✅ Active', rejected:'❌ Từ chối', suspended:'⛔ Tạm khoá'}[s] || s;
+}
+function payLabel(s) { return {unpaid:'Chưa TT', pending:'Đã CK', paid:'Đã xác nhận'}[s] || s; }
+function orderStatusLabel(s) {
+  return {waiting:'⏳ Chờ', matching:'🔍 Đang quét', accepted:'✅ Nhận đơn', in_progress:'⚡ Đang làm', completed:'🎉 Xong', cancelled:'❌ Huỷ', rejected:'🚫 Từ chối'}[s] || s;
+}
+function showToast(msg, dur=3000) {
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), dur);
+}
+</script>
+</body>
+</html>
