@@ -10,19 +10,19 @@ const publicDir = path.join(__dirname, '../public');
 
 // Routes
 router.get('/', (req, res) => {
-  res.sendFile(path.join(publicDir, 'index.html'));
+  res.sendFile(path.join(publicDir, 'index'));
 });
 
 router.get('/register', (req, res) => {
-  res.sendFile(path.join(publicDir, 'register.html'));
+  res.sendFile(path.join(publicDir, 'register'));
 });
 
 router.get('/payment', (req, res) => {
-  res.sendFile(path.join(publicDir, 'payment.html'));
+  res.sendFile(path.join(publicDir, 'payment'));
 });
 
 router.get('/admin', (req, res) => {
-  res.sendFile(path.join(publicDir, 'admin.html'));
+  res.sendFile(path.join(publicDir, 'admin'));
 });
 
 export default router;
