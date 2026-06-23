@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>hocho.com — Thanh toán kích hoạt tài khoản</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --green:#16a34a;--green2:#15803d;--lime:#84cc16;
+  --bg:#0a0f0a;--card:#111811;--border:rgba(132,204,22,.13);
+  --cream:#f0fdf4;--muted:rgba(240,253,244,.55);
+  --coral:#E8504A;--gold:#F0B429;
+  --font:'Nunito',sans-serif;--mono:'JetBrains Mono',monospace;
+}
+body{font-family:var(--font);background:var(--bg);color:var(--cream);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:0 16px 80px;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:
+  radial-gradient(ellipse 60% 40% at 20% 10%,rgba(22,163,74,.18) 0%,transparent 70%),
+  radial-gradient(ellipse 50% 35% at 80% 80%,rgba(132,204,22,.1) 0%,transparent 70%);
+  pointer-events:none;z-index:0}
+
+.header{width:100%;max-width:480px;display:flex;align-items:center;gap:12px;padding:20px 0 16px;position:relative;z-index:1}
+.logo-icon{width:40px;height:40px;background:linear-gradient(135deg,var(--green),var(--lime));border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:.9rem;font-weight:900;color:#fff;font-family:var(--mono);flex-shrink:0}
+.header-title{font-family:'Fredoka One',cursive;font-size:1.4rem;color:var(--cream)}
+.header-sub{font-size:.72rem;color:var(--muted);font-weight:700}
+
+/* CARD */
+.card{width:100%;max-width:480px;background:var(--card);border:1px solid var(--border);border-radius:24px;overflow:hidden;position:relative;z-index:1;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+
+/* PLAN STRIP */
+.plan-strip{padding:16px 24px;display:flex;align-items:center;gap:14px;border-bottom:1px solid var(--border);background:linear-gradient(135deg,rgba(22,163,74,.12),rgba(22,163,74,.04))}
+.plan-icon{font-size:2rem}
+.plan-info{flex:1}
+.plan-name{font-weight:900;font-size:1rem;color:var(--lime)}
+.plan-tagline{font-size:.75rem;color:var(--muted);margin-top:2px}
+.plan-price{background:rgba(22,163,74,.15);color:var(--lime);border:1px solid rgba(22,163,74,.3);border-radius:50px;padding:6px 14px;font-size:.8rem;font-weight:900;white-space:nowrap}
+
+/* QR SECTION */
+.qr-section{padding:24px;display:flex;flex-direction:column;align-items:center;gap:16px}
+
+/* TIMER */
+.timer-wrap{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.05);border-radius:50px;padding:8px 18px;border:1px solid var(--border)}
+.timer-val{font-family:var(--mono);font-size:1.1rem;font-weight:700;color:var(--lime);min-width:48px;transition:color .3s}
+.timer-val.urgent{color:var(--coral);animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+
+/* QR FRAME */
+.qr-frame{background:#fff;border-radius:20px;padding:16px;box-shadow:0 8px 40px rgba(0,0,0,.4);position:relative}
+.qr-frame img{width:210px;height:210px;border-radius:8px;display:block}
+.qr-loading{width:210px;height:210px;display:flex;align-items:center;justify-content:center;color:#888;font-size:.85rem;background:#f5f5f5;border-radius:8px;flex-direction:column;gap:8px}
+.qr-corner{position:absolute;width:18px;height:18px;border-color:var(--green);border-style:solid;border-width:0}
+.qr-corner.tl{top:8px;left:8px;border-top-width:3px;border-left-width:3px;border-radius:4px 0 0 0}
+.qr-corner.tr{top:8px;right:8px;border-top-width:3px;border-right-width:3px;border-radius:0 4px 0 0}
+.qr-corner.bl{bottom:8px;left:8px;border-bottom-width:3px;border-left-width:3px;border-radius:0 0 0 4px}
+.qr-corner.br{bottom:8px;right:8px;border-bottom-width:3px;border-right-width:3px;border-radius:0 0 4px 0}
+
+/* BANK INFO */
+.bank-info{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.bank-row{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--border);font-size:.85rem}
+.bank-row:last-child{border:none}
+.bank-key{color:var(--muted);font-weight:700}
+.bank-val{font-weight:900;color:var(--cream)}
+.bank-val.mono{font-family:var(--mono);font-size:.82rem}
+.bank-val.amount{color:var(--lime);font-size:1.05rem}
+.copy-btn{background:rgba(255,255,255,.08);border:none;border-radius:6px;padding:3px 8px;color:var(--muted);font-size:.7rem;cursor:pointer;font-family:var(--font);font-weight:700;transition:.2s}
+.copy-btn:hover{background:rgba(255,255,255,.15);color:var(--cream)}
+
+/* NOTE */
+.note-badge{width:100%;background:rgba(22,163,74,.08);border:1px solid rgba(22,163,74,.2);border-radius:12px;padding:12px 16px;font-size:.82rem;color:rgba(132,204,22,.85);text-align:center;line-height:1.5;font-weight:700}
+
+/* BUTTONS */
+.btn-paid{width:100%;background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;border:none;border-radius:16px;padding:17px;font-family:var(--font);font-size:1rem;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 4px 24px rgba(22,163,74,.35);transition:.2s;position:relative;overflow:hidden}
+.btn-paid:hover{transform:translateY(-1px);box-shadow:0 8px 30px rgba(22,163,74,.45)}
+.btn-paid:disabled{background:#2a2a2a;box-shadow:none;cursor:not-allowed;transform:none}
+.btn-later{width:100%;background:transparent;border:1px solid var(--border);border-radius:16px;padding:13px;font-family:var(--font);font-size:.9rem;font-weight:700;color:var(--muted);cursor:pointer;transition:.2s;margin-top:-4px}
+.btn-later:hover{border-color:rgba(240,253,244,.3);color:var(--cream)}
+
+/* EXPIRED */
+.expired-wrap{padding:32px 24px;text-align:center;display:none;flex-direction:column;align-items:center;gap:16px}
+.expired-wrap.show{display:flex}
+.btn-refresh{background:var(--green);color:#fff;border:none;border-radius:50px;padding:12px 28px;font-family:var(--font);font-weight:900;font-size:.9rem;cursor:pointer}
+
+/* THANK YOU */
+#thankYou{display:none;width:100%;max-width:480px;position:relative;z-index:1}
+.ty-card{background:var(--card);border:1px solid var(--border);border-radius:24px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+.ty-hero{background:linear-gradient(135deg,var(--green),var(--green2));padding:40px 24px 32px;text-align:center;position:relative;overflow:hidden}
+.ty-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 70% 30%,rgba(255,255,255,.12),transparent 60%);pointer-events:none}
+.ty-icon{font-size:3.5rem;animation:dance 1.5s ease-in-out infinite;display:block;margin-bottom:16px}
+@keyframes dance{0%,100%{transform:rotate(-5deg) scale(1)}50%{transform:rotate(5deg) scale(1.05)}}
+.ty-title{font-family:'Fredoka One',cursive;font-size:1.8rem;color:#fff;margin-bottom:8px}
+.ty-sub{font-size:.9rem;color:rgba(255,255,255,.85);font-weight:700;line-height:1.5}
+.ty-body{padding:24px;display:flex;flex-direction:column;gap:14px}
+.ty-block{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:14px;padding:16px}
+.ty-block-title{font-size:.7rem;font-weight:900;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px}
+.ty-block-body{font-size:.88rem;color:rgba(240,253,244,.85);line-height:1.6;font-weight:700}
+.ty-block-body a{color:var(--lime);text-decoration:none;font-weight:900}
+.ty-reg-id{font-family:var(--mono);background:rgba(22,163,74,.12);border:1px solid rgba(22,163,74,.25);border-radius:8px;padding:10px 14px;font-size:.9rem;color:var(--lime);font-weight:700;text-align:center;margin-bottom:4px}
+.btn-check{width:100%;background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;border:none;border-radius:16px;padding:16px;font-family:var(--font);font-size:1rem;font-weight:900;cursor:pointer;text-decoration:none;display:block;text-align:center;transition:.2s}
+.btn-check:hover{transform:translateY(-1px)}
+
+/* LOADING */
+#loadingScreen{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;min-height:60vh;position:relative;z-index:1}
+.spinner{width:48px;height:48px;border:3px solid rgba(132,204,22,.15);border-top-color:var(--lime);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#1a2a1a;color:var(--cream);border:1px solid rgba(22,163,74,.3);border-radius:50px;padding:12px 24px;font-weight:800;font-size:.85rem;z-index:9999;transition:transform .3s cubic-bezier(.34,1.56,.64,1);white-space:nowrap}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* CONFETTI */
+.confetti-piece{position:fixed;top:-10px;width:8px;height:14px;border-radius:2px;animation:fall linear forwards;z-index:9990;pointer-events:none}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:0}}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="logo-icon">HC</div>
+  <div>
+    <div class="header-title">hocho.com</div>
+    <div class="header-sub">Thanh toán kích hoạt tài khoản Đối tác</div>
+  </div>
+</div>
+
+<!-- LOADING -->
+<div id="loadingScreen">
+  <div class="spinner"></div>
+  <div style="font-size:.85rem;color:var(--muted);font-weight:700">Đang tải thông tin...</div>
+</div>
+
+<!-- PAYMENT CARD -->
+<div class="card" id="paymentCard" style="display:none">
+  <div class="plan-strip">
+    <div class="plan-icon">🎓</div>
+    <div class="plan-info">
+      <div class="plan-name">Kích hoạt tài khoản Đối tác</div>
+      <div class="plan-tagline" id="planTagline">hocho.com · Học hộ</div>
+    </div>
+    <div class="plan-price">200.000đ</div>
+  </div>
+
+  <div class="qr-section" id="qrSection">
+    <!-- Timer -->
+    <div class="timer-wrap">
+      <span>⏱️</span>
+      <span class="timer-val" id="timerVal">10:00</span>
+      <span style="font-size:.78rem;color:var(--muted);font-weight:700">Mã QR hết hạn sau</span>
+    </div>
+
+    <!-- QR Frame -->
+    <div class="qr-frame">
+      <div class="qr-corner tl"></div><div class="qr-corner tr"></div>
+      <div class="qr-corner bl"></div><div class="qr-corner br"></div>
+      <div class="qr-loading" id="qrLoading">
+        <div class="spinner" style="width:28px;height:28px;border-width:2px"></div>
+        <span>Đang tạo mã QR...</span>
+      </div>
+      <img id="qrImg" src="" alt="QR Thanh toán" style="display:none"
+        onload="this.style.display='block';document.getElementById('qrLoading').style.display='none'"
+        onerror="document.getElementById('qrLoading').innerHTML='⚠️ Lỗi tải QR<br>Dùng chuyển khoản thủ công'">
+    </div>
+
+    <!-- Bank info -->
+    <div class="bank-info">
+      <div class="bank-row">
+        <span class="bank-key">Ngân hàng</span>
+        <span class="bank-val">VIB</span>
+      </div>
+      <div class="bank-row">
+        <span class="bank-key">Số tài khoản</span>
+        <div style="display:flex;align-items:center;gap:8px">
+          <span class="bank-val mono">068394585</span>
+          <button class="copy-btn" onclick="copyText('068394585','✅ Đã sao chép số TK!')">Copy</button>
+        </div>
+      </div>
+      <div class="bank-row">
+        <span class="bank-key">Tên TK</span>
+        <span class="bank-val">HOCHO PLATFORM</span>
+      </div>
+      <div class="bank-row">
+        <span class="bank-key">Số tiền</span>
+        <span class="bank-val amount">200.000đ</span>
+      </div>
+      <div class="bank-row">
+        <span class="bank-key">Nội dung CK</span>
+        <div style="display:flex;align-items:center;gap:8px;flex:1;min-width:0">
+          <span class="bank-val mono" id="bankDesc" style="font-size:.75rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:160px"></span>
+          <button class="copy-btn" onclick="copyText(document.getElementById('bankDesc').textContent,'✅ Đã sao chép!')">Copy</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Note -->
+    <div class="note-badge">
+      🔒 Phí kích hoạt <strong>1 lần duy nhất · 200.000đ</strong><br>
+      Sau khi admin xác nhận, tài khoản sẽ được kích hoạt trong 24–48h
+    </div>
+
+    <!-- Buttons -->
+    <button class="btn-paid" id="btnPaid" onclick="confirmPayment()">
+      <span>✅</span><span>Tôi đã chuyển khoản xong</span>
+    </button>
+    <button class="btn-later" onclick="payLater()">Thanh toán sau · Lưu hồ sơ</button>
+  </div>
+
+  <!-- Expired -->
+  <div class="expired-wrap" id="expiredWrap">
+    <div style="font-size:3rem">⏰</div>
+    <div style="font-weight:900;color:var(--muted)">Mã QR đã hết hạn</div>
+    <div style="font-size:.82rem;color:rgba(240,253,244,.35);font-weight:700">Nhấn làm mới để tạo mã mới</div>
+    <button class="btn-refresh" onclick="refreshQR()">🔄 Làm mới mã QR</button>
+  </div>
+</div>
+
+<!-- THANK YOU -->
+<div id="thankYou">
+  <div class="ty-card">
+    <div class="ty-hero">
+      <span class="ty-icon">🎓</span>
+      <div class="ty-title">Cảm ơn bạn!</div>
+      <div class="ty-sub">Hồ sơ đăng ký Đối tác của bạn đã được ghi nhận thành công</div>
+    </div>
+    <div class="ty-body">
+      <div class="ty-block">
+        <div class="ty-block-title">📋 Mã hồ sơ của bạn</div>
+        <div class="ty-reg-id" id="tyRegId">HC-XXXXXXX</div>
+        <div class="ty-block-body" style="font-size:.78rem;color:var(--muted);text-align:center">Lưu mã này để tra cứu tình trạng hồ sơ</div>
+      </div>
+      <div class="ty-block">
+        <div class="ty-block-title">🕐 Bước tiếp theo</div>
+        <div class="ty-block-body">
+          Chúng mình sẽ <strong style="color:var(--cream)">liên hệ lại trong vòng 24–48 giờ</strong> qua số điện thoại đã đăng ký để xác nhận và hướng dẫn kích hoạt app.<br><br>
+          Tra cứu tình trạng tại: <a href="register.html#lookup">register.html → Tra cứu hồ sơ</a>
+        </div>
+      </div>
+      <div style="background:rgba(22,163,74,.08);border:1px solid rgba(22,163,74,.2);border-radius:14px;padding:16px;display:flex;align-items:flex-start;gap:12px">
+        <div style="font-size:1.6rem;flex-shrink:0">💰</div>
+        <div style="font-size:.82rem;color:rgba(132,204,22,.85);line-height:1.6;font-weight:700">
+          <strong style="color:var(--lime)">Thu nhập của bạn: 140.000đ/đơn!</strong><br>
+          Trung bình 10 đơn/tháng = 1.400.000đ thu nhập thêm mỗi tháng 🎉
+        </div>
+      </div>
+      <a href="register.html#lookup" class="btn-check">🔍 Kiểm tra tình trạng hồ sơ</a>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const API_BASE = '';
+const params = new URLSearchParams(location.search);
+const phoneParam = params.get('phone') || '';
+const regId = params.get('id') || '';
+let planData = null, timerInt = null, expired = false;
+
+window.addEventListener('DOMContentLoaded', init);
+
+async function init() {
+  if (!phoneParam && !regId) { showError('Thiếu thông tin. Vui lòng trở về trang đăng ký.'); return; }
+  try {
+    const q = phoneParam
+      ? `phone=${encodeURIComponent(phoneParam)}`
+      : `id=${encodeURIComponent(regId)}`;
+    const r = await fetch(`${API_BASE}/api/partner/payment-plan?` + q);
+    const d = await r.json();
+    if (!d.success) { showError(d.message || 'Không tìm thấy hồ sơ. Vui lòng kiểm tra lại.'); return; }
+    planData = d.data;
+    renderPayment();
+  } catch(e) { showError('Không kết nối được server. Vui lòng thử lại.'); }
+}
+
+function renderPayment() {
+  const { registerId, phone, full_name } = planData;
+  const desc = 'HC KH ' + (phone || phoneParam || registerId);
+  document.getElementById('bankDesc').textContent = desc;
+  document.getElementById('planTagline').textContent = `${full_name || ''} · ${registerId || ''}`;
+  buildQR(200000, desc);
+  document.getElementById('loadingScreen').style.display = 'none';
+  document.getElementById('paymentCard').style.display = 'block';
+  startTimer(10 * 60);
+}
+
+function buildQR(fee, desc) {
+  const url = `https://qr.sepay.vn/img?bank=VIB&acc=068394585&template=compact&amount=${fee}&des=${encodeURIComponent(desc)}`;
+  document.getElementById('qrImg').src = url;
+}
+
+function startTimer(total) {
+  clearInterval(timerInt); expired = false;
+  let s = total; updateTimerUI(s);
+  timerInt = setInterval(() => {
+    s--;
+    updateTimerUI(s);
+    if (s <= 0) { clearInterval(timerInt); expired = true; onExpired(); }
+  }, 1000);
+}
+function updateTimerUI(s) {
+  const el = document.getElementById('timerVal');
+  el.textContent = String(Math.floor(s/60)).padStart(2,'0') + ':' + String(s%60).padStart(2,'0');
+  el.className = 'timer-val' + (s <= 60 ? ' urgent' : '');
+}
+function onExpired() {
+  document.getElementById('qrSection').style.display = 'none';
+  document.getElementById('expiredWrap').classList.add('show');
+  document.getElementById('expiredWrap').style.display = 'flex';
+}
+function refreshQR() {
+  document.getElementById('qrSection').style.display = 'flex';
+  document.getElementById('expiredWrap').classList.remove('show');
+  document.getElementById('expiredWrap').style.display = 'none';
+  const desc = 'HC KH ' + (planData?.phone || phoneParam);
+  buildQR(200000, desc);
+  startTimer(10 * 60);
+}
+
+async function confirmPayment() {
+  if (expired) { toast('⚠️ Mã QR đã hết hạn — vui lòng làm mới'); return; }
+  const btn = document.getElementById('btnPaid');
+  btn.disabled = true;
+  btn.innerHTML = '<div style="width:20px;height:20px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite"></div><span>Đang xác nhận...</span>';
+  try {
+    const body = phoneParam ? { phone: phoneParam, paid: true } : { id: regId, paid: true };
+    const r = await fetch(`${API_BASE}/api/partner/payment-confirm`, {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(body)
+    });
+    const d = await r.json();
+    if (d.success) {
+      clearInterval(timerInt);
+      showThankYou({ registerId: d.data?.registerId || regId, paid: true });
+    } else {
+      toast('❌ ' + (d.message || 'Lỗi xác nhận'));
+      btn.disabled = false;
+      btn.innerHTML = '<span>✅</span><span>Tôi đã chuyển khoản xong</span>';
+    }
+  } catch(e) {
+    toast('❌ Không kết nối được server');
+    btn.disabled = false;
+    btn.innerHTML = '<span>✅</span><span>Tôi đã chuyển khoản xong</span>';
+  }
+}
+
+async function payLater() {
+  clearInterval(timerInt);
+  try {
+    const body = phoneParam ? { phone: phoneParam, paid: false } : { id: regId, paid: false };
+    await fetch(`${API_BASE}/api/partner/payment-confirm`, {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(body)
+    });
+  } catch(e) {}
+  showThankYou({ registerId: planData?.registerId || regId, paid: false });
+}
+
+function showThankYou(data) {
+  document.getElementById('tyRegId').textContent = data.registerId || 'HC-XXXXXXX';
+  document.getElementById('paymentCard').style.display = 'none';
+  const ty = document.getElementById('thankYou');
+  ty.style.display = 'block'; ty.style.opacity = '0'; ty.style.transform = 'translateY(20px)';
+  requestAnimationFrame(() => {
+    ty.style.transition = 'opacity .5s, transform .5s';
+    ty.style.opacity = '1'; ty.style.transform = 'translateY(0)';
+  });
+  if (data.paid !== false) setTimeout(launchConfetti, 300);
+}
+
+function copyText(txt, msg) {
+  navigator.clipboard.writeText(txt).then(() => toast(msg)).catch(() => {
+    const el = document.createElement('textarea');
+    el.value = txt; document.body.appendChild(el);
+    el.select(); document.execCommand('copy'); document.body.removeChild(el);
+    toast(msg);
+  });
+}
+function toast(msg, dur=2800) {
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), dur);
+}
+function showError(msg) {
+  document.getElementById('loadingScreen').innerHTML = `
+    <div style="text-align:center;padding:32px 24px">
+      <div style="font-size:3rem;margin-bottom:16px">⚠️</div>
+      <div style="font-weight:900;color:var(--coral);margin-bottom:8px">Không tải được thông tin</div>
+      <div style="font-size:.85rem;color:var(--muted);font-weight:700;margin-bottom:24px">${msg}</div>
+      <a href="register.html" style="background:var(--green);color:#fff;border:none;border-radius:50px;padding:12px 28px;font-family:var(--font);font-weight:900;text-decoration:none;font-size:.9rem">← Về trang đăng ký</a>
+    </div>`;
+}
+function launchConfetti() {
+  const colors = ['#16a34a','#84cc16','#f0fdf4','#4ade80','#a3e635'];
+  for (let i = 0; i < 60; i++) {
+    const p = document.createElement('div');
+    p.className = 'confetti-piece';
+    p.style.cssText = `left:${Math.random()*100}vw;background:${colors[Math.floor(Math.random()*colors.length)]};animation-duration:${1.5+Math.random()*2}s;animation-delay:${Math.random()*.8}s;transform:rotate(${Math.random()*360}deg);width:${6+Math.random()*6}px;height:${10+Math.random()*8}px;`;
+    document.body.appendChild(p);
+    setTimeout(() => p.remove(), 4000);
+  }
+}
+</script>
+</body>
+</html>
