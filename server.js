@@ -13,9 +13,9 @@ import partnerApi from './routes/api/partner.js';
 import orderApi from './routes/api/order.js';
 import chatApi from './routes/api/chat.js';
 import adminApi from './routes/api/admin.js';
-import chatbotApi from './routes/api/chatbot.js'; // 👈 THÊM DÒNG NÀY
+import chatbotApi from './routes/api/chatbot.js';
 
-// Pre-load models
+// Pre-load models so mongoose knows about them
 import './models/Partner.js';
 import './models/Order.js';
 import './models/ChatMessage.js';
@@ -28,30 +28,36 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/crabor';
 
+// Middleware
 app.use(cors({ origin: '*', credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(PUBLIC_DIR));
 
+// MongoDB Connection
 mongoose.connect(MONGO_URI)
   .then(() => console.log('✅ MongoDB connected'))
   .catch(err => console.error('❌ MongoDB error:', err));
 
+// Routes
 app.use('/', webRoutes);
 app.use('/api/partner', partnerApi);
 app.use('/api/order', orderApi);
 app.use('/api/chat', chatApi);
 app.use('/api/admin', adminApi);
-app.use('/api/chatbot', chatbotApi); // 👈 THÊM DÒNG NÀY
+app.use('/api/chatbot', chatbotApi);
 
+// Health check
 app.get('/health', (req, res) =>
   res.json({ status: 'ok', timestamp: new Date().toISOString() })
 );
 
+// 404 handler
 app.use((req, res) =>
   res.status(404).json({ success: false, message: 'Route not found' })
 );
 
+// Error handler
 app.use((err, req, res, next) => {
   console.error('❌', err);
   res.status(500).json({
@@ -60,8 +66,9 @@ app.use((err, req, res, next) => {
   });
 });
 
+// Start server
 app.listen(PORT, () => {
-  console.log(`\🧠 hocho Backend  →  http://localhost:${PORT}`);
+  console.log(`\n🧠 Hocho Backend  →  http://localhost:${PORT}`);
   console.log(`📁 Static files    →  ${PUBLIC_DIR}`);
   console.log(`📊 MongoDB         →  ${MONGO_URI}`);
   console.log(`🤖 Chatbot endpoint → /api/chatbot/chat\n`);
