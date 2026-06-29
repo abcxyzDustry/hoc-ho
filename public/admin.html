@@ -505,8 +505,8 @@ function buildPartnersTable(data, showApprove) {
             <td style="color:var(--lime);font-weight:900">${fmtMoney(p.balance||0)}</td>
             ${showApprove ? `
               <td style="display:flex;gap:6px;flex-wrap:wrap">
-                <button class="btn-approve" onclick="approvePartner('${p.id}','${p.full_name}')">✓ Duyệt</button>
-                <button class="btn-reject" onclick="rejectPartner('${p.id}','${p.full_name}')">✗ Từ chối</button>
+                <button class="btn-approve" onclick="approvePartner('${p._id}','${p.full_name}')">✓ Duyệt</button>
+                <button class="btn-reject" onclick="rejectPartner('${p._id}','${p.full_name}')">✗ Từ chối</button>
               </td>` : ''}
           </tr>`).join('')}
       </tbody>
@@ -630,7 +630,7 @@ async function loadPayments() {
               <td style="font-size:.78rem;color:var(--muted)">${fmtDate(p.createdAt)}</td>
               <td>
                 ${p.payment_status !== 'paid'
-                  ? `<button class="btn-confirm" onclick="confirmPayment('${p.id}','${p.full_name}')">✓ Xác nhận đã nhận tiền</button>`
+                  ? `<button class="btn-confirm" onclick="confirmPayment('${p._id}','${p.full_name}')">✓ Xác nhận đã nhận tiền</button>`
                   : '<span style="color:var(--lime);font-size:.8rem">✅ Đã xác nhận</span>'}
               </td>
             </tr>`).join('')}
