@@ -120,6 +120,19 @@ section{position:relative;z-index:1}
 .terms-highlight{background:rgba(22,163,74,.08);border-left:3px solid var(--lime);padding:16px 20px;border-radius:0 12px 12px 0;margin:16px 0}
 .terms-highlight p{color:rgba(132,204,22,.9);font-weight:700}
 
+/* DOWNLOAD APPS */
+.download-section{padding:80px 24px;background:rgba(22,163,74,.04)}
+.download-inner{max-width:900px;margin:0 auto}
+.download-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
+.download-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:32px 28px;text-align:center;transition:.3s}
+.download-card:hover{transform:translateY(-4px);border-color:rgba(132,204,22,.3)}
+.download-icon{font-size:2.4rem;margin-bottom:14px;display:block}
+.download-title{font-family:'Fredoka One',cursive;font-size:1.3rem;color:var(--cream);margin-bottom:8px}
+.download-desc{font-size:.88rem;color:var(--muted);line-height:1.6;font-weight:600;margin-bottom:22px}
+.btn-download{background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;border:none;border-radius:14px;padding:14px 28px;font-family:var(--font);font-size:.95rem;font-weight:900;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:.2s;box-shadow:0 4px 20px rgba(22,163,74,.3)}
+.btn-download:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(22,163,74,.45)}
+.download-note{font-size:.75rem;color:var(--muted);margin-top:12px;font-weight:600}
+
 /* CTA */
 .cta-section{padding:100px 24px;text-align:center}
 .cta-inner{max-width:600px;margin:0 auto}
@@ -283,6 +296,7 @@ footer{background:rgba(22,163,74,.04);border-top:1px solid var(--border);padding
       <a href="#pricing">Giá dịch vụ</a>
       <a href="#partner">Trở thành đối tác</a>
       <a href="#terms">Điều khoản</a>
+      <a href="#download">Tải app</a>
       <a href="register.html" class="btn-nav">Đăng ký đối tác</a>
     </div>
   </div>
@@ -533,6 +547,30 @@ footer{background:rgba(22,163,74,.04);border-top:1px solid var(--border);padding
   </div>
 </section>
 
+<!-- DOWNLOAD APPS -->
+<section class="download-section" id="download">
+  <div class="download-inner">
+    <h2 class="section-title">📲 Tải ứng dụng hocho.com</h2>
+    <p class="section-sub">Cài đặt app trên điện thoại Android để trải nghiệm mượt mà nhất</p>
+    <div class="download-grid">
+      <div class="download-card">
+        <span class="download-icon">🎓</span>
+        <div class="download-title">App Khách hàng</div>
+        <div class="download-desc">Đặt dịch vụ hỗ trợ khi ốm đau, theo dõi đơn, chat với đối tác trực tiếp trên điện thoại.</div>
+        <a href="/hocho-customer-app.apk" class="btn-download" download>⬇️ Tải APK Khách hàng</a>
+        <div class="download-note">Dành cho Android · Cho phép cài đặt từ nguồn không xác định khi cài lần đầu</div>
+      </div>
+      <div class="download-card">
+        <span class="download-icon">💼</span>
+        <div class="download-title">App Đối tác</div>
+        <div class="download-desc">Nhận đơn, bật/tắt trạng thái online, quản lý ví và thu nhập ngay trên điện thoại.</div>
+        <a href="/hocho-partner-app.apk" class="btn-download" download>⬇️ Tải APK Đối tác</a>
+        <div class="download-note">Dành cho Android · Cho phép cài đặt từ nguồn không xác định khi cài lần đầu</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- CTA -->
 <section class="cta-section">
   <div class="cta-inner">
@@ -554,6 +592,7 @@ footer{background:rgba(22,163,74,.04);border-top:1px solid var(--border);padding
     <a href="register.html">Đăng ký đối tác</a>
     <a href="admin.html">Quản trị</a>
     <a href="#terms">Điều khoản</a>
+    <a href="#download">Tải app</a>
     <a href="#">Liên hệ</a>
   </div>
   <div class="footer-copy">© 2026 hocho.com · Hỗ trợ sinh viên — Nhân văn và trách nhiệm 💚</div>
