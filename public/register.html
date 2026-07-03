@@ -5,25 +5,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>hocho.com — Đăng ký Đối tác</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --green:#16a34a;--green2:#15803d;--lime:#84cc16;
-  --bg:#0a0f0a;--card:#111811;--border:rgba(132,204,22,.13);
-  --cream:#f0fdf4;--muted:rgba(240,253,244,.55);
-  --font:'Nunito',sans-serif;--mono:'JetBrains Mono',monospace;
+  --green:#16a34a;--green2:#15803d;--lime:#4d7c0f;
+  --bg:#fafaf9;--card:#ffffff;--border:rgba(15,23,42,.08);
+  --cream:#0f172a;--muted:rgba(15,23,42,.56);
+  --font:'Plus Jakarta Sans',sans-serif;--mono:'JetBrains Mono',monospace;
   --coral:#E8504A;--gold:#F0B429;
 }
 body{font-family:var(--font);background:var(--bg);color:var(--cream);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:0 16px 80px}
 body::before{content:'';position:fixed;inset:0;background:
-  radial-gradient(ellipse 60% 40% at 15% 5%,rgba(22,163,74,.15) 0%,transparent 70%),
-  radial-gradient(ellipse 50% 35% at 85% 85%,rgba(132,204,22,.08) 0%,transparent 70%);
+  radial-gradient(ellipse 60% 40% at 15% 5%,rgba(21,128,61,.05) 0%,transparent 70%),
+  radial-gradient(ellipse 50% 35% at 85% 85%,rgba(21,128,61,.04) 0%,transparent 70%);
   pointer-events:none;z-index:0}
 
 .header{width:100%;max-width:520px;display:flex;align-items:center;gap:12px;padding:20px 0 16px;position:relative;z-index:1}
 .logo-icon{width:40px;height:40px;background:linear-gradient(135deg,var(--green),var(--lime));border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:.9rem;font-weight:900;color:#fff;font-family:var(--mono);flex-shrink:0}
-.header-title{font-family:'Fredoka One',cursive;font-size:1.4rem;color:var(--cream)}
+.header-title{font-family:var(--font);font-weight:800;font-size:1.4rem;color:var(--cream)}
 .header-sub{font-size:.72rem;color:var(--muted);font-weight:700}
 .back-link{margin-left:auto;color:var(--muted);text-decoration:none;font-size:.82rem;font-weight:700;transition:.2s}
 .back-link:hover{color:var(--lime)}
@@ -34,7 +34,7 @@ body::before{content:'';position:fixed;inset:0;background:
 .tab.active{background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;box-shadow:0 4px 12px rgba(22,163,74,.3)}
 
 /* CARD */
-.card{width:100%;max-width:520px;background:var(--card);border:1px solid var(--border);border-radius:24px;overflow:hidden;position:relative;z-index:1;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.card{width:100%;max-width:520px;background:var(--card);border:1px solid var(--border);border-radius:24px;overflow:hidden;position:relative;z-index:1;box-shadow:0 20px 45px rgba(15,23,42,.08)}
 
 /* STEP HEADER */
 .step-header{padding:20px 24px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:14px}
@@ -50,16 +50,16 @@ body::before{content:'';position:fixed;inset:0;background:
 .form-body{padding:24px;display:flex;flex-direction:column;gap:18px}
 .form-group{display:flex;flex-direction:column;gap:8px}
 .form-label{font-size:.82rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
-.form-input{background:rgba(255,255,255,.05);border:1.5px solid var(--border);border-radius:12px;padding:14px 16px;color:var(--cream);font-family:var(--font);font-size:.95rem;font-weight:700;outline:none;transition:.2s;width:100%}
+.form-input{background:rgba(15,23,42,.035);border:1.5px solid var(--border);border-radius:12px;padding:14px 16px;color:var(--cream);font-family:var(--font);font-size:.95rem;font-weight:700;outline:none;transition:.2s;width:100%}
 .form-input:focus{border-color:rgba(22,163,74,.5);background:rgba(22,163,74,.06)}
-.form-input::placeholder{color:rgba(240,253,244,.25)}
+.form-input::placeholder{color:rgba(15,23,42,.28)}
 select.form-input{cursor:pointer}
-select.form-input option{background:#111811;color:#f0fdf4}
+select.form-input option{background:#ffffff;color:#0f172a}
 textarea.form-input{resize:vertical;min-height:80px}
 
 /* TAGS */
 .tags-wrap{display:flex;flex-wrap:wrap;gap:8px}
-.tag{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.06);border:1.5px solid var(--border);border-radius:50px;padding:7px 14px;cursor:pointer;transition:.2s;font-size:.82rem;font-weight:800;color:var(--muted)}
+.tag{display:flex;align-items:center;gap:6px;background:rgba(15,23,42,.045);border:1.5px solid var(--border);border-radius:50px;padding:7px 14px;cursor:pointer;transition:.2s;font-size:.82rem;font-weight:800;color:var(--muted)}
 .tag:hover{border-color:rgba(22,163,74,.3);color:var(--cream)}
 .tag.selected{background:rgba(22,163,74,.15);border-color:rgba(22,163,74,.5);color:var(--lime)}
 
@@ -75,9 +75,9 @@ textarea.form-input{resize:vertical;min-height:80px}
 .status-pending_approval{background:rgba(132,204,22,.1);color:var(--lime);border:1px solid rgba(132,204,22,.25)}
 .status-active{background:rgba(22,163,74,.15);color:#4ade80;border:1px solid rgba(22,163,74,.35)}
 .status-rejected{background:rgba(232,80,74,.1);color:var(--coral);border:1px solid rgba(232,80,74,.25)}
-.status-suspended{background:rgba(255,255,255,.06);color:var(--muted);border:1px solid var(--border)}
+.status-suspended{background:rgba(15,23,42,.045);color:var(--muted);border:1px solid var(--border)}
 
-.profile-card{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;padding:20px}
+.profile-card{background:rgba(15,23,42,.03);border:1px solid var(--border);border-radius:16px;padding:20px}
 .profile-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);font-size:.88rem}
 .profile-row:last-child{border:none}
 .pkey{color:var(--muted);font-weight:700}
@@ -85,7 +85,7 @@ textarea.form-input{resize:vertical;min-height:80px}
 .pval.mono{font-family:var(--mono);font-size:.82rem;color:var(--lime)}
 
 /* TOAST */
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#1a2a1a;color:var(--cream);border:1px solid rgba(22,163,74,.3);border-radius:50px;padding:12px 24px;font-weight:800;font-size:.85rem;z-index:9999;transition:transform .3s cubic-bezier(.34,1.56,.64,1);white-space:nowrap}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#0f172a;color:#fff;border:1px solid rgba(15,23,42,.1);border-radius:50px;padding:12px 24px;font-weight:800;font-size:.85rem;z-index:9999;transition:transform .3s cubic-bezier(.34,1.56,.64,1);white-space:nowrap}
 .toast.show{transform:translateX(-50%) translateY(0)}
 
 .spinner{width:20px;height:20px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
@@ -179,7 +179,7 @@ textarea.form-input{resize:vertical;min-height:80px}
         <textarea class="form-input" id="bio" placeholder="Mình là sv năm 3, chăm chỉ, dễ tính..."></textarea>
       </div>
       <div style="display:flex;gap:10px">
-        <button class="btn-next" style="background:rgba(255,255,255,.07);box-shadow:none;flex:0 0 auto;width:auto;padding:17px 20px" onclick="goStep(1)">←</button>
+        <button class="btn-next" style="background:rgba(15,23,42,.05);box-shadow:none;flex:0 0 auto;width:auto;padding:17px 20px" onclick="goStep(1)">←</button>
         <button class="btn-next" style="flex:1" onclick="goStep(3)">Tiếp tục →</button>
       </div>
     </div>
@@ -220,7 +220,7 @@ textarea.form-input{resize:vertical;min-height:80px}
         </div>
       </div>
       <div style="display:flex;gap:10px">
-        <button class="btn-next" style="background:rgba(255,255,255,.07);box-shadow:none;flex:0 0 auto;width:auto;padding:17px 20px" onclick="goStep(2)">←</button>
+        <button class="btn-next" style="background:rgba(15,23,42,.05);box-shadow:none;flex:0 0 auto;width:auto;padding:17px 20px" onclick="goStep(2)">←</button>
         <button class="btn-next" style="flex:1" onclick="goStep(4)">Tiếp tục →</button>
       </div>
     </div>
@@ -241,7 +241,7 @@ textarea.form-input{resize:vertical;min-height:80px}
         💡 Sau khi đăng ký, bạn sẽ được chuyển đến trang thanh toán phí kích hoạt <strong style="color:var(--lime)">200.000đ</strong> qua SeaPay. Hồ sơ sẽ được admin duyệt trong 24–48 giờ.
       </div>
       <div style="display:flex;gap:10px">
-        <button class="btn-next" style="background:rgba(255,255,255,.07);box-shadow:none;flex:0 0 auto;width:auto;padding:17px 20px" onclick="goStep(3)">←</button>
+        <button class="btn-next" style="background:rgba(15,23,42,.05);box-shadow:none;flex:0 0 auto;width:auto;padding:17px 20px" onclick="goStep(3)">←</button>
         <button class="btn-next" id="btnSubmit" style="flex:1" onclick="submitRegister()">🚀 Đăng ký & Thanh toán</button>
       </div>
     </div>
@@ -405,7 +405,7 @@ async function doLookup() {
     const d = await res.json();
 
     if (!d.success) {
-      resultEl.innerHTML = `<div style="text-align:center;padding:24px;color:rgba(240,253,244,.4);font-weight:700">⚠️ ${d.message}</div>`;
+      resultEl.innerHTML = `<div style="text-align:center;padding:24px;color:rgba(15,23,42,.4);font-weight:700">⚠️ ${d.message}</div>`;
       return;
     }
 
