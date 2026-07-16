@@ -3,215 +3,145 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>hocho.com — Thanh toán kích hoạt tài khoản</title>
+<title>hocho — Thanh toán kích hoạt tài khoản</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --green:#16a34a;--green2:#15803d;--lime:#84cc16;
-  --bg:#0a0f0a;--card:#111811;--border:rgba(132,204,22,.13);
-  --cream:#f0fdf4;--muted:rgba(240,253,244,.55);
+  --green:#16a34a;--green2:#15803d;--lime:#4d7c0f;
+  --bg:#f8fafc;--card:#ffffff;--border:rgba(15,23,42,.09);
+  --cream:#0f172a;--muted:rgba(15,23,42,.5);
+  --font:'Plus Jakarta Sans',sans-serif;--mono:'JetBrains Mono',monospace;
   --coral:#E8504A;--gold:#F0B429;
-  --font:'Nunito',sans-serif;--mono:'JetBrains Mono',monospace;
 }
-body{font-family:var(--font);background:var(--bg);color:var(--cream);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:0 16px 80px;overflow-x:hidden}
-body::before{content:'';position:fixed;inset:0;background:
-  radial-gradient(ellipse 60% 40% at 20% 10%,rgba(22,163,74,.18) 0%,transparent 70%),
-  radial-gradient(ellipse 50% 35% at 80% 80%,rgba(132,204,22,.1) 0%,transparent 70%);
-  pointer-events:none;z-index:0}
-
-.header{width:100%;max-width:480px;display:flex;align-items:center;gap:12px;padding:20px 0 16px;position:relative;z-index:1}
-.logo-icon{width:40px;height:40px;background:linear-gradient(135deg,var(--green),var(--lime));border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:.9rem;font-weight:900;color:#fff;font-family:var(--mono);flex-shrink:0}
-.header-title{font-family:'Fredoka One',cursive;font-size:1.4rem;color:var(--cream)}
-.header-sub{font-size:.72rem;color:var(--muted);font-weight:700}
-
-/* CARD */
-.card{width:100%;max-width:480px;background:var(--card);border:1px solid var(--border);border-radius:24px;overflow:hidden;position:relative;z-index:1;box-shadow:0 30px 80px rgba(0,0,0,.5)}
-
+body{font-family:var(--font);background:var(--bg);color:var(--cream);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:0 16px 80px}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 70% 50% at 0% 0%,rgba(21,128,61,.06) 0%,transparent 60%),radial-gradient(ellipse 50% 40% at 100% 100%,rgba(21,128,61,.04) 0%,transparent 60%);pointer-events:none;z-index:0}
+.top-nav{width:100%;max-width:500px;display:flex;align-items:center;gap:12px;padding:20px 0 24px;position:relative;z-index:1;border-bottom:1px solid var(--border);margin-bottom:28px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-mark{width:38px;height:38px;background:linear-gradient(135deg,var(--green),var(--lime));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:900;color:#fff;font-family:var(--mono)}
+.logo-name{font-weight:800;font-size:1.2rem;color:var(--cream);letter-spacing:-.02em}
+.card{width:100%;max-width:500px;background:var(--card);border:1px solid var(--border);border-radius:20px;overflow:hidden;position:relative;z-index:1;box-shadow:0 4px 24px rgba(15,23,42,.06)}
 /* PLAN STRIP */
-.plan-strip{padding:16px 24px;display:flex;align-items:center;gap:14px;border-bottom:1px solid var(--border);background:linear-gradient(135deg,rgba(22,163,74,.12),rgba(22,163,74,.04))}
-.plan-icon{font-size:2rem}
+.plan-strip{padding:18px 22px;display:flex;align-items:center;gap:14px;border-bottom:1px solid var(--border);background:rgba(22,163,74,.04)}
 .plan-info{flex:1}
-.plan-name{font-weight:900;font-size:1rem;color:var(--lime)}
+.plan-name{font-weight:800;font-size:.95rem;color:var(--cream)}
 .plan-tagline{font-size:.75rem;color:var(--muted);margin-top:2px}
-.plan-price{background:rgba(22,163,74,.15);color:var(--lime);border:1px solid rgba(22,163,74,.3);border-radius:50px;padding:6px 14px;font-size:.8rem;font-weight:900;white-space:nowrap}
-
-/* QR SECTION */
-.qr-section{padding:24px;display:flex;flex-direction:column;align-items:center;gap:16px}
-
+.plan-price-badge{background:rgba(22,163,74,.12);color:var(--green);border:1px solid rgba(22,163,74,.25);border-radius:50px;padding:6px 14px;font-size:.82rem;font-weight:800;white-space:nowrap}
 /* TIMER */
-.timer-wrap{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.05);border-radius:50px;padding:8px 18px;border:1px solid var(--border)}
-.timer-val{font-family:var(--mono);font-size:1.1rem;font-weight:700;color:var(--lime);min-width:48px;transition:color .3s}
+.timer-row{display:flex;align-items:center;justify-content:space-between;padding:14px 22px;border-bottom:1px solid var(--border);background:rgba(15,23,42,.02)}
+.timer-label{font-size:.78rem;font-weight:700;color:var(--muted)}
+.timer-val{font-family:var(--mono);font-size:1.1rem;font-weight:700;color:var(--green)}
 .timer-val.urgent{color:var(--coral);animation:pulse 1s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
-
-/* QR FRAME */
-.qr-frame{background:#fff;border-radius:20px;padding:16px;box-shadow:0 8px 40px rgba(0,0,0,.4);position:relative}
-.qr-frame img{width:210px;height:210px;border-radius:8px;display:block}
-.qr-loading{width:210px;height:210px;display:flex;align-items:center;justify-content:center;color:#888;font-size:.85rem;background:#f5f5f5;border-radius:8px;flex-direction:column;gap:8px}
-.qr-corner{position:absolute;width:18px;height:18px;border-color:var(--green);border-style:solid;border-width:0}
-.qr-corner.tl{top:8px;left:8px;border-top-width:3px;border-left-width:3px;border-radius:4px 0 0 0}
-.qr-corner.tr{top:8px;right:8px;border-top-width:3px;border-right-width:3px;border-radius:0 4px 0 0}
-.qr-corner.bl{bottom:8px;left:8px;border-bottom-width:3px;border-left-width:3px;border-radius:0 0 0 4px}
-.qr-corner.br{bottom:8px;right:8px;border-bottom-width:3px;border-right-width:3px;border-radius:0 0 4px 0}
-
+/* QR */
+.qr-section{padding:28px 22px;display:flex;flex-direction:column;align-items:center;gap:20px}
+.qr-frame{background:#fff;border-radius:16px;padding:14px;box-shadow:0 2px 20px rgba(15,23,42,.1);border:1px solid var(--border)}
+.qr-frame img{width:200px;height:200px;border-radius:6px;display:block}
+.qr-hint{font-size:.8rem;color:var(--muted);font-weight:600;text-align:center;line-height:1.5}
 /* BANK INFO */
-.bank-info{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:16px;overflow:hidden}
-.bank-row{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--border);font-size:.85rem}
+.bank-card{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.bank-row{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--border);font-size:.875rem}
 .bank-row:last-child{border:none}
-.bank-key{color:var(--muted);font-weight:700}
-.bank-val{font-weight:900;color:var(--cream)}
-.bank-val.mono{font-family:var(--mono);font-size:.82rem}
-.bank-val.amount{color:var(--lime);font-size:1.05rem}
-.copy-btn{background:rgba(255,255,255,.08);border:none;border-radius:6px;padding:3px 8px;color:var(--muted);font-size:.7rem;cursor:pointer;font-family:var(--font);font-weight:700;transition:.2s}
-.copy-btn:hover{background:rgba(255,255,255,.15);color:var(--cream)}
-
-/* NOTE */
-.note-badge{width:100%;background:rgba(22,163,74,.08);border:1px solid rgba(22,163,74,.2);border-radius:12px;padding:12px 16px;font-size:.82rem;color:rgba(132,204,22,.85);text-align:center;line-height:1.5;font-weight:700}
-
+.bk{color:var(--muted);font-weight:600}
+.bv{font-weight:700;color:var(--cream);display:flex;align-items:center;gap:8px}
+.bv.mono{font-family:var(--mono);font-size:.82rem;color:var(--green)}
+.bv.amount{color:var(--green);font-size:1rem;font-weight:800}
+.copy-btn{background:rgba(15,23,42,.06);border:none;border-radius:6px;padding:3px 9px;font-size:.7rem;font-weight:700;color:var(--muted);cursor:pointer;transition:.2s;font-family:var(--font)}
+.copy-btn:hover{background:rgba(15,23,42,.12);color:var(--cream)}
+/* INFO BOX */
+.info-box{background:rgba(22,163,74,.07);border:1px solid rgba(22,163,74,.2);border-radius:12px;padding:13px 16px;font-size:.8rem;color:rgba(77,124,15,.9);line-height:1.6;font-weight:600;text-align:center}
 /* BUTTONS */
-.btn-paid{width:100%;background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;border:none;border-radius:16px;padding:17px;font-family:var(--font);font-size:1rem;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 4px 24px rgba(22,163,74,.35);transition:.2s;position:relative;overflow:hidden}
-.btn-paid:hover{transform:translateY(-1px);box-shadow:0 8px 30px rgba(22,163,74,.45)}
-.btn-paid:disabled{background:#2a2a2a;box-shadow:none;cursor:not-allowed;transform:none}
-.btn-later{width:100%;background:transparent;border:1px solid var(--border);border-radius:16px;padding:13px;font-family:var(--font);font-size:.9rem;font-weight:700;color:var(--muted);cursor:pointer;transition:.2s;margin-top:-4px}
-.btn-later:hover{border-color:rgba(240,253,244,.3);color:var(--cream)}
-
+.btn-primary{width:100%;background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;border:none;border-radius:12px;padding:15px 24px;font-family:var(--font);font-size:.95rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 4px 16px rgba(22,163,74,.28);transition:.2s}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(22,163,74,.38)}
+.btn-primary:disabled{background:rgba(15,23,42,.12);box-shadow:none;cursor:not-allowed;transform:none;color:rgba(15,23,42,.4)}
+.btn-ghost{width:100%;background:transparent;border:1.5px solid var(--border);border-radius:12px;padding:12px 24px;font-family:var(--font);font-size:.88rem;font-weight:700;color:var(--muted);cursor:pointer;transition:.2s}
+.btn-ghost:hover{border-color:rgba(15,23,42,.2);color:var(--cream)}
 /* EXPIRED */
-.expired-wrap{padding:32px 24px;text-align:center;display:none;flex-direction:column;align-items:center;gap:16px}
+.expired-wrap{padding:36px 24px;text-align:center;display:none;flex-direction:column;align-items:center;gap:16px}
 .expired-wrap.show{display:flex}
-.btn-refresh{background:var(--green);color:#fff;border:none;border-radius:50px;padding:12px 28px;font-family:var(--font);font-weight:900;font-size:.9rem;cursor:pointer}
-
 /* THANK YOU */
-#thankYou{display:none;width:100%;max-width:480px;position:relative;z-index:1}
-.ty-card{background:var(--card);border:1px solid var(--border);border-radius:24px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.5)}
-.ty-hero{background:linear-gradient(135deg,var(--green),var(--green2));padding:40px 24px 32px;text-align:center;position:relative;overflow:hidden}
-.ty-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 70% 30%,rgba(255,255,255,.12),transparent 60%);pointer-events:none}
-.ty-icon{font-size:3.5rem;animation:dance 1.5s ease-in-out infinite;display:block;margin-bottom:16px}
-@keyframes dance{0%,100%{transform:rotate(-5deg) scale(1)}50%{transform:rotate(5deg) scale(1.05)}}
-.ty-title{font-family:'Fredoka One',cursive;font-size:1.8rem;color:#fff;margin-bottom:8px}
-.ty-sub{font-size:.9rem;color:rgba(255,255,255,.85);font-weight:700;line-height:1.5}
+#thankYou{display:none;width:100%;max-width:500px;position:relative;z-index:1}
+.ty-card{background:var(--card);border:1px solid var(--border);border-radius:20px;overflow:hidden;box-shadow:0 4px 24px rgba(15,23,42,.06)}
+.ty-hero{background:linear-gradient(135deg,var(--green),var(--green2));padding:40px 24px 32px;text-align:center;position:relative}
+.ty-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 70% 30%,rgba(255,255,255,.12),transparent 60%)}
+.ty-icon{font-size:3.5rem;display:block;margin-bottom:16px;animation:dance 2s ease-in-out infinite}
+@keyframes dance{0%,100%{transform:rotate(-4deg) scale(1)}50%{transform:rotate(4deg) scale(1.05)}}
+.ty-title{font-weight:800;font-size:1.6rem;color:#fff;margin-bottom:8px;letter-spacing:-.03em}
+.ty-sub{font-size:.9rem;color:rgba(255,255,255,.85);font-weight:600;line-height:1.6}
 .ty-body{padding:24px;display:flex;flex-direction:column;gap:14px}
-.ty-block{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:14px;padding:16px}
-.ty-block-title{font-size:.7rem;font-weight:900;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px}
-.ty-block-body{font-size:.88rem;color:rgba(240,253,244,.85);line-height:1.6;font-weight:700}
-.ty-block-body a{color:var(--lime);text-decoration:none;font-weight:900}
-.ty-reg-id{font-family:var(--mono);background:rgba(22,163,74,.12);border:1px solid rgba(22,163,74,.25);border-radius:8px;padding:10px 14px;font-size:.9rem;color:var(--lime);font-weight:700;text-align:center;margin-bottom:4px}
-.btn-check{width:100%;background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;border:none;border-radius:16px;padding:16px;font-family:var(--font);font-size:1rem;font-weight:900;cursor:pointer;text-decoration:none;display:block;text-align:center;transition:.2s}
-.btn-check:hover{transform:translateY(-1px)}
-
+.ty-block{background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:16px}
+.ty-block-label{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px}
+.ty-block-content{font-size:.88rem;color:var(--cream);line-height:1.6;font-weight:600}
+.ty-block-content a{color:var(--green);text-decoration:none;font-weight:800}
+.ty-reg-id{font-family:var(--mono);background:rgba(22,163,74,.1);border:1px solid rgba(22,163,74,.2);border-radius:8px;padding:10px 14px;font-size:.9rem;color:var(--green);font-weight:700;text-align:center}
 /* LOADING */
 #loadingScreen{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;min-height:60vh;position:relative;z-index:1}
-.spinner{width:48px;height:48px;border:3px solid rgba(132,204,22,.15);border-top-color:var(--lime);border-radius:50%;animation:spin .8s linear infinite}
+.spinner{width:40px;height:40px;border:3px solid rgba(22,163,74,.15);border-top-color:var(--green);border-radius:50%;animation:spin .8s linear infinite}
+.spinner-sm{width:18px;height:18px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-
-/* TOAST */
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#1a2a1a;color:var(--cream);border:1px solid rgba(22,163,74,.3);border-radius:50px;padding:12px 24px;font-weight:800;font-size:.85rem;z-index:9999;transition:transform .3s cubic-bezier(.34,1.56,.64,1);white-space:nowrap}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#0f172a;color:#fff;border-radius:50px;padding:11px 22px;font-weight:700;font-size:.83rem;z-index:9999;transition:transform .3s cubic-bezier(.34,1.56,.64,1);white-space:nowrap;box-shadow:0 8px 30px rgba(15,23,42,.25)}
 .toast.show{transform:translateX(-50%) translateY(0)}
-
-/* CONFETTI */
 .confetti-piece{position:fixed;top:-10px;width:8px;height:14px;border-radius:2px;animation:fall linear forwards;z-index:9990;pointer-events:none}
 @keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:0}}
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<div class="header">
-  <div class="logo-icon">HC</div>
-  <div>
-    <div class="header-title">hocho.com</div>
-    <div class="header-sub">Thanh toán kích hoạt tài khoản Đối tác</div>
-  </div>
+<div class="top-nav">
+  <a href="index.html" class="logo">
+    <div class="logo-mark">HC</div>
+    <span class="logo-name">hocho</span>
+  </a>
+  <span style="margin-left:auto;font-size:.8rem;font-weight:700;color:var(--muted)">Thanh toán kích hoạt</span>
 </div>
 
 <!-- LOADING -->
 <div id="loadingScreen">
   <div class="spinner"></div>
-  <div style="font-size:.85rem;color:var(--muted);font-weight:700">Đang tải thông tin...</div>
+  <div style="font-size:.85rem;color:var(--muted);font-weight:600">Đang tải thông tin...</div>
 </div>
 
 <!-- PAYMENT CARD -->
 <div class="card" id="paymentCard" style="display:none">
   <div class="plan-strip">
-    <div class="plan-icon">🎓</div>
+    <div style="font-size:1.8rem">🎓</div>
     <div class="plan-info">
       <div class="plan-name">Kích hoạt tài khoản Đối tác</div>
       <div class="plan-tagline" id="planTagline">hocho.com · Học hộ</div>
     </div>
-    <div class="plan-price">200.000đ</div>
+    <div class="plan-price-badge">200.000đ</div>
+  </div>
+
+  <div class="timer-row">
+    <span class="timer-label">QR hết hạn sau</span>
+    <span class="timer-val" id="timerVal">15:00</span>
   </div>
 
   <div class="qr-section" id="qrSection">
-    <!-- Timer -->
-    <div class="timer-wrap">
-      <span>⏱️</span>
-      <span class="timer-val" id="timerVal">10:00</span>
-      <span style="font-size:.78rem;color:var(--muted);font-weight:700">Mã QR hết hạn sau</span>
-    </div>
-
-    <!-- QR Frame -->
     <div class="qr-frame">
-      <div class="qr-corner tl"></div><div class="qr-corner tr"></div>
-      <div class="qr-corner bl"></div><div class="qr-corner br"></div>
-      <div class="qr-loading" id="qrLoading">
-        <div class="spinner" style="width:28px;height:28px;border-width:2px"></div>
-        <span>Đang tạo mã QR...</span>
-      </div>
-      <img id="qrImg" src="" alt="QR Thanh toán" style="display:none"
-        onload="this.style.display='block';document.getElementById('qrLoading').style.display='none'"
-        onerror="document.getElementById('qrLoading').innerHTML='⚠️ Lỗi tải QR<br>Dùng chuyển khoản thủ công'">
-    </div>
-
-    <!-- Bank info -->
-    <div class="bank-info">
-      <div class="bank-row">
-        <span class="bank-key">Ngân hàng</span>
-        <span class="bank-val">VIB</span>
-      </div>
-      <div class="bank-row">
-        <span class="bank-key">Số tài khoản</span>
-        <div style="display:flex;align-items:center;gap:8px">
-          <span class="bank-val mono">068394585</span>
-          <button class="copy-btn" onclick="copyText('068394585','✅ Đã sao chép số TK!')">Copy</button>
-        </div>
-      </div>
-      <div class="bank-row">
-        <span class="bank-key">Tên TK</span>
-        <span class="bank-val">HOCHO PLATFORM</span>
-      </div>
-      <div class="bank-row">
-        <span class="bank-key">Số tiền</span>
-        <span class="bank-val amount">200.000đ</span>
-      </div>
-      <div class="bank-row">
-        <span class="bank-key">Nội dung CK</span>
-        <div style="display:flex;align-items:center;gap:8px;flex:1;min-width:0">
-          <span class="bank-val mono" id="bankDesc" style="font-size:.75rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:160px"></span>
-          <button class="copy-btn" onclick="copyText(document.getElementById('bankDesc').textContent,'✅ Đã sao chép!')">Copy</button>
-        </div>
+      <div id="qrImgWrap" style="width:200px;height:200px;display:flex;align-items:center;justify-content:center;background:#f8f8f8;border-radius:6px;color:#888;font-size:.82rem;text-align:center">
+        <div><div class="spinner" style="width:32px;height:32px;border-width:2px;margin:0 auto 10px"></div>Đang tạo QR...</div>
       </div>
     </div>
+    <p class="qr-hint">Mở app ngân hàng → Quét mã QR → Chuyển khoản<br><strong style="color:var(--cream)">Không cần nhập tay</strong> — QR tự điền đầy đủ thông tin</p>
 
-    <!-- Note -->
-    <div class="note-badge">
-      🔒 Phí kích hoạt <strong>1 lần duy nhất · 200.000đ</strong><br>
-      Sau khi admin xác nhận, tài khoản sẽ được kích hoạt trong 24–48h
+    <div class="bank-card" id="bankInfo"></div>
+
+    <div class="info-box" id="transferNote"></div>
+
+    <div id="payBtns" style="width:100%;display:flex;flex-direction:column;gap:10px">
+      <button class="btn-primary" id="btnPaid" onclick="confirmPayment()">Tôi đã chuyển khoản xong ✓</button>
+      <button class="btn-ghost" onclick="if(confirm('Bạn muốn thanh toán sau? Hồ sơ vẫn được lưu.'))window.location.href='register.html#lookup'">Thanh toán sau</button>
     </div>
 
-    <!-- Buttons -->
-    <button class="btn-paid" id="btnPaid" onclick="confirmPayment()">
-      <span>✅</span><span>Tôi đã chuyển khoản xong</span>
-    </button>
-    <button class="btn-later" onclick="payLater()">Thanh toán sau · Lưu hồ sơ</button>
-  </div>
-
-  <!-- Expired -->
-  <div class="expired-wrap" id="expiredWrap">
-    <div style="font-size:3rem">⏰</div>
-    <div style="font-weight:900;color:var(--muted)">Mã QR đã hết hạn</div>
-    <div style="font-size:.82rem;color:rgba(240,253,244,.35);font-weight:700">Nhấn làm mới để tạo mã mới</div>
-    <button class="btn-refresh" onclick="refreshQR()">🔄 Làm mới mã QR</button>
+    <!-- EXPIRED -->
+    <div class="expired-wrap" id="expiredWrap">
+      <div style="font-size:2.5rem">⏰</div>
+      <div style="font-weight:800;font-size:1rem;color:var(--cream)">QR đã hết hạn</div>
+      <div style="font-size:.84rem;color:var(--muted);font-weight:600">Tạo lại QR để tiếp tục thanh toán</div>
+      <button class="btn-primary" onclick="location.reload()">Tạo QR mới</button>
+    </div>
   </div>
 </div>
 
@@ -219,31 +149,21 @@ body::before{content:'';position:fixed;inset:0;background:
 <div id="thankYou">
   <div class="ty-card">
     <div class="ty-hero">
-      <span class="ty-icon">🎓</span>
-      <div class="ty-title">Cảm ơn bạn!</div>
-      <div class="ty-sub">Hồ sơ đăng ký Đối tác của bạn đã được ghi nhận thành công</div>
+      <span class="ty-icon">🎉</span>
+      <div class="ty-title">Đã ghi nhận thanh toán!</div>
+      <div class="ty-sub">Admin sẽ xác nhận và kích hoạt tài khoản<br>của bạn trong vòng <strong>24–48 giờ</strong></div>
     </div>
     <div class="ty-body">
       <div class="ty-block">
-        <div class="ty-block-title">📋 Mã hồ sơ của bạn</div>
-        <div class="ty-reg-id" id="tyRegId">HC-XXXXXXX</div>
-        <div class="ty-block-body" style="font-size:.78rem;color:var(--muted);text-align:center">Lưu mã này để tra cứu tình trạng hồ sơ</div>
+        <div class="ty-block-label">Mã hồ sơ của bạn</div>
+        <div class="ty-reg-id" id="tyRegId"></div>
       </div>
       <div class="ty-block">
-        <div class="ty-block-title">🕐 Bước tiếp theo</div>
-        <div class="ty-block-body">
-          Chúng mình sẽ <strong style="color:var(--cream)">liên hệ lại trong vòng 24–48 giờ</strong> qua số điện thoại đã đăng ký để xác nhận và hướng dẫn kích hoạt app.<br><br>
-          Tra cứu tình trạng tại: <a href="register.html#lookup">register.html → Tra cứu hồ sơ</a>
-        </div>
+        <div class="ty-block-label">Bước tiếp theo</div>
+        <div class="ty-block-content">Sau khi được duyệt, bạn sẽ nhận thông báo qua SMS. Tải app hocho trên <a href="https://play.google.com/store/apps/details?id=com.hocho.partner" target="_blank">Google Play</a> và đăng nhập bằng số điện thoại đã đăng ký.</div>
       </div>
-      <div style="background:rgba(22,163,74,.08);border:1px solid rgba(22,163,74,.2);border-radius:14px;padding:16px;display:flex;align-items:flex-start;gap:12px">
-        <div style="font-size:1.6rem;flex-shrink:0">💰</div>
-        <div style="font-size:.82rem;color:rgba(132,204,22,.85);line-height:1.6;font-weight:700">
-          <strong style="color:var(--lime)">Thu nhập của bạn: 140.000đ/đơn!</strong><br>
-          Trung bình 10 đơn/tháng = 1.400.000đ thu nhập thêm mỗi tháng 🎉
-        </div>
-      </div>
-      <a href="register.html#lookup" class="btn-check">🔍 Kiểm tra tình trạng hồ sơ</a>
+      <a href="https://play.google.com/store/apps/details?id=com.hocho.partner" target="_blank" class="btn-primary" style="text-decoration:none">Tải app Đối tác trên Google Play</a>
+      <a href="register.html#lookup" class="btn-ghost" style="text-decoration:none;display:flex;align-items:center;justify-content:center">Tra cứu hồ sơ</a>
     </div>
   </div>
 </div>
@@ -251,155 +171,97 @@ body::before{content:'';position:fixed;inset:0;background:
 <div class="toast" id="toast"></div>
 
 <script>
-const API_BASE = '';
-const params = new URLSearchParams(location.search);
-const phoneParam = params.get('phone') || '';
-const regId = params.get('id') || '';
-let planData = null, timerInt = null, expired = false;
+const API_BASE='';
+const params=new URLSearchParams(location.search);
+const partnerId=params.get('id'),partnerPhone=params.get('phone');
+let timerInterval,totalSeconds=900;
 
-window.addEventListener('DOMContentLoaded', init);
-
-async function init() {
-  if (!phoneParam && !regId) { showError('Thiếu thông tin. Vui lòng trở về trang đăng ký.'); return; }
-  try {
-    const q = phoneParam
-      ? `phone=${encodeURIComponent(phoneParam)}`
-      : `id=${encodeURIComponent(regId)}`;
-    const r = await fetch(`${API_BASE}/api/partner/payment-plan?` + q);
-    const d = await r.json();
-    if (!d.success) { showError(d.message || 'Không tìm thấy hồ sơ. Vui lòng kiểm tra lại.'); return; }
-    planData = d.data;
-    renderPayment();
-  } catch(e) { showError('Không kết nối được server. Vui lòng thử lại.'); }
+async function init(){
+  if(!partnerId&&!partnerPhone){document.getElementById('loadingScreen').innerHTML='<div style="text-align:center;color:var(--muted);font-size:.9rem;padding:20px">❌ Thiếu thông tin. <a href="register.html" style="color:var(--green)">Quay lại đăng ký</a></div>';return}
+  try{
+    const qs=partnerId?`id=${encodeURIComponent(partnerId)}`:`phone=${encodeURIComponent(partnerPhone)}`;
+    const res=await fetch(`${API_BASE}/api/partner/lookup?`+qs);
+    const d=await res.json();
+    if(!d.success){throw new Error(d.message)}
+    const p=d.data;
+    if(p.payment_status==='paid'){showThankYou(p.register_id);return}
+    document.getElementById('loadingScreen').style.display='none';
+    document.getElementById('paymentCard').style.display='block';
+    document.getElementById('planTagline').textContent=`hocho.com · ${p.full_name}`;
+    renderBankInfo(p);
+    loadQR(p);
+    startTimer();
+  }catch(e){
+    document.getElementById('loadingScreen').innerHTML=`<div style="text-align:center;color:var(--muted);font-size:.9rem;padding:20px">❌ ${e.message||'Lỗi tải thông tin'}<br><a href="register.html" style="color:var(--green);font-weight:700">← Quay lại đăng ký</a></div>`;
+  }
 }
 
-function renderPayment() {
-  const { registerId, phone, full_name } = planData;
-  const desc = 'HC KH ' + (phone || phoneParam || registerId);
-  document.getElementById('bankDesc').textContent = desc;
-  document.getElementById('planTagline').textContent = `${full_name || ''} · ${registerId || ''}`;
-  buildQR(200000, desc);
-  document.getElementById('loadingScreen').style.display = 'none';
-  document.getElementById('paymentCard').style.display = 'block';
-  startTimer(10 * 60);
+function renderBankInfo(p){
+  const amount=p.activation_fee||200000;
+  const note=p.payment_note||(p.register_id?`HOCHO ${p.register_id}`:'HOCHO KT');
+  document.getElementById('bankInfo').innerHTML=`
+    <div class="bank-row"><span class="bk">Ngân hàng</span><span class="bv">SeABank (SeaPay)</span></div>
+    <div class="bank-row"><span class="bk">Số tài khoản</span><span class="bv mono">${p.bank_account||'1234567890'}<button class="copy-btn" onclick="copyText('${p.bank_account||'1234567890'}')">Copy</button></span></div>
+    <div class="bank-row"><span class="bk">Tên tài khoản</span><span class="bv">${p.bank_name||'CONG TY HOCHO'}</span></div>
+    <div class="bank-row"><span class="bk">Số tiền</span><span class="bv amount">200.000đ</span></div>
+    <div class="bank-row"><span class="bk">Nội dung CK</span><span class="bv mono">${note}<button class="copy-btn" onclick="copyText('${note}')">Copy</button></span></div>
+  `;
+  document.getElementById('transferNote').innerHTML=`Nhập <strong>${note}</strong> vào nội dung chuyển khoản để hệ thống xác nhận tự động`;
 }
 
-function buildQR(fee, desc) {
-  const url = `https://qr.sepay.vn/img?bank=VIB&acc=068394585&template=compact&amount=${fee}&des=${encodeURIComponent(desc)}`;
-  document.getElementById('qrImg').src = url;
+function loadQR(p){
+  const wrap=document.getElementById('qrImgWrap');
+  if(p.qr_url){
+    const img=new Image();
+    img.onload=()=>{wrap.innerHTML='';wrap.style.cssText='width:200px;height:200px';wrap.appendChild(img);img.style.cssText='width:200px;height:200px;border-radius:6px;display:block'};
+    img.onerror=()=>{wrap.innerHTML='<div style="color:#aaa;font-size:.78rem;text-align:center;padding:20px">QR không tải được<br>Vui lòng chuyển khoản thủ công</div>'};
+    img.src=p.qr_url;
+  } else {
+    wrap.innerHTML='<div style="color:#aaa;font-size:.78rem;text-align:center;padding:20px">Vui lòng chuyển khoản<br>theo thông tin bên dưới</div>';
+  }
 }
 
-function startTimer(total) {
-  clearInterval(timerInt); expired = false;
-  let s = total; updateTimerUI(s);
-  timerInt = setInterval(() => {
-    s--;
-    updateTimerUI(s);
-    if (s <= 0) { clearInterval(timerInt); expired = true; onExpired(); }
-  }, 1000);
+function startTimer(){
+  const el=document.getElementById('timerVal');
+  timerInterval=setInterval(()=>{
+    totalSeconds--;
+    const m=Math.floor(totalSeconds/60),s=totalSeconds%60;
+    el.textContent=`${m}:${String(s).padStart(2,'0')}`;
+    if(totalSeconds<=60)el.classList.add('urgent');
+    if(totalSeconds<=0){clearInterval(timerInterval);showExpired()}
+  },1000);
 }
-function updateTimerUI(s) {
-  const el = document.getElementById('timerVal');
-  el.textContent = String(Math.floor(s/60)).padStart(2,'0') + ':' + String(s%60).padStart(2,'0');
-  el.className = 'timer-val' + (s <= 60 ? ' urgent' : '');
-}
-function onExpired() {
-  document.getElementById('qrSection').style.display = 'none';
+
+function showExpired(){
+  document.getElementById('payBtns').style.display='none';
   document.getElementById('expiredWrap').classList.add('show');
-  document.getElementById('expiredWrap').style.display = 'flex';
-}
-function refreshQR() {
-  document.getElementById('qrSection').style.display = 'flex';
-  document.getElementById('expiredWrap').classList.remove('show');
-  document.getElementById('expiredWrap').style.display = 'none';
-  const desc = 'HC KH ' + (planData?.phone || phoneParam);
-  buildQR(200000, desc);
-  startTimer(10 * 60);
 }
 
-async function confirmPayment() {
-  if (expired) { toast('⚠️ Mã QR đã hết hạn — vui lòng làm mới'); return; }
-  const btn = document.getElementById('btnPaid');
-  btn.disabled = true;
-  btn.innerHTML = '<div style="width:20px;height:20px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite"></div><span>Đang xác nhận...</span>';
-  try {
-    const body = phoneParam ? { phone: phoneParam, paid: true } : { id: regId, paid: true };
-    const r = await fetch(`${API_BASE}/api/partner/payment-confirm`, {
-      method: 'POST', headers: {'Content-Type':'application/json'},
-      body: JSON.stringify(body)
-    });
-    const d = await r.json();
-    if (d.success) {
-      clearInterval(timerInt);
-      showThankYou({ registerId: d.data?.registerId || regId, paid: true });
-    } else {
-      toast('❌ ' + (d.message || 'Lỗi xác nhận'));
-      btn.disabled = false;
-      btn.innerHTML = '<span>✅</span><span>Tôi đã chuyển khoản xong</span>';
-    }
-  } catch(e) {
-    toast('❌ Không kết nối được server');
-    btn.disabled = false;
-    btn.innerHTML = '<span>✅</span><span>Tôi đã chuyển khoản xong</span>';
-  }
+async function confirmPayment(){
+  const btn=document.getElementById('btnPaid');
+  btn.disabled=true;btn.innerHTML='<div class="spinner-sm"></div><span>Đang ghi nhận...</span>';
+  try{
+    const qs=partnerId?`id=${encodeURIComponent(partnerId)}`:`phone=${encodeURIComponent(partnerPhone)}`;
+    const res=await fetch(`${API_BASE}/api/partner/confirm-payment`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({register_id:partnerId,phone:partnerPhone})});
+    const d=await res.json();
+    if(d.success){clearInterval(timerInterval);spawnConfetti();showThankYou(d.data?.register_id||partnerId)}
+    else{toast('⚠️ '+(d.message||'Lỗi xác nhận'));btn.disabled=false;btn.innerHTML='Tôi đã chuyển khoản xong ✓'}
+  }catch(e){toast('❌ Không kết nối được server');btn.disabled=false;btn.innerHTML='Tôi đã chuyển khoản xong ✓'}
 }
 
-async function payLater() {
-  clearInterval(timerInt);
-  try {
-    const body = phoneParam ? { phone: phoneParam, paid: false } : { id: regId, paid: false };
-    await fetch(`${API_BASE}/api/partner/payment-confirm`, {
-      method: 'POST', headers: {'Content-Type':'application/json'},
-      body: JSON.stringify(body)
-    });
-  } catch(e) {}
-  showThankYou({ registerId: planData?.registerId || regId, paid: false });
+function showThankYou(regId){
+  document.getElementById('paymentCard').style.display='none';
+  document.getElementById('thankYou').style.display='block';
+  if(regId)document.getElementById('tyRegId').textContent=regId;
 }
 
-function showThankYou(data) {
-  document.getElementById('tyRegId').textContent = data.registerId || 'HC-XXXXXXX';
-  document.getElementById('paymentCard').style.display = 'none';
-  const ty = document.getElementById('thankYou');
-  ty.style.display = 'block'; ty.style.opacity = '0'; ty.style.transform = 'translateY(20px)';
-  requestAnimationFrame(() => {
-    ty.style.transition = 'opacity .5s, transform .5s';
-    ty.style.opacity = '1'; ty.style.transform = 'translateY(0)';
-  });
-  if (data.paid !== false) setTimeout(launchConfetti, 300);
-}
+function copyText(t){navigator.clipboard.writeText(t).then(()=>toast('✅ Đã sao chép!')).catch(()=>{const el=document.createElement('input');el.value=t;document.body.appendChild(el);el.select();document.execCommand('copy');document.body.removeChild(el);toast('✅ Đã sao chép!')})}
 
-function copyText(txt, msg) {
-  navigator.clipboard.writeText(txt).then(() => toast(msg)).catch(() => {
-    const el = document.createElement('textarea');
-    el.value = txt; document.body.appendChild(el);
-    el.select(); document.execCommand('copy'); document.body.removeChild(el);
-    toast(msg);
-  });
-}
-function toast(msg, dur=2800) {
-  const el = document.getElementById('toast');
-  el.textContent = msg; el.classList.add('show');
-  setTimeout(() => el.classList.remove('show'), dur);
-}
-function showError(msg) {
-  document.getElementById('loadingScreen').innerHTML = `
-    <div style="text-align:center;padding:32px 24px">
-      <div style="font-size:3rem;margin-bottom:16px">⚠️</div>
-      <div style="font-weight:900;color:var(--coral);margin-bottom:8px">Không tải được thông tin</div>
-      <div style="font-size:.85rem;color:var(--muted);font-weight:700;margin-bottom:24px">${msg}</div>
-      <a href="register.html" style="background:var(--green);color:#fff;border:none;border-radius:50px;padding:12px 28px;font-family:var(--font);font-weight:900;text-decoration:none;font-size:.9rem">← Về trang đăng ký</a>
-    </div>`;
-}
-function launchConfetti() {
-  const colors = ['#16a34a','#84cc16','#f0fdf4','#4ade80','#a3e635'];
-  for (let i = 0; i < 60; i++) {
-    const p = document.createElement('div');
-    p.className = 'confetti-piece';
-    p.style.cssText = `left:${Math.random()*100}vw;background:${colors[Math.floor(Math.random()*colors.length)]};animation-duration:${1.5+Math.random()*2}s;animation-delay:${Math.random()*.8}s;transform:rotate(${Math.random()*360}deg);width:${6+Math.random()*6}px;height:${10+Math.random()*8}px;`;
-    document.body.appendChild(p);
-    setTimeout(() => p.remove(), 4000);
-  }
-}
+function spawnConfetti(){const colors=['#16a34a','#4ade80','#F0B429','#E8504A','#60a5fa'];for(let i=0;i<40;i++){const el=document.createElement('div');el.className='confetti-piece';el.style.cssText=`left:${Math.random()*100}vw;background:${colors[Math.floor(Math.random()*colors.length)]};animation-duration:${2+Math.random()*2}s;animation-delay:${Math.random()*.5}s;transform:rotate(${Math.random()*360}deg)`;document.body.appendChild(el);setTimeout(()=>el.remove(),4000)}}
+
+function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),3000)}
+
+init();
 </script>
 </body>
 </html>
