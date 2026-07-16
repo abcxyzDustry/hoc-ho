@@ -10,148 +10,153 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
   --green:#16a34a;--green2:#15803d;--lime:#4d7c0f;
-  --bg:#fafaf9;--card:#ffffff;--border:rgba(15,23,42,.08);
-  --cream:#0f172a;--muted:rgba(15,23,42,.56);
+  --bg:#f8fafc;--card:#ffffff;--border:rgba(15,23,42,.09);
+  --cream:#0f172a;--muted:rgba(15,23,42,.5);
   --font:'Plus Jakarta Sans',sans-serif;--mono:'JetBrains Mono',monospace;
   --coral:#E8504A;--gold:#F0B429;
 }
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 body{font-family:var(--font);background:var(--bg);color:var(--cream);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:0 16px 80px}
-body::before{content:'';position:fixed;inset:0;background:
-  radial-gradient(ellipse 60% 40% at 15% 5%,rgba(21,128,61,.05) 0%,transparent 70%),
-  radial-gradient(ellipse 50% 35% at 85% 85%,rgba(21,128,61,.04) 0%,transparent 70%);
-  pointer-events:none;z-index:0}
-
-.header{width:100%;max-width:520px;display:flex;align-items:center;gap:12px;padding:20px 0 16px;position:relative;z-index:1}
-.logo-icon{width:40px;height:40px;background:linear-gradient(135deg,var(--green),var(--lime));border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:.9rem;font-weight:900;color:#fff;font-family:var(--mono);flex-shrink:0}
-.header-title{font-family:var(--font);font-weight:800;font-size:1.4rem;color:var(--cream)}
-.header-sub{font-size:.72rem;color:var(--muted);font-weight:700}
-.back-link{margin-left:auto;color:var(--muted);text-decoration:none;font-size:.82rem;font-weight:700;transition:.2s}
-.back-link:hover{color:var(--lime)}
-
-/* TABS */
-.tabs{width:100%;max-width:520px;position:relative;z-index:1;display:flex;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:4px;margin-bottom:16px}
-.tab{flex:1;text-align:center;padding:11px;border-radius:12px;font-weight:800;font-size:.88rem;cursor:pointer;transition:.2s;color:var(--muted);border:none;background:none;font-family:var(--font)}
-.tab.active{background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;box-shadow:0 4px 12px rgba(22,163,74,.3)}
-
-/* CARD */
-.card{width:100%;max-width:520px;background:var(--card);border:1px solid var(--border);border-radius:24px;overflow:hidden;position:relative;z-index:1;box-shadow:0 20px 45px rgba(15,23,42,.08)}
-
-/* STEP HEADER */
-.step-header{padding:20px 24px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:14px}
-.step-badge{background:linear-gradient(135deg,var(--green),var(--lime));color:#fff;width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.95rem;flex-shrink:0}
-.step-title{font-weight:900;font-size:1rem;color:var(--cream)}
-.step-sub{font-size:.75rem;color:var(--muted);margin-top:2px}
-
-/* PROGRESS */
-.progress-bar{height:3px;background:rgba(132,204,22,.15)}
-.progress-fill{height:100%;background:linear-gradient(90deg,var(--green),var(--lime));transition:width .4s ease}
-
-/* FORM */
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 70% 50% at 0% 0%,rgba(21,128,61,.06) 0%,transparent 60%),radial-gradient(ellipse 50% 40% at 100% 100%,rgba(21,128,61,.04) 0%,transparent 60%);pointer-events:none;z-index:0}
+.top-nav{width:100%;max-width:560px;display:flex;align-items:center;gap:12px;padding:20px 0 24px;position:relative;z-index:1;border-bottom:1px solid var(--border);margin-bottom:28px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-mark{width:38px;height:38px;background:linear-gradient(135deg,var(--green),var(--lime));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:900;color:#fff;font-family:var(--mono)}
+.logo-name{font-weight:800;font-size:1.2rem;color:var(--cream);letter-spacing:-.02em}
+.back-link{margin-left:auto;display:inline-flex;align-items:center;gap:6px;color:var(--muted);text-decoration:none;font-size:.83rem;font-weight:700;padding:8px 14px;border:1px solid var(--border);border-radius:50px;transition:.2s;background:var(--card)}
+.back-link:hover{border-color:rgba(22,163,74,.4);color:var(--green)}
+.page-header{width:100%;max-width:560px;margin-bottom:20px;position:relative;z-index:1}
+.page-header h1{font-size:1.55rem;font-weight:800;color:var(--cream);letter-spacing:-.03em;margin-bottom:6px}
+.page-header p{font-size:.88rem;color:var(--muted);font-weight:500;line-height:1.6}
+.tabs{width:100%;max-width:560px;position:relative;z-index:1;display:flex;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:4px;margin-bottom:20px;gap:4px}
+.tab{flex:1;text-align:center;padding:10px 16px;border-radius:10px;font-weight:700;font-size:.85rem;cursor:pointer;transition:.2s;color:var(--muted);border:none;background:none;font-family:var(--font)}
+.tab.active{background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;box-shadow:0 3px 10px rgba(22,163,74,.25)}
+.step-track{width:100%;max-width:560px;position:relative;z-index:1;display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:24px}
+.step-dot{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;position:relative}
+.step-dot:not(:last-child)::after{content:'';position:absolute;top:16px;left:calc(50% + 18px);right:calc(-50% + 18px);height:1.5px;background:var(--border)}
+.step-dot.done::after{background:var(--green)}
+.step-dot.active::after{background:linear-gradient(90deg,var(--green),var(--border))}
+.dot-circle{width:32px;height:32px;border-radius:50%;border:2px solid var(--border);background:var(--card);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:800;color:var(--muted);transition:.3s;position:relative;z-index:1}
+.step-dot.active .dot-circle{border-color:var(--green);background:var(--green);color:#fff;box-shadow:0 0 0 4px rgba(22,163,74,.15)}
+.step-dot.done .dot-circle{border-color:var(--green);background:var(--green);color:#fff}
+.dot-label{font-size:.68rem;font-weight:700;color:var(--muted);text-align:center;line-height:1.3}
+.step-dot.active .dot-label{color:var(--green);font-weight:800}
+.card{width:100%;max-width:560px;background:var(--card);border:1px solid var(--border);border-radius:20px;overflow:hidden;position:relative;z-index:1;box-shadow:0 4px 24px rgba(15,23,42,.06)}
+.card-head{padding:22px 24px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:14px}
+.head-icon{width:40px;height:40px;background:rgba(22,163,74,.1);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.head-title{font-weight:800;font-size:.95rem;color:var(--cream)}
+.head-sub{font-size:.75rem;color:var(--muted);margin-top:2px}
+.head-badge{margin-left:auto;background:rgba(22,163,74,.1);color:var(--green);border:1px solid rgba(22,163,74,.2);border-radius:50px;padding:4px 12px;font-size:.72rem;font-weight:800;white-space:nowrap}
 .form-body{padding:24px;display:flex;flex-direction:column;gap:18px}
-.form-group{display:flex;flex-direction:column;gap:8px}
-.form-label{font-size:.82rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
-.form-input{background:rgba(15,23,42,.035);border:1.5px solid var(--border);border-radius:12px;padding:14px 16px;color:var(--cream);font-family:var(--font);font-size:.95rem;font-weight:700;outline:none;transition:.2s;width:100%}
-.form-input:focus{border-color:rgba(22,163,74,.5);background:rgba(22,163,74,.06)}
-.form-input::placeholder{color:rgba(15,23,42,.28)}
+.form-group{display:flex;flex-direction:column;gap:7px}
+.form-label{font-size:.78rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.6px}
+.req{color:var(--coral)}
+.form-input{background:var(--bg);border:1.5px solid var(--border);border-radius:12px;padding:13px 15px;color:var(--cream);font-family:var(--font);font-size:.93rem;font-weight:600;outline:none;transition:.2s;width:100%}
+.form-input:focus{border-color:rgba(22,163,74,.5);background:#fff;box-shadow:0 0 0 3px rgba(22,163,74,.08)}
+.form-input::placeholder{color:rgba(15,23,42,.25);font-weight:500}
 select.form-input{cursor:pointer}
-select.form-input option{background:#ffffff;color:#0f172a}
-textarea.form-input{resize:vertical;min-height:80px}
-
-/* TAGS */
+select.form-input option{background:#fff;color:#0f172a}
+textarea.form-input{resize:vertical;min-height:80px;line-height:1.6}
 .tags-wrap{display:flex;flex-wrap:wrap;gap:8px}
-.tag{display:flex;align-items:center;gap:6px;background:rgba(15,23,42,.045);border:1.5px solid var(--border);border-radius:50px;padding:7px 14px;cursor:pointer;transition:.2s;font-size:.82rem;font-weight:800;color:var(--muted)}
-.tag:hover{border-color:rgba(22,163,74,.3);color:var(--cream)}
-.tag.selected{background:rgba(22,163,74,.15);border-color:rgba(22,163,74,.5);color:var(--lime)}
-
-/* BUTTON */
-.btn-next{width:100%;background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;border:none;border-radius:16px;padding:17px;font-family:var(--font);font-size:1rem;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 4px 20px rgba(22,163,74,.3);transition:.2s;position:relative;overflow:hidden}
-.btn-next:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(22,163,74,.4)}
-.btn-next:disabled{background:#2a2a2a;box-shadow:none;cursor:not-allowed;transform:none}
-
-/* LOOKUP SECTION */
-.lookup-body{padding:24px;display:flex;flex-direction:column;gap:16px}
-.status-badge{display:inline-flex;align-items:center;gap:8px;border-radius:50px;padding:6px 14px;font-size:.8rem;font-weight:900}
-.status-pending_payment{background:rgba(240,180,41,.12);color:var(--gold);border:1px solid rgba(240,180,41,.3)}
-.status-pending_approval{background:rgba(132,204,22,.1);color:var(--lime);border:1px solid rgba(132,204,22,.25)}
-.status-active{background:rgba(22,163,74,.15);color:#4ade80;border:1px solid rgba(22,163,74,.35)}
-.status-rejected{background:rgba(232,80,74,.1);color:var(--coral);border:1px solid rgba(232,80,74,.25)}
-.status-suspended{background:rgba(15,23,42,.045);color:var(--muted);border:1px solid var(--border)}
-
-.profile-card{background:rgba(15,23,42,.03);border:1px solid var(--border);border-radius:16px;padding:20px}
-.profile-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);font-size:.88rem}
-.profile-row:last-child{border:none}
-.pkey{color:var(--muted);font-weight:700}
-.pval{font-weight:900;color:var(--cream)}
-.pval.mono{font-family:var(--mono);font-size:.82rem;color:var(--lime)}
-
-/* TOAST */
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#0f172a;color:#fff;border:1px solid rgba(15,23,42,.1);border-radius:50px;padding:12px 24px;font-weight:800;font-size:.85rem;z-index:9999;transition:transform .3s cubic-bezier(.34,1.56,.64,1);white-space:nowrap}
+.tag{display:inline-flex;align-items:center;gap:5px;background:var(--bg);border:1.5px solid var(--border);border-radius:50px;padding:7px 14px;cursor:pointer;transition:.2s;font-size:.8rem;font-weight:700;color:var(--muted)}
+.tag:hover{border-color:rgba(22,163,74,.35);color:var(--cream);background:#fff}
+.tag.selected{background:rgba(22,163,74,.1);border-color:rgba(22,163,74,.45);color:var(--green)}
+.plan-option{background:var(--bg);border:2px solid var(--border);border-radius:14px;padding:16px 18px;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:14px}
+.plan-option:hover{border-color:rgba(22,163,74,.3);background:#fff}
+.plan-option.selected{background:rgba(22,163,74,.08);border-color:rgba(22,163,74,.5);box-shadow:0 0 0 3px rgba(22,163,74,.1)}
+.plan-radio{width:18px;height:18px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;transition:.2s;display:flex;align-items:center;justify-content:center}
+.plan-option.selected .plan-radio{border-color:var(--green);background:var(--green)}
+.plan-option.selected .plan-radio::after{content:'';width:6px;height:6px;border-radius:50%;background:#fff}
+.plan-name{font-weight:800;font-size:.9rem;color:var(--cream)}
+.plan-desc{font-size:.76rem;color:var(--muted);margin-top:2px}
+.plan-price{margin-left:auto;font-weight:800;font-size:1rem;color:var(--green);white-space:nowrap}
+.review-table{background:var(--bg);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.review-row{display:flex;justify-content:space-between;align-items:center;padding:11px 16px;border-bottom:1px solid var(--border);font-size:.875rem}
+.review-row:last-child{border:none}
+.rk{color:var(--muted);font-weight:600}
+.rv{font-weight:700;color:var(--cream);text-align:right;max-width:60%}
+.info-box{background:rgba(22,163,74,.07);border:1px solid rgba(22,163,74,.2);border-radius:12px;padding:14px 16px;font-size:.82rem;color:rgba(77,124,15,.9);line-height:1.6;font-weight:600;display:flex;gap:10px}
+.btn-row{display:flex;gap:10px}
+.btn-back{background:var(--bg);border:1.5px solid var(--border);border-radius:12px;padding:14px 18px;font-family:var(--font);font-size:.9rem;font-weight:700;color:var(--muted);cursor:pointer;transition:.2s;flex-shrink:0}
+.btn-back:hover{border-color:rgba(15,23,42,.2);color:var(--cream)}
+.btn-next{flex:1;background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;border:none;border-radius:12px;padding:15px 24px;font-family:var(--font);font-size:.95rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 4px 16px rgba(22,163,74,.28);transition:.2s}
+.btn-next:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(22,163,74,.38)}
+.btn-next:disabled{background:rgba(15,23,42,.12);box-shadow:none;cursor:not-allowed;transform:none;color:rgba(15,23,42,.4)}
+.btn-full{width:100%;background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;border:none;border-radius:12px;padding:15px 24px;font-family:var(--font);font-size:.95rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 4px 16px rgba(22,163,74,.28);transition:.2s}
+.btn-full:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(22,163,74,.38)}
+.status-pill{display:inline-flex;align-items:center;gap:6px;border-radius:50px;padding:5px 12px;font-size:.76rem;font-weight:800}
+.status-pending_payment{background:rgba(240,180,41,.1);color:#b45309;border:1px solid rgba(240,180,41,.3)}
+.status-pending_approval{background:rgba(59,130,246,.1);color:#1d4ed8;border:1px solid rgba(59,130,246,.25)}
+.status-active{background:rgba(22,163,74,.12);color:#15803d;border:1px solid rgba(22,163,74,.3)}
+.status-rejected{background:rgba(232,80,74,.1);color:#b91c1c;border:1px solid rgba(232,80,74,.25)}
+.status-suspended{background:rgba(15,23,42,.06);color:var(--muted);border:1px solid var(--border)}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#0f172a;color:#fff;border-radius:50px;padding:11px 22px;font-weight:700;font-size:.83rem;z-index:9999;transition:transform .3s cubic-bezier(.34,1.56,.64,1);white-space:nowrap;box-shadow:0 8px 30px rgba(15,23,42,.25)}
 .toast.show{transform:translateX(-50%) translateY(0)}
-
-.spinner{width:20px;height:20px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
+.spinner{width:18px;height:18px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<div class="header">
-  <div class="logo-icon">HC</div>
-  <div>
-    <div class="header-title">hocho</div>
-    <div class="header-sub">Đăng ký Đối tác · Học hộ</div>
-  </div>
+<div class="top-nav">
+  <a href="index.html" class="logo">
+    <div class="logo-mark">HC</div>
+    <span class="logo-name">hocho</span>
+  </a>
   <a href="index.html" class="back-link">← Trang chủ</a>
 </div>
 
-<!-- TABS -->
-<div class="tabs">
-  <button class="tab active" id="tabRegister" onclick="switchTab('register')">📝 Đăng ký mới</button>
-  <button class="tab" id="tabLookup" onclick="switchTab('lookup')">🔍 Tra cứu hồ sơ</button>
+<div class="page-header">
+  <h1>Đăng ký làm Đối tác</h1>
+  <p>Giúp đỡ bạn bè sinh viên khi họ ốm đau — và kiếm thêm <strong>140.000đ/buổi</strong> ngay tại trường bạn.</p>
 </div>
 
-<!-- REGISTER CARD -->
-<div class="card" id="registerCard">
-  <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:25%"></div></div>
+<div class="tabs">
+  <button class="tab active" id="tabRegister" onclick="switchTab('register')">Đăng ký mới</button>
+  <button class="tab" id="tabLookup" onclick="switchTab('lookup')">Tra cứu hồ sơ</button>
+</div>
 
+<div class="step-track" id="stepTrack">
+  <div class="step-dot active" id="dotStep1"><div class="dot-circle">1</div><div class="dot-label">Cá nhân</div></div>
+  <div class="step-dot" id="dotStep2"><div class="dot-circle">2</div><div class="dot-label">Khu vực</div></div>
+  <div class="step-dot" id="dotStep3"><div class="dot-circle">3</div><div class="dot-label">Hồ sơ</div></div>
+  <div class="step-dot" id="dotStep4"><div class="dot-circle">4</div><div class="dot-label">Xác nhận</div></div>
+</div>
+
+<div class="card" id="registerCard">
   <!-- STEP 1 -->
   <div id="step1">
-    <div class="step-header">
-      <div class="step-badge">1</div>
-      <div>
-        <div class="step-title">Thông tin cá nhân</div>
-        <div class="step-sub">Bước 1 / 4 · Họ tên, SĐT, email</div>
-      </div>
+    <div class="card-head">
+      <div class="head-icon">👤</div>
+      <div><div class="head-title">Thông tin cá nhân</div><div class="head-sub">Họ tên, số điện thoại, email</div></div>
+      <div class="head-badge">1 / 4</div>
     </div>
     <div class="form-body">
       <div class="form-group">
-        <label class="form-label">Họ và tên *</label>
+        <label class="form-label">Họ và tên <span class="req">*</span></label>
         <input type="text" class="form-input" id="full_name" placeholder="Nguyễn Văn A">
       </div>
       <div class="form-group">
-        <label class="form-label">Số điện thoại *</label>
-        <input type="tel" class="form-input" id="phone" placeholder="0912345678">
+        <label class="form-label">Số điện thoại <span class="req">*</span></label>
+        <input type="tel" class="form-input" id="phone" placeholder="0912 345 678">
       </div>
       <div class="form-group">
-        <label class="form-label">Email (tuỳ chọn)</label>
+        <label class="form-label">Email <small style="font-weight:500;text-transform:none;letter-spacing:0">(tuỳ chọn)</small></label>
         <input type="email" class="form-input" id="email" placeholder="email@example.com">
       </div>
-      <button class="btn-next" onclick="goStep(2)">Tiếp tục →</button>
+      <button class="btn-full" onclick="goStep(2)">Tiếp tục →</button>
     </div>
   </div>
 
   <!-- STEP 2 -->
   <div id="step2" style="display:none">
-    <div class="step-header">
-      <div class="step-badge">2</div>
-      <div>
-        <div class="step-title">Khu vực hoạt động</div>
-        <div class="step-sub">Bước 2 / 4 · Trường đại học bạn phủ sóng</div>
-      </div>
+    <div class="card-head">
+      <div class="head-icon">🏫</div>
+      <div><div class="head-title">Khu vực hoạt động</div><div class="head-sub">Trường đại học bạn sẽ nhận đơn</div></div>
+      <div class="head-badge">2 / 4</div>
     </div>
     <div class="form-body">
       <div class="form-group">
-        <label class="form-label">Trường đại học chính *</label>
+        <label class="form-label">Trường đại học chính <span class="req">*</span></label>
         <select class="form-input" id="university">
           <option value="">— Chọn trường —</option>
           <option>ĐH Bách Khoa Hà Nội</option>
@@ -175,74 +180,72 @@ textarea.form-input{resize:vertical;min-height:80px}
         </select>
       </div>
       <div class="form-group">
-        <label class="form-label">Giới thiệu bản thân (tuỳ chọn)</label>
-        <textarea class="form-input" id="bio" placeholder="Mình là sv năm 3, chăm chỉ, dễ tính..."></textarea>
+        <label class="form-label">Giới thiệu bản thân <small style="font-weight:500;text-transform:none;letter-spacing:0">(tuỳ chọn)</small></label>
+        <textarea class="form-input" id="bio" placeholder="Mình là sinh viên năm 3, chăm chỉ, viết chữ đẹp..."></textarea>
       </div>
-      <div style="display:flex;gap:10px">
-        <button class="btn-next" style="background:rgba(15,23,42,.05);box-shadow:none;flex:0 0 auto;width:auto;padding:17px 20px" onclick="goStep(1)">←</button>
-        <button class="btn-next" style="flex:1" onclick="goStep(3)">Tiếp tục →</button>
+      <div class="btn-row">
+        <button class="btn-back" onclick="goStep(1)">←</button>
+        <button class="btn-next" onclick="goStep(3)">Tiếp tục →</button>
       </div>
     </div>
   </div>
 
   <!-- STEP 3 -->
   <div id="step3" style="display:none">
-    <div class="step-header">
-      <div class="step-badge">3</div>
-      <div>
-        <div class="step-title">Tính cách & phong cách</div>
-        <div class="step-sub">Bước 3 / 4 · Khách hàng sẽ filter theo đây</div>
-      </div>
+    <div class="card-head">
+      <div class="head-icon">✨</div>
+      <div><div class="head-title">Hồ sơ & Gói đăng ký</div><div class="head-sub">Tính cách và lựa chọn gói</div></div>
+      <div class="head-badge">3 / 4</div>
     </div>
     <div class="form-body">
       <div class="form-group">
-        <label class="form-label">Tính cách của bạn (chọn nhiều)</label>
+        <label class="form-label">Tính cách nổi bật</label>
         <div class="tags-wrap" id="tagWrap">
-          <div class="tag" onclick="toggleTag(this,'Xung phong')">🙋 Xung phong</div>
-          <div class="tag" onclick="toggleTag(this,'Hoà đồng')">😊 Hoà đồng</div>
-          <div class="tag" onclick="toggleTag(this,'Chủ động')">⚡ Chủ động</div>
-          <div class="tag" onclick="toggleTag(this,'Cẩn thận')">🎯 Cẩn thận</div>
-          <div class="tag" onclick="toggleTag(this,'Hài hước')">😂 Hài hước</div>
-          <div class="tag" onclick="toggleTag(this,'Thân thiện')">🤝 Thân thiện</div>
-          <div class="tag" onclick="toggleTag(this,'Đúng giờ')">⏰ Đúng giờ</div>
-          <div class="tag" onclick="toggleTag(this,'Chuyên nghiệp')">💼 Chuyên nghiệp</div>
-          <div class="tag" onclick="toggleTag(this,'Sáng tạo')">✨ Sáng tạo</div>
-          <div class="tag" onclick="toggleTag(this,'Nhanh nhẹn')">🏃 Nhanh nhẹn</div>
+          <div class="tag" onclick="toggleTag(this,'Xung phong')">Xung phong</div>
+          <div class="tag" onclick="toggleTag(this,'Hoà đồng')">Hoà đồng</div>
+          <div class="tag" onclick="toggleTag(this,'Chủ động')">Chủ động</div>
+          <div class="tag" onclick="toggleTag(this,'Cẩn thận')">Cẩn thận</div>
+          <div class="tag" onclick="toggleTag(this,'Hài hước')">Hài hước</div>
+          <div class="tag" onclick="toggleTag(this,'Thân thiện')">Thân thiện</div>
+          <div class="tag" onclick="toggleTag(this,'Đúng giờ')">Đúng giờ</div>
+          <div class="tag" onclick="toggleTag(this,'Chuyên nghiệp')">Chuyên nghiệp</div>
+          <div class="tag" onclick="toggleTag(this,'Nhanh nhẹn')">Nhanh nhẹn</div>
         </div>
       </div>
       <div class="form-group">
         <label class="form-label">Gói đăng ký</label>
-        <div style="display:flex;flex-direction:column;gap:10px">
-          <div class="tag" id="planStandard" style="border-radius:14px;padding:14px 16px;flex-direction:column;align-items:flex-start;gap:4px" onclick="selectPlan('standard')">
-            <div style="font-size:.88rem;font-weight:900;color:var(--cream)">🛵 Gói Tiêu Chuẩn · 200.000đ</div>
-            <div style="font-size:.76rem;color:var(--muted)">Kích hoạt tài khoản 1 lần duy nhất</div>
+        <div class="plan-option selected" id="planStandard" onclick="selectPlan('standard')">
+          <div class="plan-radio"></div>
+          <div>
+            <div class="plan-name">Gói Tiêu Chuẩn</div>
+            <div class="plan-desc">Kích hoạt tài khoản 1 lần duy nhất · Hoàn vốn sau 2 buổi</div>
           </div>
+          <div class="plan-price">200.000đ</div>
         </div>
       </div>
-      <div style="display:flex;gap:10px">
-        <button class="btn-next" style="background:rgba(15,23,42,.05);box-shadow:none;flex:0 0 auto;width:auto;padding:17px 20px" onclick="goStep(2)">←</button>
-        <button class="btn-next" style="flex:1" onclick="goStep(4)">Tiếp tục →</button>
+      <div class="btn-row">
+        <button class="btn-back" onclick="goStep(2)">←</button>
+        <button class="btn-next" onclick="goStep(4)">Tiếp tục →</button>
       </div>
     </div>
   </div>
 
-  <!-- STEP 4 REVIEW -->
+  <!-- STEP 4 -->
   <div id="step4" style="display:none">
-    <div class="step-header">
-      <div class="step-badge">4</div>
-      <div>
-        <div class="step-title">Xác nhận thông tin</div>
-        <div class="step-sub">Bước 4 / 4 · Kiểm tra lại trước khi nộp</div>
-      </div>
+    <div class="card-head">
+      <div class="head-icon">✅</div>
+      <div><div class="head-title">Xác nhận thông tin</div><div class="head-sub">Kiểm tra lại trước khi nộp hồ sơ</div></div>
+      <div class="head-badge">4 / 4</div>
     </div>
     <div class="form-body">
-      <div class="profile-card" id="reviewBox"></div>
-      <div style="background:rgba(22,163,74,.08);border:1px solid rgba(22,163,74,.2);border-radius:12px;padding:14px;font-size:.82rem;color:rgba(132,204,22,.8);line-height:1.6;font-weight:700">
-        💡 Sau khi đăng ký, bạn sẽ được chuyển đến trang thanh toán phí kích hoạt <strong style="color:var(--lime)">200.000đ</strong> qua SeaPay. Hồ sơ sẽ được admin duyệt trong 24–48 giờ.
+      <div class="review-table" id="reviewBox"></div>
+      <div class="info-box">
+        <span>💡</span>
+        <span>Sau khi đăng ký, bạn sẽ được chuyển đến trang thanh toán phí kích hoạt <strong>200.000đ</strong> qua SeaPay. Hồ sơ sẽ được admin duyệt trong 24–48 giờ.</span>
       </div>
-      <div style="display:flex;gap:10px">
-        <button class="btn-next" style="background:rgba(15,23,42,.05);box-shadow:none;flex:0 0 auto;width:auto;padding:17px 20px" onclick="goStep(3)">←</button>
-        <button class="btn-next" id="btnSubmit" style="flex:1" onclick="submitRegister()">🚀 Đăng ký & Thanh toán</button>
+      <div class="btn-row">
+        <button class="btn-back" onclick="goStep(3)">←</button>
+        <button class="btn-next" id="btnSubmit" onclick="submitRegister()">Đăng ký & Thanh toán</button>
       </div>
     </div>
   </div>
@@ -250,206 +253,34 @@ textarea.form-input{resize:vertical;min-height:80px}
 
 <!-- LOOKUP CARD -->
 <div class="card" id="lookupCard" style="display:none">
-  <div class="step-header">
-    <div class="step-badge">🔍</div>
-    <div>
-      <div class="step-title">Tra cứu hồ sơ</div>
-      <div class="step-sub">Nhập SĐT hoặc mã hồ sơ để kiểm tra</div>
-    </div>
+  <div class="card-head">
+    <div class="head-icon">🔍</div>
+    <div><div class="head-title">Tra cứu hồ sơ</div><div class="head-sub">Nhập SĐT hoặc mã hồ sơ để kiểm tra trạng thái</div></div>
   </div>
-  <div class="lookup-body">
+  <div class="form-body">
     <div class="form-group">
-      <label class="form-label">Số điện thoại hoặc Mã hồ sơ</label>
+      <label class="form-label">Số điện thoại hoặc mã hồ sơ</label>
       <input type="text" class="form-input" id="lookupInput" placeholder="0912345678 hoặc HC-XXXXXXX">
     </div>
-    <button class="btn-next" onclick="doLookup()">🔍 Tra cứu</button>
+    <button class="btn-full" onclick="doLookup()">Tra cứu</button>
     <div id="lookupResult" style="display:none"></div>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
-
 <script>
-const API_BASE = '';
-let selectedTags = [];
-let selectedPlan = 'standard';
-let currentStep = 1;
-
-// ── TABS ──
-function switchTab(t) {
-  document.getElementById('tabRegister').className = 'tab' + (t==='register' ? ' active' : '');
-  document.getElementById('tabLookup').className   = 'tab' + (t==='lookup'   ? ' active' : '');
-  document.getElementById('registerCard').style.display = t==='register' ? 'block' : 'none';
-  document.getElementById('lookupCard').style.display   = t==='lookup'   ? 'block' : 'none';
-}
-
-// Check URL hash for lookup
-if (location.hash === '#lookup') switchTab('lookup');
-
-// ── STEPS ──
-function goStep(n) {
-  if (n > currentStep && !validateStep(currentStep)) return;
-  document.getElementById('step'+currentStep).style.display = 'none';
-  document.getElementById('step'+n).style.display = 'block';
-  currentStep = n;
-  document.getElementById('progressFill').style.width = (n * 25) + '%';
-  if (n === 4) renderReview();
-  window.scrollTo(0, 0);
-}
-
-function validateStep(n) {
-  if (n === 1) {
-    const name = document.getElementById('full_name').value.trim();
-    const phone = document.getElementById('phone').value.trim();
-    if (!name) { toast('⚠️ Nhập họ tên của bạn'); return false; }
-    if (!phone || phone.length < 9) { toast('⚠️ Số điện thoại không hợp lệ'); return false; }
-    return true;
-  }
-  if (n === 2) {
-    const uni = document.getElementById('university').value;
-    if (!uni) { toast('⚠️ Chọn trường đại học chính'); return false; }
-    return true;
-  }
-  return true;
-}
-
-// ── TAGS ──
-function toggleTag(el, tag) {
-  const idx = selectedTags.indexOf(tag);
-  if (idx > -1) { selectedTags.splice(idx, 1); el.classList.remove('selected'); }
-  else { selectedTags.push(tag); el.classList.add('selected'); }
-}
-
-function selectPlan(plan) {
-  selectedPlan = plan;
-  document.querySelectorAll('[id^="plan"]').forEach(el => el.classList.remove('selected'));
-  const el = document.getElementById('plan' + plan.charAt(0).toUpperCase() + plan.slice(1).replace('_', ''));
-  if (el) el.classList.add('selected');
-}
-
-// ── REVIEW ──
-function renderReview() {
-  const box = document.getElementById('reviewBox');
-  const rows = [
-    ['Họ tên', document.getElementById('full_name').value],
-    ['SĐT', document.getElementById('phone').value],
-    ['Email', document.getElementById('email').value || '—'],
-    ['Trường', document.getElementById('university').value],
-    ['Tính cách', selectedTags.join(', ') || '—'],
-    ['Gói', 'Tiêu Chuẩn · 200.000đ'],
-  ];
-  box.innerHTML = rows.map(([k, v]) =>
-    `<div class="profile-row"><span class="pkey">${k}</span><span class="pval">${v}</span></div>`
-  ).join('');
-}
-
-// ── SUBMIT ──
-async function submitRegister() {
-  const btn = document.getElementById('btnSubmit');
-  btn.disabled = true;
-  btn.innerHTML = '<div class="spinner"></div><span>Đang đăng ký...</span>';
-
-  const data = {
-    full_name: document.getElementById('full_name').value.trim(),
-    phone: document.getElementById('phone').value.trim(),
-    email: document.getElementById('email').value.trim(),
-    university: document.getElementById('university').value,
-    university_list: [document.getElementById('university').value],
-    plan: selectedPlan,
-    bio: document.getElementById('bio').value.trim(),
-    personality_tags: selectedTags,
-  };
-
-  try {
-    const res = await fetch(`${API_BASE}/api/partner/register`, {
-      method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(data)
-    });
-    const d = await res.json();
-
-    if (d.success) {
-      toast('✅ Đăng ký thành công! Chuyển đến trang thanh toán...');
-      setTimeout(() => {
-        window.location.href = `payment.html?phone=${encodeURIComponent(data.phone)}&id=${d.data.register_id}`;
-      }, 1200);
-    } else if (res.status === 409) {
-      toast('⚠️ ' + d.message);
-      setTimeout(() => switchTab('lookup'), 1500);
-      btn.disabled = false;
-      btn.innerHTML = '🚀 Đăng ký & Thanh toán';
-    } else {
-      toast('❌ ' + (d.message || 'Lỗi đăng ký'));
-      btn.disabled = false;
-      btn.innerHTML = '🚀 Đăng ký & Thanh toán';
-    }
-  } catch(e) {
-    toast('❌ Không kết nối được server');
-    btn.disabled = false;
-    btn.innerHTML = '🚀 Đăng ký & Thanh toán';
-  }
-}
-
-// ── LOOKUP ──
-async function doLookup() {
-  const val = document.getElementById('lookupInput').value.trim();
-  if (!val) { toast('⚠️ Nhập SĐT hoặc mã hồ sơ'); return; }
-
-  const resultEl = document.getElementById('lookupResult');
-  resultEl.style.display = 'block';
-  resultEl.innerHTML = '<div style="text-align:center;padding:20px"><div class="spinner" style="margin:0 auto"></div></div>';
-
-  const isId = val.startsWith('HC-');
-  const qs = isId ? `id=${encodeURIComponent(val)}` : `phone=${encodeURIComponent(val)}`;
-
-  try {
-    const res = await fetch(`${API_BASE}/api/partner/lookup?` + qs);
-    const d = await res.json();
-
-    if (!d.success) {
-      resultEl.innerHTML = `<div style="text-align:center;padding:24px;color:rgba(15,23,42,.4);font-weight:700">⚠️ ${d.message}</div>`;
-      return;
-    }
-
-    const p = d.data;
-    const statusLabels = {
-      pending_payment:'⏳ Chờ thanh toán',
-      pending_approval:'🔄 Chờ duyệt hồ sơ',
-      active:'✅ Đang hoạt động',
-      rejected:'❌ Bị từ chối',
-      suspended:'⛔ Tạm khóa'
-    };
-    const payLabels = {unpaid:'Chưa thanh toán', pending:'Đã CK - chờ xác nhận', paid:'Đã xác nhận ✅'};
-
-    resultEl.innerHTML = `
-      <div class="profile-card">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-          <div style="font-weight:900;font-size:1rem">${p.full_name}</div>
-          <div class="status-badge status-${p.status}">${statusLabels[p.status] || p.status}</div>
-        </div>
-        <div class="profile-row"><span class="pkey">Mã hồ sơ</span><span class="pval mono">${p.register_id}</span></div>
-        <div class="profile-row"><span class="pkey">Trường</span><span class="pval">${p.university}</span></div>
-        <div class="profile-row"><span class="pkey">Thanh toán</span><span class="pval">${payLabels[p.payment_status] || p.payment_status}</span></div>
-        <div class="profile-row"><span class="pkey">Đơn hoàn thành</span><span class="pval">${p.completed_orders || 0}</span></div>
-        <div class="profile-row"><span class="pkey">Rating</span><span class="pval">⭐ ${p.rating || 5}</span></div>
-      </div>
-      ${p.payment_status === 'unpaid' ? `
-        <a href="payment.html?phone=${encodeURIComponent(p.phone)}&id=${p.register_id}" style="display:block;text-align:center;background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;border-radius:14px;padding:14px;font-weight:900;text-decoration:none;margin-top:4px">
-          💳 Đến trang thanh toán →
-        </a>` : ''}
-    `;
-  } catch(e) {
-    resultEl.innerHTML = `<div style="text-align:center;padding:24px;color:rgba(232,80,74,.7);font-weight:700">❌ Lỗi kết nối server</div>`;
-  }
-}
-
-function toast(msg, dur=2800) {
-  const el = document.getElementById('toast');
-  el.textContent = msg; el.classList.add('show');
-  setTimeout(() => el.classList.remove('show'), dur);
-}
-
-// Init plan
-selectPlan('standard');
-document.getElementById('planStandard').classList.add('selected');
+const API_BASE='';let selectedTags=[],selectedPlan='standard',currentStep=1;
+function switchTab(t){document.getElementById('tabRegister').className='tab'+(t==='register'?' active':'');document.getElementById('tabLookup').className='tab'+(t==='lookup'?' active':'');document.getElementById('registerCard').style.display=t==='register'?'block':'none';document.getElementById('lookupCard').style.display=t==='lookup'?'block':'none';document.getElementById('stepTrack').style.display=t==='register'?'flex':'none'}
+if(location.hash==='#lookup')switchTab('lookup');
+function updateDots(n){for(let i=1;i<=4;i++){const el=document.getElementById('dotStep'+i);el.className='step-dot'+(i<n?' done':i===n?' active':'');el.querySelector('.dot-circle').innerHTML=i<n?'✓':i}}
+function goStep(n){if(n>currentStep&&!validateStep(currentStep))return;document.getElementById('step'+currentStep).style.display='none';document.getElementById('step'+n).style.display='block';currentStep=n;updateDots(n);if(n===4)renderReview();window.scrollTo({top:0,behavior:'smooth'})}
+function validateStep(n){if(n===1){const name=document.getElementById('full_name').value.trim(),phone=document.getElementById('phone').value.trim();if(!name){toast('⚠️ Nhập họ tên của bạn');return false}if(!phone||phone.replace(/\D/g,'').length<9){toast('⚠️ Số điện thoại không hợp lệ');return false}return true}if(n===2){if(!document.getElementById('university').value){toast('⚠️ Chọn trường đại học chính');return false}return true}return true}
+function toggleTag(el,tag){const idx=selectedTags.indexOf(tag);if(idx>-1){selectedTags.splice(idx,1);el.classList.remove('selected')}else{selectedTags.push(tag);el.classList.add('selected')}}
+function selectPlan(plan){selectedPlan=plan;document.querySelectorAll('.plan-option').forEach(el=>el.classList.remove('selected'));document.getElementById('plan'+plan.charAt(0).toUpperCase()+plan.slice(1)).classList.add('selected')}
+function renderReview(){const rows=[['Họ và tên',document.getElementById('full_name').value],['Số điện thoại',document.getElementById('phone').value],['Email',document.getElementById('email').value||'—'],['Trường đại học',document.getElementById('university').value],['Tính cách',selectedTags.join(', ')||'—'],['Gói đăng ký','Tiêu Chuẩn · 200.000đ']];document.getElementById('reviewBox').innerHTML=rows.map(([k,v])=>`<div class="review-row"><span class="rk">${k}</span><span class="rv">${v}</span></div>`).join('')}
+async function submitRegister(){const btn=document.getElementById('btnSubmit');btn.disabled=true;btn.innerHTML='<div class="spinner"></div><span>Đang đăng ký...</span>';const data={full_name:document.getElementById('full_name').value.trim(),phone:document.getElementById('phone').value.trim(),email:document.getElementById('email').value.trim(),university:document.getElementById('university').value,university_list:[document.getElementById('university').value],plan:selectedPlan,bio:document.getElementById('bio').value.trim(),personality_tags:selectedTags};try{const res=await fetch(`${API_BASE}/api/partner/register`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});const d=await res.json();if(d.success){toast('✅ Đăng ký thành công! Đang chuyển đến trang thanh toán...');setTimeout(()=>{window.location.href=`payment.html?phone=${encodeURIComponent(data.phone)}&id=${d.data.register_id}`},1200)}else if(res.status===409){toast('⚠️ '+d.message);setTimeout(()=>switchTab('lookup'),1500);btn.disabled=false;btn.innerHTML='Đăng ký & Thanh toán'}else{toast('❌ '+(d.message||'Lỗi đăng ký'));btn.disabled=false;btn.innerHTML='Đăng ký & Thanh toán'}}catch(e){toast('❌ Không kết nối được server');btn.disabled=false;btn.innerHTML='Đăng ký & Thanh toán'}}
+async function doLookup(){const val=document.getElementById('lookupInput').value.trim();if(!val){toast('⚠️ Nhập SĐT hoặc mã hồ sơ');return}const resultEl=document.getElementById('lookupResult');resultEl.style.display='block';resultEl.innerHTML='<div style="text-align:center;padding:28px"><div class="spinner" style="margin:0 auto;border-color:rgba(22,163,74,.2);border-top-color:var(--green)"></div></div>';const isId=val.startsWith('HC-');const qs=isId?`id=${encodeURIComponent(val)}`:`phone=${encodeURIComponent(val)}`;try{const res=await fetch(`${API_BASE}/api/partner/lookup?`+qs);const d=await res.json();if(!d.success){resultEl.innerHTML=`<div style="text-align:center;padding:28px;color:var(--muted);font-size:.88rem">⚠️ ${d.message}</div>`;return}const p=d.data;const statusLabels={pending_payment:'Chờ thanh toán',pending_approval:'Chờ duyệt hồ sơ',active:'Đang hoạt động',rejected:'Bị từ chối',suspended:'Tạm khóa'};const payLabels={unpaid:'Chưa thanh toán',pending:'Đã chuyển khoản · chờ xác nhận',paid:'Đã xác nhận ✅'};resultEl.innerHTML=`<div class="review-table"><div class="review-row" style="padding:14px 16px;display:block"><div style="font-weight:800;font-size:.95rem;margin-bottom:8px">${p.full_name}</div><div class="status-pill status-${p.status}">${statusLabels[p.status]||p.status}</div></div><div class="review-row"><span class="rk">Mã hồ sơ</span><span class="rv" style="font-family:var(--mono);font-size:.82rem;color:var(--green)">${p.register_id}</span></div><div class="review-row"><span class="rk">Trường</span><span class="rv">${p.university}</span></div><div class="review-row"><span class="rk">Thanh toán</span><span class="rv">${payLabels[p.payment_status]||p.payment_status}</span></div><div class="review-row"><span class="rk">Đơn hoàn thành</span><span class="rv">${p.completed_orders||0}</span></div><div class="review-row"><span class="rk">Đánh giá</span><span class="rv">${p.rating_avg?p.rating_avg.toFixed(1)+'★':'—'}</span></div></div>${p.status==='pending_payment'?`<button class="btn-full" onclick="window.location.href='payment.html?phone=${encodeURIComponent(p.phone)}&id=${p.register_id}'" style="margin-top:12px">Thanh toán ngay →</button>`:''}`}catch(e){resultEl.innerHTML=`<div style="text-align:center;padding:28px;color:var(--muted);font-size:.88rem">❌ Không kết nối được server</div>`}}
+function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),3000)}
 </script>
 </body>
 </html>
