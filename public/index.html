@@ -2,47 +2,31 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HoCho.com — Hỗ trợ sinh viên ốm đau #1 Việt Nam</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --green:#16a34a;--green2:#15803d;--lime:#4d7c0f;
-  --bg:#fafaf9;--card:#ffffff;--border:rgba(15,23,42,.08);
-  --cream:#0f172a;--muted:rgba(15,23,42,.56);
-  --coral:#E8504A;--gold:#F0B429;
-  --font:'Plus Jakarta Sans',sans-serif;--mono:'JetBrains Mono',monospace;
-}
+:root{--green:#16a34a;--green2:#15803d;--lime:#4d7c0f;--bg:#fafaf9;--card:#ffffff;--border:rgba(15,23,42,.08);--cream:#0f172a;--muted:rgba(15,23,42,.56);--coral:#E8504A;--gold:#F0B429;--font:'Plus Jakarta Sans',sans-serif;--mono:'JetBrains Mono',monospace}
 body{font-family:var(--font);background:var(--bg);color:var(--cream);overflow-x:hidden}
-body::before{content:'';position:fixed;inset:0;background:
-  radial-gradient(ellipse 60% 40% at 10% 0%,rgba(21,128,61,.05) 0%,transparent 70%),
-  radial-gradient(ellipse 50% 35% at 90% 90%,rgba(21,128,61,.04) 0%,transparent 70%);
-  pointer-events:none;z-index:0}
-
-/* NAV */
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 10% 0%,rgba(21,128,61,.05) 0%,transparent 70%),radial-gradient(ellipse 50% 35% at 90% 90%,rgba(21,128,61,.04) 0%,transparent 70%);pointer-events:none;z-index:0}
+section{position:relative;z-index:1}
 nav{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px);background:rgba(250,250,249,.85);border-bottom:1px solid var(--border);padding:0 24px}
 .nav-inner{max-width:1100px;margin:0 auto;height:64px;display:flex;align-items:center;justify-content:space-between}
 .logo{display:flex;align-items:center;gap:10px;text-decoration:none}
 .logo-icon{width:38px;height:38px;background:linear-gradient(135deg,var(--green),var(--lime));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:900;color:#fff;font-family:var(--mono)}
-.logo-text{font-family:var(--font);font-weight:800;font-size:1.4rem;color:var(--cream)}
-.logo-dot{color:var(--lime)}
+.logo-text{font-weight:800;font-size:1.4rem;color:var(--cream)}.logo-dot{color:var(--lime)}
 .nav-links{display:flex;gap:24px;align-items:center}
 .nav-links a{color:var(--muted);text-decoration:none;font-weight:700;font-size:.9rem;transition:.2s}
 .nav-links a:hover{color:var(--cream)}
 .btn-nav{background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;border:none;border-radius:50px;padding:9px 22px;font-family:var(--font);font-weight:800;font-size:.88rem;cursor:pointer;text-decoration:none;transition:.2s}
 .btn-nav:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(22,163,74,.4)}
-
-/* SECTIONS */
-section{position:relative;z-index:1}
-
-/* HERO */
 .hero{padding:72px 24px 40px}
 .hero-inner{max-width:1160px;margin:0 auto;display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;text-align:left}
 @media(max-width:860px){.hero-inner{grid-template-columns:1fr;text-align:center}}
 .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(22,163,74,.1);border:1px solid rgba(22,163,74,.25);border-radius:50px;padding:8px 18px;font-size:.78rem;font-weight:700;color:var(--lime);margin-bottom:24px;letter-spacing:.3px}
-.hero h1{font-family:var(--font);font-weight:800;font-size:clamp(2.3rem,4.6vw,3.4rem);line-height:1.15;color:var(--cream);margin-bottom:20px;letter-spacing:-.02em}
+.hero h1{font-weight:800;font-size:clamp(2.3rem,4.6vw,3.4rem);line-height:1.15;margin-bottom:20px;letter-spacing:-.02em}
 .hero h1 span{color:var(--green)}
 .hero p{font-size:1.05rem;color:var(--muted);line-height:1.7;margin-bottom:28px;font-weight:500;max-width:520px}
 @media(max-width:860px){.hero p{margin-left:auto;margin-right:auto}}
@@ -55,19 +39,11 @@ section{position:relative;z-index:1}
 .hero-visual{position:relative}
 .hero-visual img{width:100%;height:auto;border-radius:24px;box-shadow:0 30px 60px -20px rgba(15,23,42,.25);display:block}
 .hero-visual::after{content:'';position:absolute;inset:16px -16px -16px 16px;border:1px solid var(--border);border-radius:24px;z-index:-1}
-.btn-primary{background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;border:none;border-radius:16px;padding:16px 36px;font-family:var(--font);font-size:1.05rem;font-weight:900;cursor:pointer;text-decoration:none;display:inline-block;transition:.2s;box-shadow:0 4px 24px rgba(22,163,74,.35)}
+.btn-primary{background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;border:none;border-radius:16px;padding:16px 36px;font-size:1.05rem;font-weight:900;cursor:pointer;text-decoration:none;display:inline-block;transition:.2s;box-shadow:0 4px 24px rgba(22,163,74,.35)}
 .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(22,163,74,.5)}
-.btn-outline{background:transparent;color:var(--cream);border:1.5px solid rgba(15,23,42,.22);border-radius:16px;padding:16px 36px;font-family:var(--font);font-size:1.05rem;font-weight:800;cursor:pointer;text-decoration:none;display:inline-block;transition:.2s}
+.btn-outline{background:transparent;color:var(--cream);border:1.5px solid rgba(15,23,42,.22);border-radius:16px;padding:16px 36px;font-size:1.05rem;font-weight:800;cursor:pointer;text-decoration:none;display:inline-block;transition:.2s}
 .btn-outline:hover{border-color:var(--lime);color:var(--lime)}
-
-/* STATS BAR */
-.stats-bar{padding:40px 24px;background:rgba(22,163,74,.06);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.stats-inner{max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:24px;text-align:center}
-.stat-item .num{font-family:var(--font);font-weight:800;font-size:2.2rem;color:var(--green)}
-.stat-item .lbl{font-size:.82rem;color:var(--muted);font-weight:700;margin-top:4px}
-
-/* HOW IT WORKS */
-.section-title{text-align:center;font-family:var(--font);font-weight:800;font-size:clamp(1.8rem,4vw,2.6rem);color:var(--cream);margin-bottom:12px}
+.section-title{text-align:center;font-weight:800;font-size:clamp(1.8rem,4vw,2.6rem);margin-bottom:12px}
 .section-sub{text-align:center;color:var(--muted);font-size:1rem;font-weight:600;margin-bottom:48px}
 .how-section{padding:80px 24px}
 .how-inner{max-width:1000px;margin:0 auto}
@@ -75,443 +51,93 @@ section{position:relative;z-index:1}
 .step-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px 24px;position:relative;overflow:hidden;transition:.3s}
 .step-card:hover{transform:translateY(-4px);border-color:rgba(132,204,22,.3)}
 .step-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--green),var(--lime))}
-.step-num{font-family:var(--font);font-weight:800;font-size:2.5rem;color:rgba(132,204,22,.2);margin-bottom:12px}
+.step-num{font-weight:800;font-size:2.5rem;color:rgba(132,204,22,.2);margin-bottom:12px}
 .step-icon{font-size:2rem;margin-bottom:12px;display:block}
-.step-title{font-weight:900;font-size:1rem;color:var(--cream);margin-bottom:8px}
+.step-title{font-weight:900;font-size:1rem;margin-bottom:8px}
 .step-desc{font-size:.85rem;color:var(--muted);line-height:1.6}
-
-/* PRICING */
 .pricing-section{padding:80px 24px;background:rgba(22,163,74,.04)}
 .pricing-inner{max-width:800px;margin:0 auto}
 .price-card{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:36px;text-align:center;position:relative;overflow:hidden}
-.price-tag{font-family:var(--font);font-weight:800;font-size:3.5rem;color:var(--green)}
+.price-tag{font-weight:800;font-size:3.5rem;color:var(--green)}
 .price-desc{font-size:1rem;color:var(--muted);font-weight:700;margin:8px 0 24px}
-.price-features{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:12px;text-align:left;margin-bottom:28px}
-.price-features li{display:flex;gap:8px;align-items:center;font-size:.9rem;font-weight:700;color:var(--cream)}
-.price-features li span:first-child{color:var(--lime);font-size:1rem}
 .fee-breakdown{background:rgba(22,163,74,.08);border:1px solid rgba(22,163,74,.2);border-radius:14px;padding:20px;display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px}
 .fee-item{text-align:center}
-.fee-item .fee-val{font-family:var(--font);font-weight:800;font-size:1.5rem;color:var(--green)}
+.fee-item .fee-val{font-weight:800;font-size:1.5rem;color:var(--green)}
 .fee-item .fee-lbl{font-size:.75rem;color:var(--muted);font-weight:700;margin-top:2px}
-
-/* WHY */
 .why-section{padding:80px 24px}
 .why-inner{max-width:1000px;margin:0 auto}
 .why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
 .why-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:24px;display:flex;gap:16px;align-items:flex-start;transition:.3s}
 .why-card:hover{border-color:rgba(132,204,22,.25);transform:translateY(-2px)}
 .why-icon{font-size:1.8rem;flex-shrink:0;width:48px;height:48px;background:rgba(22,163,74,.12);border-radius:12px;display:flex;align-items:center;justify-content:center}
-.why-title{font-weight:900;color:var(--cream);margin-bottom:6px;font-size:.95rem}
+.why-title{font-weight:900;margin-bottom:6px;font-size:.95rem}
 .why-desc{font-size:.83rem;color:var(--muted);line-height:1.6}
-
-/* FOR PARTNER */
-.partner-section{padding:80px 24px;background:rgba(22,163,74,.04)}
-.partner-inner{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
-@media(max-width:700px){.partner-inner{grid-template-columns:1fr}}
-.partner-text h2{font-family:var(--font);font-weight:800;font-size:2.2rem;color:var(--cream);margin-bottom:16px;line-height:1.2}
-.partner-text h2 span{color:var(--lime)}
-.partner-text p{color:var(--muted);font-size:.95rem;line-height:1.7;font-weight:600;margin-bottom:24px}
-.earn-box{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:20px}
-.earn-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);font-size:.9rem}
-.earn-row:last-child{border:none}
-.earn-key{color:var(--muted);font-weight:700}
-.earn-val{font-weight:900;color:var(--lime)}
-
-/* TERMS SECTION */
 .terms-section{padding:80px 24px;background:rgba(22,163,74,.02)}
 .terms-inner{max-width:900px;margin:0 auto}
 .terms-card{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:36px}
-.terms-card h3{font-family:var(--font);font-weight:800;font-size:1.4rem;color:var(--lime);margin:24px 0 12px}
+.terms-card h3{font-weight:800;font-size:1.4rem;color:var(--lime);margin:24px 0 12px}
 .terms-card h3:first-child{margin-top:0}
 .terms-card p{color:var(--muted);font-size:.92rem;line-height:1.8;font-weight:600}
 .terms-card ul{list-style:none;padding:0}
 .terms-card ul li{color:var(--muted);font-size:.9rem;line-height:1.7;padding:6px 0;padding-left:24px;position:relative;font-weight:600}
 .terms-card ul li::before{content:'✓';position:absolute;left:0;color:var(--lime);font-weight:900}
-.terms-highlight{background:rgba(22,163,74,.08);border-left:3px solid var(--lime);padding:16px 20px;border-radius:0 12px 12px 0;margin:16px 0}
-.terms-highlight p{color:rgba(132,204,22,.9);font-weight:700}
-
-/* DOWNLOAD APPS */
 .download-section{padding:80px 24px;background:rgba(22,163,74,.04)}
-.download-inner{max-width:900px;margin:0 auto}
-.download-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
-.download-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:32px 28px;text-align:center;transition:.3s}
+.download-inner{max-width:800px;margin:0 auto;text-align:center}
+.download-grid{display:grid;grid-template-columns:1fr;gap:24px;max-width:400px;margin:0 auto}
+.download-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:32px;text-align:center;transition:.3s}
 .download-card:hover{transform:translateY(-4px);border-color:rgba(132,204,22,.3)}
-.download-icon{font-size:2.4rem;margin-bottom:14px;display:block}
-.download-title{font-family:var(--font);font-weight:800;font-size:1.3rem;color:var(--cream);margin-bottom:8px}
-.download-desc{font-size:.88rem;color:var(--muted);line-height:1.6;font-weight:600;margin-bottom:22px}
-.coming-soon-badge{display:inline-block;background:rgba(22,163,74,.08);border:1px solid rgba(22,163,74,.25);color:var(--green);font-weight:700;font-size:.85rem;padding:10px 20px;border-radius:50px;margin:8px 0 28px}
-.btn-download{background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;border:none;border-radius:14px;padding:14px 28px;font-family:var(--font);font-size:.95rem;font-weight:900;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:.2s;box-shadow:0 4px 20px rgba(22,163,74,.3)}
-.btn-download:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(22,163,74,.45)}
-.download-note{font-size:.75rem;color:var(--muted);margin-top:12px;font-weight:600}
-
-/* CTA */
+.download-icon{font-size:3rem;margin-bottom:12px;display:block}
+.download-title{font-weight:900;font-size:1.2rem;margin-bottom:8px}
+.download-desc{font-size:.88rem;color:var(--muted);font-weight:600;line-height:1.5;margin-bottom:20px}
 .cta-section{padding:100px 24px;text-align:center}
 .cta-inner{max-width:600px;margin:0 auto}
-.cta-inner h2{font-family:var(--font);font-weight:800;font-size:clamp(2rem,5vw,3rem);color:var(--cream);margin-bottom:16px}
-.cta-inner p{color:var(--muted);font-size:1rem;font-weight:600;line-height:1.7;margin-bottom:36px}
-.cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
-
-/* FOOTER */
-footer{background:rgba(22,163,74,.04);border-top:1px solid var(--border);padding:40px 24px;text-align:center}
-.footer-logo{font-family:var(--font);font-weight:800;font-size:1.6rem;color:var(--cream);margin-bottom:8px}
-.footer-logo span{color:var(--lime)}
-.footer-links{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin:16px 0}
+.cta-section h2{font-weight:800;font-size:clamp(1.8rem,4vw,2.6rem);margin-bottom:16px}
+.cta-section p{color:var(--muted);font-size:1rem;font-weight:600;line-height:1.7;margin-bottom:32px}
+footer{padding:48px 24px;border-top:1px solid var(--border);text-align:center}
+.footer-logo{font-weight:800;font-size:1.6rem;margin-bottom:8px}
+.footer-links{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin:16px 0}
 .footer-links a{color:var(--muted);text-decoration:none;font-size:.85rem;font-weight:700;transition:.2s}
 .footer-links a:hover{color:var(--lime)}
-.footer-copy{font-size:.8rem;color:rgba(15,23,42,.28);font-weight:700}
-
-/* MOBILE */
-@media(max-width:600px){
-  .nav-links{display:none}
-  .price-features{grid-template-columns:1fr}
-}
-
-/* ===== CHATBOT ===== */
-.chatbot-toggle{
-  position:fixed;bottom:24px;right:24px;z-index:999;
-  width:60px;height:60px;border-radius:30px;
-  background:linear-gradient(135deg,var(--green),var(--green2));
-  border:none;color:#fff;font-size:28px;cursor:pointer;
-  box-shadow:0 4px 24px rgba(22,163,74,.4);
-  transition:.3s;display:flex;align-items:center;justify-content:center
-}
-.chatbot-toggle:hover{transform:scale(1.05)}
-.chatbot-toggle .badge{
-  position:absolute;top:-4px;right:-4px;
-  background:var(--coral);color:#fff;border-radius:50%;
-  width:22px;height:22px;font-size:12px;font-weight:900;
-  display:flex;align-items:center;justify-content:center
-}
-
-.chatbot-window{
-  position:fixed;bottom:90px;right:24px;z-index:999;
-  width:380px;max-width:calc(100vw - 48px);
-  height:500px;max-height:calc(100vh - 180px);
-  background:var(--card);border:1px solid var(--border);
-  border-radius:20px;box-shadow:0 20px 60px rgba(15,23,42,.18);
-  display:none;flex-direction:column;overflow:hidden;
-  animation:slideUp .3s ease
-}
-.chatbot-window.open{display:flex}
-@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-
-.chatbot-header{
-  padding:16px 20px;border-bottom:1px solid var(--border);
-  display:flex;justify-content:space-between;align-items:center;
-  background:rgba(22,163,74,.06);flex-shrink:0
-}
-.chatbot-header-left{display:flex;align-items:center;gap:10px}
-.chatbot-avatar{
-  width:34px;height:34px;border-radius:17px;
-  background:linear-gradient(135deg,var(--green),var(--lime));
-  display:flex;align-items:center;justify-content:center;
-  font-size:16px;font-weight:900;color:#fff
-}
-.chatbot-title{font-weight:900;color:var(--cream);font-size:.95rem}
-.chatbot-sub{font-size:.7rem;color:var(--muted);font-weight:700}
-.chatbot-close{
-  background:rgba(15,23,42,.045);border:none;
-  color:var(--muted);font-size:20px;cursor:pointer;
-  width:32px;height:32px;border-radius:16px;
-  display:flex;align-items:center;justify-content:center;
-  transition:.2s
-}
-.chatbot-close:hover{background:rgba(232,80,74,.15);color:var(--coral)}
-
-.chatbot-messages{
-  flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px
-}
-.chatbot-msg{
-  max-width:85%;padding:10px 14px;border-radius:14px;
-  font-size:.88rem;line-height:1.5;font-weight:600;word-wrap:break-word
-}
-.chatbot-msg.bot{
-  background:rgba(15,23,42,.045);border:1px solid var(--border);
-  color:var(--cream);align-self:flex-start;
-  border-bottom-left-radius:4px
-}
-.chatbot-msg.user{
-  background:var(--green);color:#fff;align-self:flex-end;
-  border-bottom-right-radius:4px
-}
-.chatbot-msg .time{
-  font-size:.65rem;color:rgba(15,23,42,.3);
-  margin-top:4px;display:block;font-weight:700
-}
-.chatbot-msg.typing{
-  background:rgba(15,23,42,.02);padding:12px 16px;
-  display:flex;gap:4px;align-items:center
-}
-.chatbot-msg.typing span{
-  display:inline-block;width:8px;height:8px;
-  border-radius:50%;background:var(--muted);
-  animation:typing 1.4s infinite
-}
-.chatbot-msg.typing span:nth-child(2){animation-delay:.2s}
-.chatbot-msg.typing span:nth-child(3){animation-delay:.4s}
-@keyframes typing{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-8px)}}
-
-.chatbot-input-bar{
-  padding:12px 16px;border-top:1px solid var(--border);
-  display:flex;gap:8px;flex-shrink:0;
-  background:rgba(15,23,42,.02)
-}
-.chatbot-input{
-  flex:1;background:rgba(15,23,42,.035);border:1.5px solid var(--border);
-  border-radius:12px;padding:10px 14px;color:var(--cream);
-  font-family:var(--font);font-size:.9rem;font-weight:600;
-  outline:none;transition:.2s
-}
-.chatbot-input:focus{border-color:rgba(22,163,74,.4)}
-.chatbot-input::placeholder{color:rgba(15,23,42,.22);font-weight:400}
-.chatbot-send{
-  background:linear-gradient(135deg,var(--green),var(--green2));
-  border:none;border-radius:12px;padding:0 18px;
-  color:#fff;font-size:18px;cursor:pointer;transition:.2s;
-  display:flex;align-items:center;justify-content:center
-}
-.chatbot-send:hover{transform:scale(1.02)}
-.chatbot-send:disabled{opacity:.4;cursor:not-allowed}
-
-.chatbot-suggestions{
-  display:flex;gap:6px;flex-wrap:wrap;padding:6px 16px 12px;
-  border-top:1px solid rgba(132,204,22,.06);flex-shrink:0
-}
-.chatbot-suggestions button{
-  background:rgba(15,23,42,.035);border:1px solid var(--border);
-  border-radius:50px;padding:5px 12px;font-size:.72rem;
-  font-weight:700;color:var(--muted);cursor:pointer;
-  transition:.2s;font-family:var(--font)
-}
-.chatbot-suggestions button:hover{
-  background:rgba(22,163,74,.12);border-color:rgba(22,163,74,.3);color:var(--lime)
-}
-
-@media(max-width:480px){
-  .chatbot-window{right:12px;bottom:80px;width:calc(100vw - 24px);height:calc(100vh - 160px)}
-  .chatbot-toggle{width:52px;height:52px;font-size:24px;bottom:16px;right:16px}
-}
-
-/* CUSTOMER DASHBOARD & AUTH MODALS CSS */
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(15, 23, 42, 0.4);
-  backdrop-filter: blur(8px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  animation: fadeIn 0.2s ease-out;
-}
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-.modal-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 24px;
-  padding: 32px;
-  width: 90%;
-  max-width: 500px;
-  box-shadow: 0 20px 40px -15px rgba(15,23,42,0.15);
-  position: relative;
-  animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-@keyframes slideUp {
-  from { transform: translateY(20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-.modal-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid var(--border);
-  padding-bottom: 16px;
-  margin-bottom: 20px;
-}
-.modal-header h3 {
-  font-family: var(--font);
-  font-weight: 800;
-  font-size: 1.3rem;
-  color: var(--cream);
-}
-.modal-close {
-  background: none;
-  border: none;
-  font-size: 1.2rem;
-  color: var(--muted);
-  cursor: pointer;
-  transition: .15s;
-}
-.modal-close:hover {
-  color: var(--cream);
-}
-.form-group {
-  margin-bottom: 16px;
-  text-align: left;
-}
-.form-group label {
-  display: block;
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--cream);
-  margin-bottom: 6px;
-}
-.form-group input[type="text"],
-.form-group input[type="email"],
-.form-group input[type="password"],
-.form-group input[type="tel"],
-.form-group input[type="number"],
-.form-group textarea,
-.form-group select {
-  width: 100%;
-  padding: 12px 16px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  font-family: var(--font);
-  font-size: 0.95rem;
-  background: #fff;
-  color: var(--cream);
-  transition: border-color .15s;
-}
-.form-group input:focus,
-.form-group textarea:focus,
-.form-group select:focus {
-  outline: none;
-  border-color: var(--green);
-  box-shadow: 0 0 0 3px rgba(22,163,74,0.1);
-}
-.auth-toggle-text {
-  text-align: center;
-  margin-top: 16px;
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: var(--muted);
-}
-.auth-toggle-text a {
-  color: var(--green);
-  text-decoration: none;
-  font-weight: 700;
-}
-.auth-toggle-text a:hover {
-  text-decoration: underline;
-}
-.order-badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 4px 10px;
-  border-radius: 50px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-.order-badge.waiting { background: #f1f5f9; color: #64748b; }
-.order-badge.matching { background: #fef9c3; color: #854d0e; }
-.order-badge.matched { background: #dbeafe; color: #1e40af; }
-.order-badge.in_progress { background: #ffedd5; color: #9a3412; }
-.order-badge.completed { background: #dcfce7; color: #166534; }
-.order-badge.cancelled { background: #fee2e2; color: #991b1b; }
-.order-card-item {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  transition: transform .2s;
-}
-.order-card-item:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(15,23,42,0.04);
-}
-.star-rating {
-  direction: rtl;
-}
-.star-rating label {
-  font-size: 2.2rem;
-  color: #cbd5e1;
-  cursor: pointer;
-  transition: color 0.2s;
-}
-.star-rating label:hover,
-.star-rating label:hover ~ label,
-.star-rating input:checked ~ label {
-  color: #f59e0b;
-}
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
+.footer-copy{font-size:.8rem;color:var(--muted);font-weight:600;margin-top:12px}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <div class="nav-inner">
-    <a href="index.html" class="logo">
-      <div class="logo-icon">HC</div>
-      <div class="logo-text">hocho</div>
-    </a>
-    <div class="nav-links" id="nav-links-guest">
+    <a href="/" class="logo"><span class="logo-icon">HC</span><span class="logo-text">hocho<span class="logo-dot">.</span>com</span></a>
+    <div class="nav-links">
       <a href="#how">Cách hoạt động</a>
-      <a href="#pricing">Giá dịch vụ</a>
-      <a href="#partner">Trở thành đối tác</a>
+      <a href="#pricing">Giá</a>
       <a href="#terms">Điều khoản</a>
-      <a href="#download">Tải app</a>
-      <a href="register.html" class="btn-nav">Đăng ký đối tác</a>
-      <button class="btn-nav" id="nav-btn-login" style="background:linear-gradient(135deg, #10b981, #059669); margin-left: 8px;">Đăng nhập khách</button>
-    </div>
-    <div class="nav-links" id="nav-links-member" style="display: none;">
-      <a href="#" id="nav-tab-create" style="color: var(--green); font-weight: 800;">Đặt đơn hỗ trợ</a>
-      <a href="#" id="nav-tab-history" style="color: var(--muted); font-weight: 700;">Lịch sử đơn</a>
-      <span id="nav-user-name" style="font-weight: 700; font-size: 0.9rem; color: var(--cream); border-left: 1px solid var(--border); padding-left: 12px; margin-left: 4px;">Tài khoản</span>
-      <button class="btn-nav" id="nav-btn-logout" style="background: linear-gradient(135deg, #ef4444, #dc2626); margin-left: 8px; padding: 7px 16px;">Đăng xuất</button>
+      <a href="partner.html">Trở thành đối tác</a>
+      <a href="https://play.google.com/store/apps/details?id=com.hocho.customer" class="btn-nav" target="_blank">Tải app</a>
     </div>
   </div>
 </nav>
 
-<div id="landing-container">
-<!-- HERO -->
 <section class="hero">
   <div class="hero-inner">
     <div>
-      <div class="hero-badge">💚 Hỗ trợ sinh viên ốm đau #1 Việt Nam</div>
+      <div class="hero-badge">🎓 Dịch vụ hỗ trợ sinh viên ốm đau #1</div>
       <h1>Bạn ốm? <span>Chúng tôi đến lớp thay bạn.</span></h1>
       <p>Không bỏ lỡ bài giảng dù bạn đang nằm viện hay gặp lý do bất khả kháng. Đặt dịch vụ ghi chép và hỗ trợ học tập trong 30 giây — có người giúp bạn trong 5 phút.</p>
       <div class="hero-btns">
-        <a href="#how" class="btn-primary">Đặt hỗ trợ ngay</a>
-        <a href="register.html" class="btn-outline">Trở thành đối tác</a>
+        <a href="https://play.google.com/store/apps/details?id=com.hocho.customer" class="btn-primary" target="_blank">📲 Tải app trên Google Play</a>
+        <a href="#how" class="btn-outline">Tìm hiểu thêm</a>
       </div>
       <div class="hero-checks">
-        <span>Có người nhận trong 5 phút</span>
-        <span>Đối tác đã xác minh</span>
-        <span>Giá cố định, minh bạch</span>
+        <span>Hoàn tiền 100% nếu không có đối tác</span>
+        <span>50+ trường đại học</span>
+        <span>Hỗ trợ 24/7</span>
       </div>
     </div>
     <div class="hero-visual">
-      <img src="hero-photo.png" alt="Đối tác hocho hỗ trợ ghi chép cho sinh viên" loading="lazy">
+      <img src="hero-photo.png" alt="HoCho - Hỗ trợ sinh viên" onerror="this.style.display='none'">
     </div>
   </div>
 </section>
 
-<!-- STATS -->
-<div class="stats-bar">
-  <div class="stats-inner">
-    <div class="stat-item"><div class="num">5.000+</div><div class="lbl">Buổi hỗ trợ thành công</div></div>
-    <div class="stat-item"><div class="num">200+</div><div class="lbl">Đối tác sẵn sàng hỗ trợ</div></div>
-    <div class="stat-item"><div class="num">50+</div><div class="lbl">Trường đại học</div></div>
-    <div class="stat-item"><div class="num">4.9★</div><div class="lbl">Đánh giá từ sinh viên</div></div>
-    <div class="stat-item"><div class="num">&lt;5 phút</div><div class="lbl">Thời gian kết nối</div></div>
-  </div>
-</div>
-
-<!-- HOW IT WORKS -->
 <section class="how-section" id="how">
   <div class="how-inner">
     <div class="section-title">Cách hoạt động</div>
@@ -519,238 +145,98 @@ footer{background:rgba(22,163,74,.04);border-top:1px solid var(--border);padding
     <div class="steps-grid">
       <div class="step-card">
         <div class="step-num">01</div>
-        <span class="step-icon">🩺</span>
+        <span class="step-icon">🤧</span>
         <div class="step-title">Bạn bị ốm / gặp lý do bất khả kháng</div>
         <div class="step-desc">Nhập thông tin: trường, toà nhà, tầng, số phòng. Mô tả lý do (ốm, tai nạn, việc gia đình đột xuất) để chúng tôi hiểu và hỗ trợ.</div>
       </div>
       <div class="step-card">
         <div class="step-num">02</div>
-        <span class="step-icon">🔍</span>
-        <div class="step-title">Hệ thống tìm đối tác gần bạn</div>
-        <div class="step-desc">AI tìm đối tác đang online gần trường của bạn nhất và gửi thông báo đến họ ngay lập tức.</div>
+        <span class="step-icon">💳</span>
+        <div class="step-title">Thanh toán 200.000đ qua QR</div>
+        <div class="step-desc">Quét mã SePay, chuyển khoản nhanh chóng. Bấm "Đã thanh toán" và admin sẽ xác nhận trong vài phút.</div>
       </div>
       <div class="step-card">
         <div class="step-num">03</div>
-        <span class="step-icon">📝</span>
-        <div class="step-title">Đối tác ghi chép & gửi tài liệu</div>
-        <div class="step-desc">Đối tác đến lớp, ghi chép đầy đủ, chụp ảnh slide/bảng, tóm tắt nội dung và gửi lại cho bạn.</div>
-      </div>
-      <div class="step-card">
-        <div class="step-num">04</div>
-        <span class="step-icon">🎉</span>
-        <div class="step-title">Nhận tài liệu & bình phục</div>
-        <div class="step-desc">Bạn nhận được bản ghi chép, ảnh tài liệu, thông báo quan trọng. Nghỉ ngơi và hồi phục sức khỏe!</div>
+        <span class="step-icon">🎓</span>
+        <div class="step-title">Đối tác đến lớp thay bạn</div>
+        <div class="step-desc">Hệ thống tự tìm đối tác gần bạn nhất trong 5 phút. Đối tác ghi chép bài, chụp ảnh bảng, gửi bạn qua chat trong app.</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- PRICING -->
 <section class="pricing-section" id="pricing">
   <div class="pricing-inner">
     <div class="section-title">Giá dịch vụ</div>
     <div class="section-sub">Cố định, minh bạch — không phí ẩn</div>
     <div class="price-card">
       <div class="price-tag">200.000đ</div>
-      <div class="price-desc">/ buổi hỗ trợ · Cố định cho mọi trường</div>
+      <div class="price-desc">mỗi buổi hỗ trợ (tối đa 2 giờ)</div>
       <div class="fee-breakdown">
-        <div class="fee-item">
-          <div class="fee-val">60.000đ</div>
-          <div class="fee-lbl">Phí nền tảng (30%)</div>
-        </div>
-        <div class="fee-item">
-          <div class="fee-val">140.000đ</div>
-          <div class="fee-lbl">Đối tác nhận (70%)</div>
-        </div>
+        <div class="fee-item"><div class="fee-val">140.000đ</div><div class="fee-lbl">Đối tác nhận (70%)</div></div>
+        <div class="fee-item"><div class="fee-val">60.000đ</div><div class="fee-lbl">Nền tảng giữ lại (30%)</div></div>
       </div>
-      <ul class="price-features">
-        <li><span>✓</span><span>Ghi chép bài giảng đầy đủ</span></li>
-        <li><span>✓</span><span>Chụp ảnh slide / bảng</span></li>
-        <li><span>✓</span><span>Tóm tắt nội dung chính</span></li>
-        <li><span>✓</span><span>Thông báo lịch thi & deadline</span></li>
-        <li><span>✓</span><span>Báo cáo tình hình học tập</span></li>
-        <li><span>✓</span><span>Hỗ trợ 24/7</span></li>
-      </ul>
-      <a href="#how" class="btn-primary" style="display:inline-block;width:100%;text-align:center">Đặt hỗ trợ ngay →</a>
+      <a href="https://play.google.com/store/apps/details?id=com.hocho.customer" class="btn-primary" target="_blank">📲 Tải app để đặt ngay</a>
     </div>
   </div>
 </section>
 
-<!-- WHY -->
 <section class="why-section">
   <div class="why-inner">
     <div class="section-title">Tại sao chọn hocho?</div>
     <div class="section-sub">Dịch vụ nhân văn đầu tiên cho sinh viên Việt Nam</div>
     <div class="why-grid">
-      <div class="why-card">
-        <div class="why-icon">💚</div>
-        <div>
-          <div class="why-title">Hỗ trợ sinh viên ốm đau</div>
-          <div class="why-desc">Chúng tôi hiểu rằng sức khỏe là trên hết. Dịch vụ giúp bạn không bỏ lỡ bài giảng khi không thể đến lớp.</div>
-        </div>
-      </div>
-      <div class="why-card">
-        <div class="why-icon">⚡</div>
-        <div>
-          <div class="why-title">Cực nhanh — dưới 5 phút</div>
-          <div class="why-desc">Hệ thống matching tự động gửi thông báo đến đối tác gần nhất ngay khi bạn đặt yêu cầu.</div>
-        </div>
-      </div>
-      <div class="why-card">
-        <div class="why-icon">🛡️</div>
-        <div>
-          <div class="why-title">Đối tác đã được xác minh</div>
-          <div class="why-desc">Mỗi đối tác đều qua quy trình đăng ký, xác minh thông tin và duyệt bởi admin trước khi hoạt động.</div>
-        </div>
-      </div>
-      <div class="why-card">
-        <div class="why-icon">💬</div>
-        <div>
-          <div class="why-title">Chat trực tiếp với đối tác</div>
-          <div class="why-desc">Bong bóng chat xuất hiện ngay khi đối tác nhận yêu cầu. Bạn có thể hỏi thêm thông tin bất cứ lúc nào.</div>
-        </div>
-      </div>
-      <div class="why-card">
-        <div class="why-icon">📋</div>
-        <div>
-          <div class="why-title">Báo cáo đầy đủ</div>
-          <div class="why-desc">Nhận được ghi chép, ảnh tài liệu, thông báo quan trọng và tóm tắt nội dung buổi học.</div>
-        </div>
-      </div>
-      <div class="why-card">
-        <div class="why-icon">⭐</div>
-        <div>
-          <div class="why-title">Hệ thống đánh giá thực</div>
-          <div class="why-desc">Rating sau mỗi buổi hỗ trợ giúp bạn biết chính xác chất lượng dịch vụ — không fake, không mua được.</div>
-        </div>
-      </div>
+      <div class="why-card"><div class="why-icon">⚡</div><div><div class="why-title">Nhanh 5 phút</div><div class="why-desc">Đối tác gần bạn nhất được ghép tự động theo vị trí GPS trong bán kính 5km.</div></div></div>
+      <div class="why-card"><div class="why-icon">🔒</div><div><div class="why-title">Xác minh sinh viên</div><div class="why-desc">Yêu cầu ảnh thẻ sinh viên khi đặt đơn, đảm bảo dịch vụ chỉ dành cho sinh viên thật.</div></div></div>
+      <div class="why-card"><div class="why-icon">💬</div><div><div class="why-title">Chat trực tiếp</div><div class="why-desc">Nhắn tin với đối tác ngay trong app — gửi ảnh bài giảng, ghi chép, trao đổi trực tiếp.</div></div></div>
+      <div class="why-card"><div class="why-icon">⭐</div><div><div class="why-title">Hệ thống đánh giá</div><div class="why-desc">Cả khách và đối tác đều đánh giá sau mỗi đơn, đảm bảo chất lượng dịch vụ.</div></div></div>
+      <div class="why-card"><div class="why-icon">🔄</div><div><div class="why-title">Hoàn tiền dễ dàng</div><div class="why-desc">Huỷ đơn trước khi đối tác nhận? Tiền hoàn vào ví hocho dùng cho lần sau.</div></div></div>
+      <div class="why-card"><div class="why-icon">🤖</div><div><div class="why-title">Chatbot AI hỗ trợ</div><div class="why-desc">Trợ lý AI tích hợp trả lời mọi câu hỏi về dịch vụ 24/7 ngay trong app.</div></div></div>
     </div>
   </div>
 </section>
 
-<!-- FOR PARTNER -->
-<section class="partner-section" id="partner">
-  <div class="partner-inner">
-    <div class="partner-text">
-      <h2>Kiếm thêm<br><span>140.000đ/buổi</span><br>ngay tại trường bạn</h2>
-      <p>Bạn là sinh viên? Bạn có thể giúp đỡ bạn bè khi họ ốm đau bằng cách đến lớp ghi chép và hỗ trợ họ. Đăng ký làm đối tác hocho — nhận yêu cầu, giúp đỡ người khác, kiếm tiền.</p>
-      <div class="earn-box">
-        <div class="earn-row"><span class="earn-key">Phí kích hoạt tài khoản</span><span class="earn-val">200.000đ (1 lần)</span></div>
-        <div class="earn-row"><span class="earn-key">Mỗi buổi hỗ trợ</span><span class="earn-val">140.000đ</span></div>
-        <div class="earn-row"><span class="earn-key">Hoàn vốn sau</span><span class="earn-val">2 buổi đầu tiên</span></div>
-        <div class="earn-row"><span class="earn-key">Thu nhập / tháng (10 buổi)</span><span class="earn-val">1.400.000đ+</span></div>
-      </div>
-      <a href="register.html" class="btn-primary">Đăng ký làm đối tác →</a>
-    </div>
-    <div class="partner-visual" style="display:flex;flex-direction:column;gap:16px">
-      <div style="background:var(--card);border:1px solid var(--border);border-radius:20px;padding:20px;position:relative;overflow:hidden">
-        <div style="font-size:.7rem;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px">📱 Yêu cầu mới</div>
-        <div style="display:flex;gap:12px;align-items:flex-start;padding:12px;background:rgba(22,163,74,.08);border:1px solid rgba(22,163,74,.2);border-radius:12px;margin-bottom:10px">
-          <div style="font-size:1.4rem;flex-shrink:0">🩺</div>
-          <div>
-            <div style="font-weight:900;font-size:.85rem;color:var(--cream)">Sinh viên cần hỗ trợ!</div>
-            <div style="font-size:.78rem;color:var(--muted);margin-top:2px">ĐH Bách Khoa HN · Phòng B4-312<br>Lý do: Sốt cao, nhập viện</div>
-            <div style="display:flex;gap:8px;margin-top:8px">
-              <button style="background:var(--green);color:#fff;border:none;border-radius:8px;padding:6px 14px;font-size:.78rem;font-weight:800;cursor:pointer">✓ Nhận hỗ trợ</button>
-              <button style="background:rgba(15,23,42,.05);color:var(--muted);border:none;border-radius:8px;padding:6px 14px;font-size:.78rem;font-weight:700;cursor:pointer">Bỏ qua</button>
-            </div>
-          </div>
-        </div>
-        <div style="font-size:.75rem;color:rgba(132,204,22,.6);font-weight:700;text-align:center;padding:8px 0">💬 Chat mở sau khi nhận yêu cầu</div>
-      </div>
-      <div style="background:var(--card);border:1px solid var(--border);border-radius:20px;padding:20px;background:rgba(22,163,74,.08);border-color:rgba(22,163,74,.25)">
-        <div style="font-size:.7rem;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">💰 Thu nhập tháng này</div>
-        <div style="font-family:var(--font);font-weight:800;font-size:2rem;color:var(--lime)">2.240.000đ</div>
-        <div style="font-size:.8rem;color:var(--muted);font-weight:700">16 buổi hoàn thành · ⭐ 4.9</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- TERMS -->
 <section class="terms-section" id="terms">
   <div class="terms-inner">
     <div class="section-title">Điều khoản dịch vụ</div>
-    <div class="section-sub">Cam kết minh bạch và trách nhiệm</div>
+    <div class="section-sub">Minh bạch, rõ ràng — bảo vệ cả khách và đối tác</div>
     <div class="terms-card">
-      <h3>1. Giá trị cốt lõi</h3>
-      <p>hocho là nền tảng kết nối sinh viên cần hỗ trợ học tập với các đối tác tình nguyện. Chúng tôi hoạt động dựa trên tinh thần <strong>tương thân tương ái</strong>, giúp đỡ sinh viên gặp khó khăn về sức khỏe hoặc lý do bất khả kháng không thể đến lớp.</p>
-
-      <h3>2. Dịch vụ cung cấp</h3>
+      <h3>1. Dịch vụ cung cấp</h3>
+      <p>hocho là nền tảng kết nối sinh viên cần hỗ trợ học tập với đối tác. Dịch vụ bao gồm: ghi chép bài giảng, chụp ảnh bảng, tổng hợp tài liệu lớp học cho sinh viên không thể đến trường.</p>
+      <h3>2. Điều kiện sử dụng</h3>
       <ul>
-        <li>Ghi chép bài giảng đầy đủ, chi tiết</li>
-        <li>Chụp ảnh slide, bảng, tài liệu</li>
-        <li>Tóm tắt nội dung chính của buổi học</li>
-        <li>Thông báo lịch thi, deadline, thông tin quan trọng từ giảng viên</li>
-        <li>Hỗ trợ kết nối với giảng viên khi cần (với sự đồng ý của khách hàng)</li>
+        <li>Chỉ sử dụng khi có lý do chính đáng: ốm đau, tai nạn, việc gia đình, bất khả kháng</li>
+        <li>Cung cấp ảnh thẻ sinh viên để xác minh</li>
+        <li>Thanh toán đầy đủ trước khi được ghép đối tác</li>
       </ul>
-
-      <h3>3. Cam kết của khách hàng</h3>
+      <h3>3. Giá và thanh toán</h3>
       <ul>
-        <li>Chỉ sử dụng dịch vụ khi có lý do chính đáng: ốm đau, tai nạn, việc gia đình đột xuất, hoặc lý do bất khả kháng khác</li>
-        <li>Không yêu cầu đối tác thực hiện các hành vi gian lận trong học tập</li>
-        <li>Không yêu cầu đối tác làm bài tập hộ hoặc thi hộ</li>
-        <li>Chịu trách nhiệm về việc sử dụng tài liệu nhận được vào mục đích học tập hợp pháp</li>
+        <li>Phí dịch vụ: 200.000đ/buổi (tối đa 2 giờ)</li>
+        <li>Thanh toán qua SePay QR — chuyển khoản nhanh</li>
+        <li>Hoàn tiền 100% vào ví nếu không tìm được đối tác</li>
       </ul>
-
-      <h3>4. Cam kết của đối tác</h3>
+      <h3>4. Lưu ý quan trọng</h3>
+      <p>hocho <strong>không</strong> cung cấp dịch vụ làm bài tập hộ hoặc thi hộ. Đây là vi phạm quy chế đào tạo. Nền tảng chỉ hỗ trợ sinh viên gặp khó khăn tiếp cận bài giảng.</p>
+      <h3>5. Hoàn tiền</h3>
       <ul>
-        <li>Không thực hiện các hành vi vi phạm quy chế của trường học</li>
-        <li>Không làm bài tập hộ hoặc thi hộ cho khách hàng</li>
-        <li>Bảo mật thông tin của khách hàng</li>
-        <li>Thực hiện đúng các dịch vụ đã cam kết: ghi chép, chụp ảnh, tóm tắt nội dung</li>
-      </ul>
-
-      <div class="terms-highlight">
-        <p><strong>⚠️ Lưu ý quan trọng:</strong> hocho <strong>không</strong> cung cấp dịch vụ làm bài tập hộ hoặc thi hộ. Đây là hành vi vi phạm quy chế đào tạo và có thể bị xử lý kỷ luật. Nền tảng chỉ hỗ trợ sinh viên gặp khó khăn về sức khỏe hoặc lý do bất khả kháng trong việc tiếp cận thông tin bài giảng.</p>
-      </div>
-
-      <h3>5. Trách nhiệm của nền tảng</h3>
-      <ul>
-        <li>Xác minh danh tính và thông tin của đối tác trước khi hoạt động</li>
-        <li>Lưu trữ lịch sử giao dịch và chat để giải quyết tranh chấp</li>
-        <li>Hỗ trợ giải quyết khiếu nại của khách hàng và đối tác</li>
-        <li>Không chịu trách nhiệm về kết quả học tập của khách hàng</li>
-      </ul>
-
-      <h3>6. Thanh toán và hoàn tiền</h3>
-      <ul>
-        <li>Phí dịch vụ: 200.000đ/buổi hỗ trợ (tối đa 2 giờ)</li>
-        <li>Hoàn tiền 100% nếu đối tác không thể thực hiện dịch vụ</li>
-        <li>Hoàn tiền 50% nếu khách hàng hủy yêu cầu sau khi đối tác đã nhận</li>
-        <li>Không hoàn tiền nếu khách hàng đã nhận được tài liệu</li>
-      </ul>
-
-      <h3>7. Quyền lợi của đối tác</h3>
-      <ul>
-        <li>Nhận 70% phí dịch vụ (140.000đ/buổi) sau khi hoàn thành</li>
-        <li>Được đánh giá và xếp hạng công khai</li>
-        <li>Có quyền từ chối yêu cầu nếu cảm thấy không phù hợp</li>
-        <li>Được hỗ trợ từ đội ngũ admin khi có vấn đề phát sinh</li>
+        <li>Hoàn 100% nếu đối tác không thể thực hiện</li>
+        <li>Hoàn 50% nếu huỷ sau khi đối tác đã nhận</li>
+        <li>Không hoàn nếu đã nhận tài liệu</li>
       </ul>
     </div>
   </div>
 </section>
 
-<!-- DOWNLOAD APPS -->
 <section class="download-section" id="download">
   <div class="download-inner">
-    <h2 class="section-title">📲 Tải ứng dụng hocho</h2>
-    <p class="section-sub">Có mặt trên Google Play — cài đặt chỉ trong 30 giây</p>
+    <div class="section-title">📲 Tải ứng dụng hocho</div>
+    <div class="section-sub">Có mặt trên Google Play — cài đặt chỉ trong 30 giây</div>
     <div class="download-grid">
       <div class="download-card">
         <span class="download-icon">🎓</span>
         <div class="download-title">App Khách hàng</div>
-        <div class="download-desc">Đặt dịch vụ hỗ trợ khi ốm đau, theo dõi đơn, chat với đối tác trực tiếp trên điện thoại.</div>
-        <a href="https://play.google.com/store/apps/details?id=com.hocho.customer" class="btn-download" target="_blank" rel="noopener">
-          <img src="https://play.google.com/intl/en_us/badges/static/images/badges/vi_badge_web_generic.png" alt="Tải trên Google Play" style="height:54px;display:block;margin:0 auto">
-        </a>
-      </div>
-      <div class="download-card">
-        <span class="download-icon">💼</span>
-        <div class="download-title">App Đối tác</div>
-        <div class="download-desc">Nhận đơn, bật/tắt trạng thái online, quản lý ví và thu nhập ngay trên điện thoại.</div>
-        <a href="https://play.google.com/store/apps/details?id=com.hocho.partner" class="btn-download" target="_blank" rel="noopener">
+        <div class="download-desc">Đặt dịch vụ hỗ trợ khi ốm đau, theo dõi đơn, chat với đối tác, đánh giá sau mỗi lần.</div>
+        <a href="https://play.google.com/store/apps/details?id=com.hocho.customer" target="_blank">
           <img src="https://play.google.com/intl/en_us/badges/static/images/badges/vi_badge_web_generic.png" alt="Tải trên Google Play" style="height:54px;display:block;margin:0 auto">
         </a>
       </div>
@@ -758,862 +244,28 @@ footer{background:rgba(22,163,74,.04);border-top:1px solid var(--border);padding
   </div>
 </section>
 
-<!-- CTA -->
 <section class="cta-section">
   <div class="cta-inner">
-    <h2>Sẵn sàng giúp đỡ hoặc được giúp đỡ?</h2>
-    <p>Dù bạn cần hỗ trợ khi ốm đau hay muốn kiếm thêm thu nhập bằng cách giúp đỡ người khác — hocho có mặt tại hơn 50 trường đại học trên cả nước.</p>
-    <div class="cta-btns">
-      <a href="#how" class="btn-primary">📚 Đặt hỗ trợ ngay</a>
-      <a href="register.html" class="btn-outline">💼 Trở thành đối tác</a>
+    <h2>Sẵn sàng được giúp đỡ?</h2>
+    <p>Dù bạn ốm đau hay gặp khó khăn — hocho có mặt tại hơn 50 trường đại học trên cả nước.</p>
+    <div class="hero-btns" style="justify-content:center">
+      <a href="https://play.google.com/store/apps/details?id=com.hocho.customer" class="btn-primary" target="_blank">📲 Tải app ngay</a>
+      <a href="partner.html" class="btn-outline">💼 Trở thành đối tác</a>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
-  <div class="footer-logo">hocho</div>
+  <div class="footer-logo">hocho<span class="logo-dot">.</span>com</div>
   <div style="font-size:.85rem;color:var(--muted);font-weight:600;margin-bottom:12px">Dịch vụ hỗ trợ sinh viên ốm đau #1 Việt Nam</div>
   <div class="footer-links">
-    <a href="index.html">Trang chủ</a>
-    <a href="register.html">Đăng ký đối tác</a>
+    <a href="/">Trang chủ</a>
+    <a href="partner.html">Trở thành đối tác</a>
     <a href="admin.html">Quản trị</a>
     <a href="#terms">Điều khoản</a>
-    <a href="#download">Tải app</a>
-    <a href="#">Liên hệ</a>
   </div>
   <div class="footer-copy">© 2026 hocho · Hỗ trợ sinh viên — Nhân văn và trách nhiệm 💚</div>
 </footer>
-</div>
-<!-- DASHBOARD CONTAINER -->
-<div id="dashboard-container" style="display: none; max-width: 1100px; margin: 40px auto; padding: 0 24px; min-height: 70vh;">
-  <!-- Tab Đặt đơn -->
-  <div id="section-create-order" class="dashboard-section">
-    <div style="max-width: 650px; margin: 0 auto; background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 36px; box-shadow: 0 10px 30px rgba(0,0,0,0.03);">
-      <h2 style="font-family: var(--font); font-weight: 800; font-size: 1.8rem; color: var(--cream); margin-bottom: 24px; text-align: center;">Đặt đơn học hộ / hỗ trợ học tập</h2>
-      <form id="create-order-form">
-        <div class="form-group">
-          <label for="order-university">Trường đại học <span style="color: var(--coral);">*</span></label>
-          <input type="text" id="order-university" placeholder="Ví dụ: Đại học Bách Khoa, NEU..." required>
-        </div>
-        
-        <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-          <div class="form-group">
-            <label for="order-class-name">Lớp / Môn học</label>
-            <input type="text" id="order-class-name" placeholder="Ví dụ: Triết học Mác-Lênin">
-          </div>
-          <div class="form-group">
-            <label for="order-building">Tòa nhà</label>
-            <input type="text" id="order-building" placeholder="Ví dụ: Nhà D3, Tòa A1">
-          </div>
-        </div>
-
-        <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-          <div class="form-group">
-            <label for="order-floor">Tầng</label>
-            <input type="number" id="order-floor" placeholder="Ví dụ: 3">
-          </div>
-          <div class="form-group">
-            <label for="order-room-number">Số phòng <span style="color: var(--coral);">*</span></label>
-            <input type="text" id="order-room-number" placeholder="Ví dụ: 302" required>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="order-reason">Lý do cần hỗ trợ (ốm, tai nạn, việc gia đình...) <span style="color: var(--coral);">*</span></label>
-          <textarea id="order-reason" placeholder="Nhập lý do chi tiết..." required style="min-height: 80px; resize: vertical;"></textarea>
-        </div>
-
-        <div class="form-group">
-          <label for="order-gender-needed">Yêu cầu giới tính đối tác</label>
-          <select id="order-gender-needed" style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 12px; font-family: var(--font); font-size: 0.95rem;">
-            <option value="any">Bất kỳ</option>
-            <option value="male">Nam</option>
-            <option value="female">Nữ</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label style="margin-bottom: 10px; display: block;">Tính cách mong muốn</label>
-          <div class="checkbox-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer;">
-              <input type="checkbox" name="personality" value="Vui vẻ" style="width: 18px; height: 18px; accent-color: var(--green);"> Vui vẻ
-            </label>
-            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer;">
-              <input type="checkbox" name="personality" value="Nhiệt tình" style="width: 18px; height: 18px; accent-color: var(--green);"> Nhiệt tình
-            </label>
-            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer;">
-              <input type="checkbox" name="personality" value="Nghiêm túc" style="width: 18px; height: 18px; accent-color: var(--green);"> Nghiêm túc
-            </label>
-            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer;">
-              <input type="checkbox" name="personality" value="Chăm chỉ" style="width: 18px; height: 18px; accent-color: var(--green);"> Chăm chỉ
-            </label>
-          </div>
-        </div>
-
-        <button type="submit" class="btn-primary" style="width: 100%; margin-top: 24px; padding: 14px; font-size: 1.05rem;">Tạo đơn hỗ trợ</button>
-      </form>
-    </div>
-  </div>
-
-  <!-- Tab Lịch sử đơn -->
-  <div id="section-order-history" class="dashboard-section" style="display: none;">
-    <h2 style="font-family: var(--font); font-weight: 800; font-size: 1.8rem; color: var(--cream); margin-bottom: 24px; text-align: center;">Lịch sử đơn hỗ trợ</h2>
-    <div id="order-history-list" class="orders-grid" style="display: grid; grid-template-columns: 1fr; gap: 16px; max-width: 800px; margin: 0 auto;">
-      <div style="text-align: center; color: var(--muted); padding: 40px; font-weight: 600;">Bạn chưa đặt đơn nào.</div>
-    </div>
-  </div>
-</div>
-
-<!-- AUTH MODAL -->
-<div class="modal-overlay" id="auth-modal" style="display: none;">
-  <div class="modal-card">
-    <div class="modal-header">
-      <h3 id="auth-modal-title">Đăng nhập khách hàng</h3>
-      <button class="modal-close" id="auth-modal-close">✕</button>
-    </div>
-    
-    <!-- Login Form -->
-    <form id="login-form">
-      <div class="form-group">
-        <label for="login-email">Email hoặc Số điện thoại</label>
-        <input type="text" id="login-email" placeholder="Nhập email hoặc sđt" required>
-      </div>
-      <div class="form-group">
-        <label for="login-password">Mật khẩu</label>
-        <input type="password" id="login-password" placeholder="Nhập mật khẩu" required>
-      </div>
-      <button type="submit" class="btn-primary" style="width: 100%; margin-top: 16px; padding: 12px 24px; font-size: 1rem;">Đăng nhập</button>
-      <p class="auth-toggle-text">Chưa có tài khoản? <a href="#" id="go-to-register">Đăng ký ngay</a></p>
-    </form>
-
-    <!-- Register Form -->
-    <form id="register-form" style="display: none;">
-      <div class="form-group">
-        <label for="register-name">Họ và tên</label>
-        <input type="text" id="register-name" placeholder="Nhập họ và tên" required>
-      </div>
-      <div class="form-group">
-        <label for="register-email">Email</label>
-        <input type="email" id="register-email" placeholder="Nhập email" required>
-      </div>
-      <div class="form-group">
-        <label for="register-phone">Số điện thoại</label>
-        <input type="tel" id="register-phone" placeholder="Nhập số điện thoại" required>
-      </div>
-      <div class="form-group">
-        <label for="register-password">Mật khẩu (ít nhất 6 ký tự)</label>
-        <input type="password" id="register-password" placeholder="Nhập mật khẩu" required minlength="6">
-      </div>
-      <button type="submit" class="btn-primary" style="width: 100%; margin-top: 16px; padding: 12px 24px; font-size: 1rem;">Đăng ký</button>
-      <p class="auth-toggle-text">Đã có tài khoản? <a href="#" id="go-to-login">Đăng nhập ngay</a></p>
-    </form>
-  </div>
-</div>
-
-<!-- PAYMENT QR MODAL -->
-<div class="modal-overlay" id="payment-modal" style="display: none;">
-  <div class="modal-card" style="max-width: 450px; text-align: center;">
-    <div class="modal-header">
-      <h3>Thanh toán đơn hàng</h3>
-      <button class="modal-close" id="payment-modal-close">✕</button>
-    </div>
-    <div style="padding: 16px 0;">
-      <p style="font-weight: 600; color: var(--muted); margin-bottom: 8px;">Vui lòng quét mã QR dưới đây để thanh toán</p>
-      <div style="font-size: 1.5rem; font-weight: 800; color: var(--green); margin-bottom: 16px;" id="payment-amount">0đ</div>
-      
-      <!-- QR Image container -->
-      <div style="background: #fff; padding: 12px; border-radius: 16px; border: 1px solid var(--border); display: inline-block; margin-bottom: 16px;">
-        <img id="payment-qr-img" src="" alt="QR Thanh toán" style="width: 220px; height: 220px; display: block;">
-      </div>
-      
-      <div style="background: rgba(22,163,74,0.06); border: 1px solid rgba(22,163,74,0.15); border-radius: 12px; padding: 12px; font-size: 0.85rem; text-align: left; margin-bottom: 20px; line-height: 1.5;">
-        <div style="margin-bottom: 4px;"><strong>Ngân hàng:</strong> MB Bank</div>
-        <div style="margin-bottom: 4px;"><strong>Chủ TK:</strong> HOCHO VIETNAM</div>
-        <div style="margin-bottom: 4px;"><strong>Số TK:</strong> 0987654321</div>
-        <div><strong>Nội dung:</strong> <span id="payment-transfer-content" style="font-weight: 800; color: var(--green); font-family: var(--mono);"></span></div>
-      </div>
-      
-      <button id="btn-confirm-payment" class="btn-primary" style="width: 100%; padding: 12px;">Đã thanh toán</button>
-      <p style="font-size: 0.8rem; color: var(--muted); margin-top: 12px;"><span class="spinner" style="display: inline-block; animation: spin 1s linear infinite; margin-right: 4px;">⏳</span> Hệ thống đang tự động kiểm tra giao dịch...</p>
-    </div>
-  </div>
-</div>
-
-<!-- RATING MODAL -->
-<div class="modal-overlay" id="rating-modal" style="display: none;">
-  <div class="modal-card" style="max-width: 450px;">
-    <div class="modal-header">
-      <h3>Đánh giá đối tác hỗ trợ</h3>
-      <button class="modal-close" id="rating-modal-close">✕</button>
-    </div>
-    <form id="rating-form" style="padding-top: 16px;">
-      <input type="hidden" id="rating-order-id">
-      
-      <div style="text-align: center; margin-bottom: 20px;">
-        <p style="font-weight: 600; color: var(--muted); margin-bottom: 12px;">Bạn đánh giá đối tác thế nào?</p>
-        <div class="star-rating" style="display: flex; justify-content: center; gap: 8px; font-size: 2rem; cursor: pointer; flex-direction: row-reverse;">
-          <input type="radio" id="star5" name="rating" value="5" style="display: none;"><label for="star5">★</label>
-          <input type="radio" id="star4" name="rating" value="4" style="display: none;"><label for="star4">★</label>
-          <input type="radio" id="star3" name="rating" value="3" style="display: none;"><label for="star3">★</label>
-          <input type="radio" id="star2" name="rating" value="2" style="display: none;"><label for="star2">★</label>
-          <input type="radio" id="star1" name="rating" value="1" style="display: none;"><label for="star1">★</label>
-        </div>
-      </div>
-      
-      <div class="form-group">
-        <label for="rating-review">Ý kiến đóng góp (Review)</label>
-        <textarea id="rating-review" placeholder="Nhập nhận xét của bạn về đối tác..." style="min-height: 80px; resize: vertical;"></textarea>
-      </div>
-      
-      <button type="submit" class="btn-primary" style="width: 100%; margin-top: 16px; padding: 12px;">Gửi đánh giá</button>
-    </form>
-  </div>
-</div>
-
-
-<!-- ===== CHATBOT ===== -->
-<button class="chatbot-toggle" id="chatbotToggle" onclick="toggleChatbot()">
-  💬
-  <span class="badge" id="chatbotBadge" style="display:none">1</span>
-</button>
-
-<div class="chatbot-window" id="chatbotWindow">
-  <div class="chatbot-header">
-    <div class="chatbot-header-left">
-      <div class="chatbot-avatar">HC</div>
-      <div>
-        <div class="chatbot-title">HoCho Bot</div>
-        <div class="chatbot-sub">🟢 Hỗ trợ 24/7</div>
-      </div>
-    </div>
-    <button class="chatbot-close" onclick="toggleChatbot()">✕</button>
-  </div>
-
-  <div class="chatbot-messages" id="chatbotMessages">
-    <div class="chatbot-msg bot">
-      👋 Chào bạn! Mình là HoCho Bot.<br>
-      Mình có thể giúp gì cho bạn hôm nay?
-      <span class="time">vừa xong</span>
-    </div>
-  </div>
-
-  <div class="chatbot-suggestions" id="chatbotSuggestions">
-    <button onclick="askBot('Dịch vụ của bạn là gì?')">🤔 Dịch vụ?</button>
-    <button onclick="askBot('Làm sao để đặt hỗ trợ?')">📚 Cách đặt?</button>
-    <button onclick="askBot('Giá bao nhiêu?')">💰 Giá</button>
-    <button onclick="askBot('Làm đối tác thế nào?')">💼 Làm đối tác</button>
-  </div>
-
-  <div class="chatbot-input-bar">
-    <input class="chatbot-input" id="chatbotInput" placeholder="Nhập câu hỏi..." onkeydown="if(event.key==='Enter')sendChat()">
-    <button class="chatbot-send" id="chatbotSend" onclick="sendChat()">➤</button>
-  </div>
-</div>
-
-<script>
-// ===== CHATBOT =====
-let chatHistory = [];
-
-function toggleChatbot() {
-  const win = document.getElementById('chatbotWindow');
-  win.classList.toggle('open');
-  if (win.classList.contains('open')) {
-    document.getElementById('chatbotInput').focus();
-    document.getElementById('chatbotBadge').style.display = 'none';
-  }
-}
-
-async function sendChat() {
-  const input = document.getElementById('chatbotInput');
-  const msg = input.value.trim();
-  if (!msg) return;
-  input.value = '';
-  await askBot(msg);
-}
-
-async function askBot(question) {
-  const messages = document.getElementById('chatbotMessages');
-  const sendBtn = document.getElementById('chatbotSend');
-  
-  // Add user message
-  addMessage('user', question);
-  
-  // Show typing indicator
-  const typingDiv = document.createElement('div');
-  typingDiv.className = 'chatbot-msg typing';
-  typingDiv.id = 'typingIndicator';
-  typingDiv.innerHTML = '<span></span><span></span><span></span>';
-  messages.appendChild(typingDiv);
-  messages.scrollTop = messages.scrollHeight;
-  
-  sendBtn.disabled = true;
-
-  try {
-    // Gọi API qua backend
-    const response = await fetch('/api/chatbot/ask', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ 
-        message: question,
-        history: chatHistory 
-      })
-    });
-
-    const data = await response.json();
-    
-    // Remove typing indicator
-    document.getElementById('typingIndicator')?.remove();
-    
-    if (data.success && data.reply) {
-      const reply = data.reply;
-      chatHistory.push({ role: 'user', content: question });
-      chatHistory.push({ role: 'assistant', content: reply });
-      
-      // Nếu là mock mode, hiển thị log
-      if (data.mock) {
-        console.log('🤖 Mock mode reply');
-      }
-      
-      addMessage('bot', reply);
-    } else {
-      addMessage('bot', 'Xin lỗi, mình đang gặp chút vấn đề. Vui lòng thử lại sau nhé!');
-    }
-  } catch (error) {
-    document.getElementById('typingIndicator')?.remove();
-    console.error('Chatbot error:', error);
-    addMessage('bot', 'Xin lỗi, mình không thể kết nối đến server. Vui lòng thử lại sau!');
-  }
-  
-  sendBtn.disabled = false;
-}
-
-function addMessage(type, content) {
-  const messages = document.getElementById('chatbotMessages');
-  const div = document.createElement('div');
-  div.className = `chatbot-msg ${type}`;
-  const formatted = content.replace(/\n/g, '<br>');
-  div.innerHTML = `${formatted}<span class="time">${new Date().toLocaleTimeString('vi-VN', {hour:'2-digit',minute:'2-digit'})}</span>`;
-  document.getElementById('typingIndicator')?.remove();
-  messages.appendChild(div);
-  messages.scrollTop = messages.scrollHeight;
-}
-
-// Auto show after 3s
-setTimeout(() => {
-  const badge = document.getElementById('chatbotBadge');
-  badge.style.display = 'flex';
-  badge.textContent = '💬';
-}, 3000);
-
-// Close on outside click
-document.addEventListener('click', (e) => {
-  const win = document.getElementById('chatbotWindow');
-  const toggle = document.getElementById('chatbotToggle');
-  if (win.classList.contains('open') && 
-      !win.contains(e.target) && 
-      !toggle.contains(e.target)) {
-    win.classList.remove('open');
-  }
-});
-
-console.log('💚 HoCho Bot ready!');
-console.log('📌 Backend endpoint: /api/chatbot/ask');
-
-// ===== CUSTOMER AUTH & DASHBOARD LOGIC =====
-const API_BASE = window.location.origin;
-
-let currentToken = localStorage.getItem('customer_token') || null;
-let currentCustomer = null;
-let pollingIntervals = {};
-
-const btnNavLogin = document.getElementById('nav-btn-login');
-const btnNavLogout = document.getElementById('nav-btn-logout');
-const navLinksGuest = document.getElementById('nav-links-guest');
-const navLinksMember = document.getElementById('nav-links-member');
-const navUserName = document.getElementById('nav-user-name');
-
-const navTabCreate = document.getElementById('nav-tab-create');
-const navTabHistory = document.getElementById('nav-tab-history');
-
-const landingContainer = document.getElementById('landing-container');
-const dashboardContainer = document.getElementById('dashboard-container');
-const sectionCreateOrder = document.getElementById('section-create-order');
-const sectionOrderHistory = document.getElementById('section-order-history');
-
-const authModal = document.getElementById('auth-modal');
-const authModalTitle = document.getElementById('auth-modal-title');
-const authModalClose = document.getElementById('auth-modal-close');
-const loginForm = document.getElementById('login-form');
-const registerForm = document.getElementById('register-form');
-const goToRegister = document.getElementById('go-to-register');
-const goToLogin = document.getElementById('go-to-login');
-
-const createOrderForm = document.getElementById('create-order-form');
-const paymentModal = document.getElementById('payment-modal');
-const paymentModalClose = document.getElementById('payment-modal-close');
-const btnConfirmPayment = document.getElementById('btn-confirm-payment');
-
-const ratingModal = document.getElementById('rating-modal');
-const ratingModalClose = document.getElementById('rating-modal-close');
-const ratingForm = document.getElementById('rating-form');
-
-async function initSession() {
-  if (currentToken) {
-    try {
-      const response = await fetch(`${API_BASE}/api/customer/me`, {
-        headers: { 'Authorization': `Bearer ${currentToken}` }
-      });
-      const result = await response.json();
-      if (result.success) {
-        currentCustomer = result.data;
-        showDashboardView();
-      } else {
-        logout();
-      }
-    } catch (e) {
-      console.error('Verify token failed:', e);
-      logout();
-    }
-  } else {
-    showLandingView();
-  }
-}
-
-function showDashboardView() {
-  landingContainer.style.display = 'none';
-  dashboardContainer.style.display = 'block';
-  navLinksGuest.style.display = 'none';
-  navLinksMember.style.display = 'flex';
-  navUserName.textContent = currentCustomer ? currentCustomer.full_name : 'Khách hàng';
-  switchTab('create');
-}
-
-function showLandingView() {
-  landingContainer.style.display = 'block';
-  dashboardContainer.style.display = 'none';
-  navLinksGuest.style.display = 'flex';
-  navLinksMember.style.display = 'none';
-  
-  Object.values(pollingIntervals).forEach(clearInterval);
-  pollingIntervals = {};
-}
-
-function logout() {
-  localStorage.removeItem('customer_token');
-  currentToken = null;
-  currentCustomer = null;
-  showLandingView();
-}
-
-function switchTab(tab) {
-  if (tab === 'create') {
-    navTabCreate.style.color = 'var(--green)';
-    navTabCreate.style.fontWeight = '800';
-    navTabHistory.style.color = 'var(--muted)';
-    navTabHistory.style.fontWeight = '700';
-    
-    sectionCreateOrder.style.display = 'block';
-    sectionOrderHistory.style.display = 'none';
-  } else {
-    navTabCreate.style.color = 'var(--muted)';
-    navTabCreate.style.fontWeight = '700';
-    navTabHistory.style.color = 'var(--green)';
-    navTabHistory.style.fontWeight = '800';
-    
-    sectionCreateOrder.style.display = 'none';
-    sectionOrderHistory.style.display = 'block';
-    loadOrderHistory();
-  }
-}
-
-btnNavLogin.addEventListener('click', (e) => {
-  e.preventDefault();
-  openAuthModal('login');
-});
-
-btnNavLogout.addEventListener('click', (e) => {
-  e.preventDefault();
-  logout();
-});
-
-navTabCreate.addEventListener('click', (e) => {
-  e.preventDefault();
-  switchTab('create');
-});
-
-navTabHistory.addEventListener('click', (e) => {
-  e.preventDefault();
-  switchTab('history');
-});
-
-document.querySelector('.hero-btns .btn-primary').addEventListener('click', (e) => {
-  if (!currentToken) {
-    e.preventDefault();
-    openAuthModal('login');
-  } else {
-    e.preventDefault();
-    showDashboardView();
-    switchTab('create');
-  }
-});
-
-function openAuthModal(type) {
-  authModal.style.display = 'flex';
-  if (type === 'login') {
-    authModalTitle.textContent = 'Đăng nhập khách hàng';
-    loginForm.style.display = 'block';
-    registerForm.style.display = 'none';
-  } else {
-    authModalTitle.textContent = 'Đăng ký khách hàng';
-    loginForm.style.display = 'none';
-    registerForm.style.display = 'block';
-  }
-}
-
-authModalClose.addEventListener('click', () => {
-  authModal.style.display = 'none';
-});
-
-goToRegister.addEventListener('click', (e) => {
-  e.preventDefault();
-  openAuthModal('register');
-});
-
-goToLogin.addEventListener('click', (e) => {
-  e.preventDefault();
-  openAuthModal('login');
-});
-
-loginForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const identifier = document.getElementById('login-email').value.trim();
-  const password = document.getElementById('login-password').value;
-  
-  try {
-    const res = await fetch(`${API_BASE}/api/customer/auth/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ identifier, password })
-    });
-    const result = await res.json();
-    if (result.success) {
-      currentToken = result.data.token;
-      localStorage.setItem('customer_token', currentToken);
-      currentCustomer = result.data.customer;
-      authModal.style.display = 'none';
-      loginForm.reset();
-      showDashboardView();
-    } else {
-      alert(result.message || 'Đăng nhập thất bại, vui lòng thử lại.');
-    }
-  } catch (err) {
-    console.error(err);
-    alert('Không thể kết nối tới máy chủ.');
-  }
-});
-
-registerForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const full_name = document.getElementById('register-name').value.trim();
-  const email = document.getElementById('register-email').value.trim();
-  const phone = document.getElementById('register-phone').value.trim();
-  const password = document.getElementById('register-password').value;
-  
-  if (password.length < 6) {
-    alert('Mật khẩu phải có ít nhất 6 ký tự.');
-    return;
-  }
-
-  const identifier = email || phone;
-
-  try {
-    const res = await fetch(`${API_BASE}/api/customer/auth/register`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ identifier, full_name, password })
-    });
-    const result = await res.json();
-    if (result.success) {
-      currentToken = result.data.token;
-      localStorage.setItem('customer_token', currentToken);
-      currentCustomer = result.data.customer;
-      authModal.style.display = 'none';
-      registerForm.reset();
-      showDashboardView();
-    } else {
-      alert(result.message || 'Đăng ký thất bại, vui lòng thử lại.');
-    }
-  } catch (err) {
-    console.error(err);
-    alert('Không thể kết nối tới máy chủ.');
-  }
-});
-
-createOrderForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  
-  const university = document.getElementById('order-university').value.trim();
-  const class_name = document.getElementById('order-class-name').value.trim();
-  const building = document.getElementById('order-building').value.trim();
-  const floor = document.getElementById('order-floor').value.trim();
-  const room_number = document.getElementById('order-room-number').value.trim();
-  const reason = document.getElementById('order-reason').value.trim();
-  const gender_needed = document.getElementById('order-gender-needed').value;
-  
-  const personality_needed = [];
-  document.querySelectorAll('input[name="personality"]:checked').forEach(cb => {
-    personality_needed.push(cb.value);
-  });
-  
-  try {
-    const res = await fetch(`${API_BASE}/api/order/create`, {
-      method: 'POST',
-      headers: { 
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${currentToken}`
-      },
-      body: JSON.stringify({
-        university, class_name, building, floor, room_number,
-        reason, gender_needed, personality_needed
-      })
-    });
-    
-    const result = await res.json();
-    if (result.success) {
-      createOrderForm.reset();
-      const orderData = result.data;
-      if (orderData.sepay_amount > 0) {
-        openPaymentModal(orderData.order_id, orderData.order_code, orderData.sepay_amount);
-      } else {
-        alert(result.message || 'Tạo đơn thành công!');
-        switchTab('history');
-      }
-    } else {
-      alert(result.message || 'Tạo đơn thất bại.');
-    }
-  } catch (err) {
-    console.error(err);
-    alert('Lỗi kết nối tới máy chủ khi đặt đơn.');
-  }
-});
-
-let activePaymentOrderId = null;
-
-window.openPaymentModal = function(orderId, orderCode, amount) {
-  activePaymentOrderId = orderId;
-  paymentModal.style.display = 'flex';
-  
-  document.getElementById('payment-amount').textContent = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
-  document.getElementById('payment-transfer-content').textContent = orderCode;
-  
-  const qrUrl = `https://img.vietqr.io/image/MB-0987654321-compact.png?amount=${amount}&addInfo=${orderCode}&accountName=HOCHO%20VIETNAM`;
-  document.getElementById('payment-qr-img').src = qrUrl;
-  
-  startStatusPolling(orderId);
-}
-
-paymentModalClose.addEventListener('click', () => {
-  paymentModal.style.display = 'none';
-  if (activePaymentOrderId) {
-    clearInterval(pollingIntervals[activePaymentOrderId]);
-    delete pollingIntervals[activePaymentOrderId];
-  }
-  switchTab('history');
-});
-
-btnConfirmPayment.addEventListener('click', async () => {
-  if (!activePaymentOrderId) return;
-  
-  try {
-    const res = await fetch(`${API_BASE}/api/order/confirm-payment`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${currentToken}`
-      },
-      body: JSON.stringify({ order_id: activePaymentOrderId })
-    });
-    const result = await res.json();
-    alert(result.message || 'Gửi yêu cầu thanh toán thành công. Đang chờ hệ thống duyệt!');
-    paymentModal.style.display = 'none';
-    if (pollingIntervals[activePaymentOrderId]) {
-      clearInterval(pollingIntervals[activePaymentOrderId]);
-      delete pollingIntervals[activePaymentOrderId];
-    }
-    switchTab('history');
-  } catch (err) {
-    console.error(err);
-    alert('Lỗi khi gửi yêu cầu xác nhận thanh toán.');
-  }
-});
-
-function startStatusPolling(orderId) {
-  if (pollingIntervals[orderId]) return;
-  
-  pollingIntervals[orderId] = setInterval(async () => {
-    try {
-      const res = await fetch(`${API_BASE}/api/order/status?order_id=${orderId}`, {
-        headers: { 'Authorization': `Bearer ${currentToken}` }
-      });
-      const result = await res.json();
-      if (result.success && result.data) {
-        const order = result.data;
-        if (order.status !== 'waiting' || order.payment_status === 'paid') {
-          clearInterval(pollingIntervals[orderId]);
-          delete pollingIntervals[orderId];
-          alert(`Đơn hàng ${order.order_code} đã được thanh toán thành công! Hệ thống đang tìm đối tác.`);
-          paymentModal.style.display = 'none';
-          switchTab('history');
-        }
-      }
-    } catch (e) {
-      console.error('Polling status error:', e);
-    }
-  }, 4000);
-}
-
-async function loadOrderHistory() {
-  const container = document.getElementById('order-history-list');
-  container.innerHTML = '<div style="text-align: center; color: var(--muted); padding: 40px; font-weight: 600;">Đang tải danh sách đơn...</div>';
-  
-  try {
-    const res = await fetch(`${API_BASE}/api/order/my-orders`, {
-      headers: { 'Authorization': `Bearer ${currentToken}` }
-    });
-    const result = await res.json();
-    if (result.success && result.data && result.data.length > 0) {
-      container.innerHTML = '';
-      result.data.forEach(order => {
-        let statusText = 'Không rõ';
-        let badgeClass = 'waiting';
-        const st = order.status;
-        
-        if (st === 'waiting') {
-          statusText = 'Chờ thanh toán';
-          badgeClass = 'waiting';
-        } else if (st === 'matching') {
-          statusText = 'Đang tìm đối tác';
-          badgeClass = 'matching';
-        } else if (['accepted', 'heading', 'arrived'].includes(st)) {
-          statusText = 'Đã ghép đối tác';
-          badgeClass = 'matched';
-        } else if (st === 'in_progress') {
-          statusText = 'Đang thực hiện';
-          badgeClass = 'in_progress';
-        } else if (st === 'completed') {
-          statusText = 'Hoàn thành';
-          badgeClass = 'completed';
-        } else if (['cancelled', 'rejected'].includes(st)) {
-          statusText = 'Đã hủy';
-          badgeClass = 'cancelled';
-        }
-        
-        const dateStr = new Date(order.created_at).toLocaleString('vi-VN');
-        
-        let partnerInfo = 'Đang tìm đối tác...';
-        if (order.partner) {
-          partnerInfo = `<strong>${order.partner.full_name}</strong> (${order.partner.rating || 5}★)`;
-        }
-        
-        let ratingBtnHtml = '';
-        if (st === 'completed' && !order.rating) {
-          ratingBtnHtml = `<button onclick="openRatingModal('${order.id}')" class="btn-primary" style="margin-top: 10px; padding: 6px 14px; font-size: 0.8rem; border-radius: 8px;">Đánh giá đối tác</button>`;
-        } else if (st === 'completed' && order.rating) {
-          ratingBtnHtml = `<div style="margin-top: 8px; font-size: 0.85rem; color: var(--lime); font-weight: 700;">Đã đánh giá: ${order.rating}★ ${order.review ? `("${order.review}")` : ''}</div>`;
-        }
-        
-        let payBtnHtml = '';
-        if (st === 'waiting' && order.payment_status === 'unpaid') {
-          const payAmount = order.price - (order.wallet_applied || 0);
-          payBtnHtml = `<button onclick="openPaymentModal('${order.id}', '${order.order_code}', ${payAmount})" class="btn-primary" style="margin-top: 10px; padding: 6px 14px; font-size: 0.8rem; border-radius: 8px; background: linear-gradient(135deg, var(--gold), #d97706)">Thanh toán ngay</button>`;
-        } else if (st === 'waiting' && order.payment_status === 'pending') {
-          payBtnHtml = `<div style="margin-top: 8px; font-size: 0.82rem; color: #d97706; font-weight: 700;">⌛ Đang chờ Admin xác nhận thanh toán</div>`;
-        }
-        
-        const cardHtml = `
-          <div class="order-card-item">
-            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-bottom: 4px;">
-              <span style="font-family: var(--mono); font-weight: 800; font-size: 0.95rem; color: var(--green);">${order.order_code}</span>
-              <span class="order-badge ${badgeClass}">${statusText}</span>
-            </div>
-            <div style="font-size: 0.9rem; line-height: 1.6; display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-              <div><strong>Trường:</strong> ${order.university}</div>
-              <div><strong>Môn học:</strong> ${order.class_name || 'N/A'}</div>
-              <div><strong>Phòng:</strong> ${order.room_number} (Tầng ${order.floor || 'N/A'}, Tòa ${order.building || 'N/A'})</div>
-              <div><strong>Đối tác:</strong> ${partnerInfo}</div>
-              <div style="grid-column: span 2;"><strong>Ngày đặt:</strong> ${dateStr}</div>
-              <div style="grid-column: span 2; font-style: italic; color: var(--muted); background: rgba(0,0,0,0.02); padding: 6px 10px; border-radius: 8px; margin-top: 4px;"><strong>Lý do:</strong> ${order.requirements || 'N/A'}</div>
-            </div>
-            <div style="display: flex; gap: 10px; justify-content: flex-end;">
-              ${payBtnHtml}
-              ${ratingBtnHtml}
-            </div>
-          </div>
-        `;
-        
-        container.insertAdjacentHTML('beforeend', cardHtml);
-      });
-    } else {
-      container.innerHTML = '<div style="text-align: center; color: var(--muted); padding: 40px; font-weight: 600;">Bạn chưa đặt đơn nào.</div>';
-    }
-  } catch (err) {
-    console.error(err);
-    container.innerHTML = '<div style="text-align: center; color: var(--coral); padding: 40px; font-weight: 600;">Lỗi khi tải lịch sử đơn hỗ trợ.</div>';
-  }
-}
-
-window.openRatingModal = function(orderId) {
-  document.getElementById('rating-order-id').value = orderId;
-  ratingModal.style.display = 'flex';
-  
-  document.querySelectorAll('input[name="rating"]').forEach(input => input.checked = false);
-  document.getElementById('rating-review').value = '';
-}
-
-ratingModalClose.addEventListener('click', () => {
-  ratingModal.style.display = 'none';
-});
-
-ratingForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const order_id = document.getElementById('rating-order-id').value;
-  const ratingInput = document.querySelector('input[name="rating"]:checked');
-  const review = document.getElementById('rating-review').value.trim();
-  
-  if (!ratingInput) {
-    alert('Vui lòng chọn số sao đánh giá (1-5 sao).');
-    return;
-  }
-  
-  const rating = ratingInput.value;
-  
-  try {
-    const res = await fetch(`${API_BASE}/api/order/rate`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${currentToken}`
-      },
-      body: JSON.stringify({ order_id, rating, review })
-    });
-    const result = await res.json();
-    if (result.success) {
-      alert('Cảm ơn bạn đã gửi đánh giá!');
-      ratingModal.style.display = 'none';
-      loadOrderHistory();
-    } else {
-      alert(result.message || 'Gửi đánh giá thất bại.');
-    }
-  } catch (err) {
-    console.error(err);
-    alert('Lỗi khi gửi đánh giá tới máy chủ.');
-  }
-});
-
-initSession();
-
-</script>
 
 </body>
 </html>
