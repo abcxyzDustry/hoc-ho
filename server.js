@@ -17,6 +17,7 @@ import adminApi      from './routes/api/admin.js';
 import uploadApi     from './routes/api/upload.js';
 import chatbotApi    from './routes/api/chatbot.js';
 import cronApi       from './routes/api/cron.js';
+import discordApi    from './routes/api/discord.js';
 import { sendStudyReminder } from './utils/reminder.js';
 import { seedDefaultAdmin } from './utils/seedAdmin.js';
 import { dropStaleGeoIndexes } from './utils/dropStaleGeoIndex.js';
@@ -70,6 +71,7 @@ app.use('/api/admin',    adminApi);
 app.use('/api/upload',   uploadApi);
 app.use('/api/chatbot',  chatbotApi);
 app.use('/api/cron',     cronApi);
+app.use('/api/discord',  discordApi);
 
 app.get('/health', (req, res) =>
   res.json({ status: 'ok', timestamp: new Date().toISOString() })

@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HoCho Partner - Dành cho Đối tác</title>
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          },
+          colors: {
+            hochoBg: '#fafaf9',
+            accent: '#16a34a',
+            accentHover: '#4d7c0f',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #fafaf9;
+    }
+    .custom-scroll::-webkit-scrollbar {
+      width: 6px;
+    }
+    .custom-scroll::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background-color: #cbd5e1;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body class="font-sans antialiased text-slate-800 min-h-screen flex flex-col">
+
+  <!-- TOP NAVIGATION BAR -->
+  <header class="bg-white border-b border-stone-200 sticky top-0 z-40 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+      <div class="flex items-center gap-2">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-green-600 to-lime-500 flex items-center justify-center text-white font-extrabold text-xl shadow-md shadow-green-200">
+          H
+        </div>
+        <div>
+          <span class="font-extrabold text-xl tracking-tight bg-gradient-to-r from-green-700 to-lime-600 bg-clip-text text-transparent">HoCho</span>
+          <span class="text-xs font-bold text-stone-500 block -mt-1">PARTNER PORTAL</span>
+        </div>
+      </div>
+
+      <!-- User Profile & Status Toggle -->
+      <div id="nav-user-info" class="hidden flex items-center gap-4">
+        <div class="flex items-center gap-2">
+          <span id="partner-name-display" class="font-bold text-sm text-stone-700">Đối tác</span>
+          <div id="partner-status-badge" class="px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-stone-100 text-stone-600 border border-stone-200">
+            OFFLINE
+          </div>
+        </div>
+        <!-- Status Switch -->
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" id="online-toggle" class="sr-only peer" onchange="toggleOnlineStatus()">
+          <div class="w-11 h-6 bg-stone-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-stone-300 after:border after:rounded-full after:height-5 after:width-5 after:transition-all peer-checked:bg-green-600"></div>
+          <span class="ml-2 text-xs font-bold text-stone-600">Sẵn sàng nhận đơn</span>
+        </label>
+        <button onclick="logout()" class="p-2 text-stone-400 hover:text-red-500 transition-colors" title="Đăng xuất">
+          <i class="fa-solid fa-right-from-bracket text-lg"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="flex-grow max-w-6xl w-full mx-auto px-4 py-6">
+
+    <!-- 1. AUTH SCREEN (LOGIN / REGISTER) -->
+    <div id="auth-screen" class="max-w-md mx-auto my-12 bg-white rounded-3xl border border-stone-200 shadow-xl p-8 transition-all duration-300">
+      <div class="text-center mb-8">
+        <h2 class="text-2xl font-extrabold text-stone-800">Trở thành Đối tác HoCho</h2>
+        <p class="text-stone-500 text-sm mt-2">Hỗ trợ sinh viên ốm đau, nhận thu nhập 140k/buổi học</p>
+      </div>
+
+      <!-- Auth step 1: Check SĐT/Email -->
+      <div id="auth-step-1" class="space-y-4">
+        <div>
+          <label class="block text-xs font-extrabold text-stone-600 uppercase tracking-wider mb-2">Số điện thoại hoặc Email</label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-stone-400">
+              <i class="fa-solid fa-user"></i>
+            </span>
+            <input type="text" id="auth-identifier" placeholder="Nhập SĐT hoặc email trường..." class="pl-10 w-full rounded-xl border border-stone-300 px-4 py-3 text-stone-800 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all">
+          </div>
+        </div>
+        <button id="btn-check-auth" onclick="checkAuth()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-xl transition-colors shadow-lg shadow-green-100 flex items-center justify-center gap-2">
+          <span>Tiếp tục</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+
+      <!-- Auth step 2: Login -->
+      <div id="auth-step-login" class="hidden space-y-4">
+        <div class="p-3 bg-green-50 rounded-xl border border-green-200 text-sm text-green-800 mb-2">
+          <i class="fa-solid fa-circle-check mr-1.5"></i> Tài khoản đã tồn tại. Nhập mật khẩu để đăng nhập.
+        </div>
+        <div>
+          <label class="block text-xs font-extrabold text-stone-600 uppercase tracking-wider mb-2">Mật khẩu</label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-stone-400">
+              <i class="fa-solid fa-lock"></i>
+            </span>
+            <input type="password" id="login-password" placeholder="Nhập mật khẩu..." class="pl-10 w-full rounded-xl border border-stone-300 px-4 py-3 text-stone-800 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all">
+          </div>
+        </div>
+        <button id="btn-login" onclick="loginPartner()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-xl transition-colors shadow-lg shadow-green-100">
+          Đăng nhập
+        </button>
+        <button onclick="backToStep1()" class="w-full text-center text-xs font-bold text-stone-500 hover:text-stone-700 py-1 transition-colors">
+          <i class="fa-solid fa-chevron-left mr-1"></i> Quay lại nhập tài khoản khác
+        </button>
+      </div>
+
+      <!-- Auth step 3: Register -->
+      <div id="auth-step-register" class="hidden space-y-4">
+        <div class="p-3 bg-amber-50 rounded-xl border border-amber-200 text-sm text-amber-800 mb-2">
+          <i class="fa-solid fa-user-plus mr-1.5"></i> Tạo hồ sơ đối tác mới. Điền các thông tin sau để đăng ký.
+        </div>
+        <div>
+          <label class="block text-xs font-extrabold text-stone-600 uppercase tracking-wider mb-1.5">Họ và tên thật</label>
+          <input type="text" id="reg-fullname" placeholder="Họ và tên đầy đủ (trùng CMT/Thẻ SV)..." class="w-full rounded-xl border border-stone-300 px-4 py-2.5 text-stone-800 text-sm focus:outline-none focus:ring-2 focus:ring-green-500">
+        </div>
+        <div>
+          <label class="block text-xs font-extrabold text-stone-600 uppercase tracking-wider mb-1.5">Trường Đại học</label>
+          <input type="text" id="reg-university" placeholder="Ví dụ: Đại học Bách Khoa Hà Nội..." class="w-full rounded-xl border border-stone-300 px-4 py-2.5 text-stone-800 text-sm focus:outline-none focus:ring-2 focus:ring-green-500">
+        </div>
+        <div>
+          <label class="block text-xs font-extrabold text-stone-600 uppercase tracking-wider mb-1.5">Giới thiệu ngắn gọn về bản thân</label>
+          <textarea id="reg-bio" placeholder="Điểm mạnh, kinh nghiệm hỗ trợ, v.v..." rows="2" class="w-full rounded-xl border border-stone-300 px-4 py-2.5 text-stone-800 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"></textarea>
+        </div>
+        <div>
+          <label class="block text-xs font-extrabold text-stone-600 uppercase tracking-wider mb-1.5">Mật khẩu mới (tối thiểu 6 ký tự)</label>
+          <input type="password" id="reg-password" placeholder="Tạo mật khẩu đăng nhập..." class="w-full rounded-xl border border-stone-300 px-4 py-2.5 text-stone-800 text-sm focus:outline-none focus:ring-2 focus:ring-green-500">
+        </div>
+        <button id="btn-register" onclick="registerPartner()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-xl transition-colors shadow-lg shadow-green-100">
+          Hoàn tất Đăng ký & Đóng phí kích hoạt (200K)
+        </button>
+        <button onclick="backToStep1()" class="w-full text-center text-xs font-bold text-stone-500 hover:text-stone-700 py-1 transition-colors">
+          <i class="fa-solid fa-chevron-left mr-1"></i> Quay lại
+        </button>
+      </div>
+    </div>
+
+    <!-- 2. PARTNER PAY ACTIVATION FEE SCREEN -->
+    <div id="activation-screen" class="hidden max-w-lg mx-auto my-8 bg-white rounded-3xl border border-stone-200 shadow-xl p-8 text-center space-y-6">
+      <div class="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto text-amber-600 text-2xl">
+        <i class="fa-solid fa-wallet"></i>
+      </div>
+      <div>
+        <h2 class="text-xl font-extrabold text-stone-800">Thanh toán phí kích hoạt tài khoản</h2>
+        <p class="text-stone-500 text-sm mt-1.5">Hồ sơ đăng ký của bạn là <strong id="activation-reg-id" class="text-green-600">...</strong>. Vui lòng thanh toán phí kích hoạt <strong>200.000đ</strong> để bắt đầu nhận đơn.</p>
+      </div>
+
+      <!-- QR SePay -->
+      <div class="bg-stone-50 border border-stone-200 rounded-2xl p-4 max-w-xs mx-auto space-y-3">
+        <img id="activation-qr-img" src="" alt="SePay QR Code" class="w-48 h-48 mx-auto rounded-lg border border-stone-200 shadow-sm">
+        <div class="text-left text-xs space-y-1 text-stone-600">
+          <div>🏦 Ngân hàng: <span class="font-bold">MB Bank</span></div>
+          <div>👤 Chủ TK: <span class="font-bold">HOCHO TECH CO</span></div>
+          <div>🔢 Số TK: <span class="font-bold">090888999</span></div>
+          <div>💸 Số tiền: <span class="font-bold text-green-600 text-sm">200,000 đ</span></div>
+          <div>📝 Nội dung: <span id="activation-memo" class="font-mono font-bold bg-amber-100 px-1 py-0.5 rounded text-amber-900">...</span></div>
+        </div>
+      </div>
+
+      <div class="p-3 bg-amber-50 rounded-xl border border-amber-200 text-xs text-amber-800 text-left">
+        💡 <strong>Lưu ý:</strong> Sau khi chuyển tiền chính xác nội dung trên, nhấn nút "Đã thanh toán" dưới đây. Hồ sơ của bạn sẽ được admin xác nhận & kích hoạt trong vòng 5-10 phút.
+      </div>
+
+      <div class="flex gap-3">
+        <button onclick="logout()" class="w-1/3 bg-stone-100 hover:bg-stone-200 text-stone-600 font-bold py-3 rounded-xl transition-colors text-sm">
+          Đăng xuất
+        </button>
+        <button onclick="confirmActivationPayment()" class="w-2/3 bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-xl transition-colors shadow-lg shadow-green-100 text-sm">
+          Tôi đã thanh toán thành công
+        </button>
+      </div>
+    </div>
+
+    <!-- 3. MAIN DASHBOARD SCREEN (LOGGED IN & ACTIVATED) -->
+    <div id="dashboard-screen" class="hidden space-y-6">
+
+      <!-- ACCOUNT STATUS WARNING (IF NOT ACTIVE) -->
+      <div id="partner-not-active-warning" class="hidden bg-amber-50 border border-amber-200 rounded-2xl p-4 flex items-start gap-3">
+        <span class="text-amber-600 text-xl mt-0.5"><i class="fa-solid fa-circle-exclamation"></i></span>
+        <div>
+          <h4 class="font-bold text-amber-900 text-sm">Tài khoản đang chờ duyệt</h4>
+          <p class="text-xs text-amber-700 mt-1">Hồ sơ hoặc thanh toán của bạn đang chờ Admin đối soát và kích hoạt. Bạn có thể xem các thông tin ví và hướng dẫn, nhưng chưa thể bật trạng thái ONLINE để nhận đơn mới.</p>
+        </div>
+      </div>
+
+      <!-- NAVIGATION TABS -->
+      <div class="bg-white p-1 rounded-2xl border border-stone-200 flex gap-1 overflow-x-auto shadow-sm">
+        <button onclick="switchTab('jobs')" class="tab-btn px-4 py-2.5 rounded-xl text-sm font-extrabold text-green-700 bg-green-50 flex items-center gap-1.5 transition-all whitespace-nowrap" id="tab-btn-jobs">
+          <i class="fa-solid fa-layer-group"></i> Bảng tin đơn
+        </button>
+        <button onclick="switchTab('active-job')" class="tab-btn px-4 py-2.5 rounded-xl text-sm font-bold text-stone-500 hover:bg-stone-50 flex items-center gap-1.5 transition-all whitespace-nowrap" id="tab-btn-active-job">
+          <i class="fa-solid fa-spinner"></i> Đơn đang làm
+          <span id="active-job-indicator" class="hidden w-2 h-2 rounded-full bg-red-500"></span>
+        </button>
+        <button onclick="switchTab('wallet')" class="tab-btn px-4 py-2.5 rounded-xl text-sm font-bold text-stone-500 hover:bg-stone-50 flex items-center gap-1.5 transition-all whitespace-nowrap" id="tab-btn-wallet">
+          <i class="fa-solid fa-wallet"></i> Ví & Rút tiền
+        </button>
+        <button onclick="switchTab('history')" class="tab-btn px-4 py-2.5 rounded-xl text-sm font-bold text-stone-500 hover:bg-stone-50 flex items-center gap-1.5 transition-all whitespace-nowrap" id="tab-btn-history">
+          <i class="fa-solid fa-clock-rotate-left"></i> Lịch sử đơn
+        </button>
+        <button onclick="switchTab('chatbot')" class="tab-btn px-4 py-2.5 rounded-xl text-sm font-bold text-stone-500 hover:bg-stone-50 flex items-center gap-1.5 transition-all whitespace-nowrap" id="tab-btn-chatbot">
+          <i class="fa-solid fa-robot"></i> Trợ lý AI
+        </button>
+      </div>
+
+      <!-- TAB CONTENT: JOBS (PENDING FOR PARTNER) -->
+      <div id="tab-jobs" class="tab-content space-y-4">
+        <div class="flex justify-between items-center">
+          <div>
+            <h3 class="font-extrabold text-lg text-stone-800">Đơn hàng phù hợp quanh bạn</h3>
+            <p class="text-stone-500 text-xs mt-0.5">Tự động tìm kiếm đơn trong bán kính 5km từ vị trí của bạn</p>
+          </div>
+          <button onclick="loadPendingJobs()" class="p-2 text-stone-500 hover:text-green-600 transition-colors" title="Làm mới">
+            <i class="fa-solid fa-arrows-rotate text-lg"></i>
+          </button>
+        </div>
+
+        <div id="pending-jobs-list" class="grid md:grid-cols-2 gap-4">
+          <!-- Jobs template will be injected here -->
+          <div class="col-span-full bg-white rounded-3xl border border-stone-200 p-8 text-center text-stone-400">
+            <i class="fa-solid fa-radar text-4xl text-stone-300 mb-3 animate-pulse"></i>
+            <p class="text-sm font-medium">Đang quét tìm đơn hàng gần bạn...</p>
+            <p class="text-xs text-stone-400 mt-1">Hãy chắc chắn bạn đã gạt công tắc ONLINE ở góc trên bên phải</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB CONTENT: ACTIVE JOB (IN PROGRESS) -->
+      <div id="tab-active-job" class="tab-content hidden space-y-6">
+        <h3 class="font-extrabold text-lg text-stone-800">Đơn hàng bạn đang thực hiện</h3>
+
+        <div id="active-job-detail" class="bg-white rounded-3xl border border-stone-200 p-6 shadow-md max-w-xl mx-auto space-y-6">
+          <div class="text-center text-stone-400 py-12">
+            <i class="fa-solid fa-clipboard-check text-4xl mb-3"></i>
+            <p class="text-sm font-medium">Bạn hiện không có đơn hàng nào đang thực hiện.</p>
+            <p class="text-xs mt-1">Hãy nhận đơn mới từ Bảng tin đơn!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB CONTENT: WALLET -->
+      <div id="tab-wallet" class="tab-content hidden grid md:grid-cols-3 gap-6">
+        <!-- Wallet summary -->
+        <div class="md:col-span-1 space-y-6">
+          <div class="bg-gradient-to-br from-green-700 to-lime-600 rounded-3xl p-6 text-white shadow-lg shadow-green-100 space-y-6">
+            <div>
+              <span class="text-xs font-bold uppercase tracking-wider text-green-100 block">Số dư có thể rút</span>
+              <span id="wallet-balance" class="text-3xl font-extrabold">0đ</span>
+            </div>
+            <div class="grid grid-cols-2 gap-4 pt-4 border-t border-white/20 text-xs">
+              <div>
+                <span class="text-green-100 block">Chờ duyệt (pending)</span>
+                <span id="wallet-pending-balance" class="font-bold text-sm">0đ</span>
+              </div>
+              <div>
+                <span class="text-green-100 block">Tổng thu nhập</span>
+                <span id="wallet-earnings-total" class="font-bold text-sm">0đ</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Withdraw request form -->
+          <div class="bg-white rounded-3xl border border-stone-200 p-6 space-y-4">
+            <h4 class="font-extrabold text-stone-800 text-sm uppercase tracking-wider">Yêu cầu Rút tiền</h4>
+            <div class="space-y-3">
+              <div>
+                <label class="block text-xs font-bold text-stone-600 mb-1">Số tiền rút (Tối thiểu 50,000đ)</label>
+                <input type="number" id="withdraw-amount" placeholder="Nhập số tiền..." class="w-full rounded-xl border border-stone-300 px-4 py-2 text-sm text-stone-800 focus:ring-2 focus:ring-green-500 focus:outline-none">
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-stone-600 mb-1">Ngân hàng</label>
+                <input type="text" id="withdraw-bank" placeholder="Ví dụ: Vietcombank, MB..." class="w-full rounded-xl border border-stone-300 px-4 py-2 text-sm text-stone-800 focus:ring-2 focus:ring-green-500 focus:outline-none">
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-stone-600 mb-1">Số tài khoản</label>
+                <input type="text" id="withdraw-account" placeholder="Nhập số tài khoản..." class="w-full rounded-xl border border-stone-300 px-4 py-2 text-sm text-stone-800 focus:ring-2 focus:ring-green-500 focus:outline-none">
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-stone-600 mb-1">Tên chủ tài khoản (Viết hoa không dấu)</label>
+                <input type="text" id="withdraw-owner" placeholder="NGUYEN VAN A..." class="w-full rounded-xl border border-stone-300 px-4 py-2 text-sm text-stone-800 focus:ring-2 focus:ring-green-500 focus:outline-none">
+              </div>
+              <button onclick="requestWithdraw()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 rounded-xl transition-colors shadow-md text-sm">
+                Gửi yêu cầu rút tiền
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Withdraw History -->
+        <div class="md:col-span-2 bg-white rounded-3xl border border-stone-200 p-6 flex flex-col min-h-[400px]">
+          <h4 class="font-extrabold text-stone-800 text-sm uppercase tracking-wider mb-4">Lịch sử giao dịch & Rút tiền</h4>
+          <div class="flex-grow overflow-y-auto custom-scroll max-h-[450px]">
+            <table class="w-full text-sm text-left">
+              <thead class="text-xs uppercase bg-stone-50 text-stone-600 sticky top-0 font-bold">
+                <tr>
+                  <th class="px-4 py-3">Thời gian</th>
+                  <th class="px-4 py-3">Số tiền</th>
+                  <th class="px-4 py-3">Thông tin nhận</th>
+                  <th class="px-4 py-3 text-right">Trạng thái</th>
+                </tr>
+              </thead>
+              <tbody id="withdraw-history-table" class="divide-y divide-stone-100">
+                <tr>
+                  <td colspan="4" class="px-4 py-8 text-center text-stone-400">Không có dữ liệu giao dịch</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB CONTENT: HISTORY (MY ORDERS AS PARTNER) -->
+      <div id="tab-history" class="tab-content hidden space-y-4">
+        <div class="flex justify-between items-center flex-wrap gap-3">
+          <div>
+            <h3 class="font-extrabold text-lg text-stone-800">Lịch sử các đơn hỗ trợ</h3>
+            <p class="text-stone-500 text-xs mt-0.5">Danh sách các đơn học hộ bạn đã hoàn thành hoặc tham gia</p>
+          </div>
+          <!-- Filter options -->
+          <div class="flex gap-2">
+            <button onclick="filterHistory('all')" class="history-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-green-600 text-white shadow-sm" id="btn-filter-all">
+              Tất cả
+            </button>
+            <button onclick="filterHistory('completed')" class="history-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-white text-stone-600 border border-stone-200 hover:bg-stone-50" id="btn-filter-completed">
+              Đã hoàn thành
+            </button>
+            <button onclick="filterHistory('cancelled')" class="history-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-white text-stone-600 border border-stone-200 hover:bg-stone-50" id="btn-filter-cancelled">
+              Đã huỷ
+            </button>
+          </div>
+        </div>
+
+        <div id="history-jobs-list" class="grid md:grid-cols-2 gap-4">
+          <!-- History jobs injected here -->
+          <div class="col-span-full bg-white rounded-3xl border border-stone-200 p-8 text-center text-stone-400">
+            <i class="fa-solid fa-folder-open text-4xl text-stone-300 mb-2"></i>
+            <p class="text-sm font-medium">Chưa có lịch sử hỗ trợ</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB CONTENT: CHATBOT AI -->
+      <div id="tab-chatbot" class="tab-content hidden max-w-2xl mx-auto bg-white rounded-3xl border border-stone-200 shadow-sm flex flex-col h-[500px]">
+        <div class="p-4 border-b border-stone-200 flex items-center gap-3">
+          <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center text-green-600 text-lg">
+            <i class="fa-solid fa-robot"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-stone-800 text-sm">Trợ lý AI HoCho</h4>
+            <span class="text-xs text-green-600 flex items-center gap-1 font-semibold">
+              <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span> Hoạt động 24/7 (llama3-8b-8192)
+            </span>
+          </div>
+        </div>
+
+        <!-- Chat messages area -->
+        <div id="chatbot-messages" class="flex-grow p-4 overflow-y-auto custom-scroll space-y-4 text-sm">
+          <div class="flex gap-2.5 items-start">
+            <div class="w-7 h-7 rounded-full bg-stone-100 flex items-center justify-center text-xs text-stone-500 shrink-0">🤖</div>
+            <div class="bg-stone-100 text-stone-800 rounded-2xl rounded-tl-none p-3 max-w-[80%]">
+              Chào bạn! Mình là Trợ lý AI của HoCho.com. Bạn cần hỏi gì về quy trình nhận đơn, mức phí, thanh toán SePay hay cách rút tiền thu nhập từ hệ thống không?
+            </div>
+          </div>
+        </div>
+
+        <!-- Chat Input area -->
+        <div class="p-3 border-t border-stone-200 flex gap-2">
+          <input type="text" id="chatbot-input" onkeypress="handleChatbotKeyPress(event)" placeholder="Nhập câu hỏi của bạn tại đây..." class="flex-grow rounded-xl border border-stone-300 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 text-stone-800">
+          <button onclick="sendChatbotMsg()" class="bg-green-600 hover:bg-green-700 text-white rounded-xl px-4 py-2 transition-colors flex items-center justify-center">
+            <i class="fa-solid fa-paper-plane"></i>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="bg-stone-100 border-t border-stone-200 py-6 text-center text-xs text-stone-500 mt-12">
+    <p>© 2026 HoCho.com - Nền tảng kết nối hỗ trợ sinh viên học tập. All rights reserved.</p>
+  </footer>
+
+  <!-- TOAST NOTIFICATION HELPERS -->
+  <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-24 opacity-0 transition-all duration-300 max-w-sm bg-stone-900 text-white px-5 py-3 rounded-2xl shadow-lg flex items-center gap-2.5 text-sm font-semibold">
+    <span id="toast-icon" class="text-green-500"><i class="fa-solid fa-circle-check"></i></span>
+    <span id="toast-text">Thông báo thành công</span>
+  </div>
+
+  <script>
+    const API_BASE = window.location.origin;
+    let PARTNER_TOKEN = localStorage.getItem('hocho_partner_token') || null;
+    let partnerInfo = null;
+    let pollingInterval = null;
+    let activeJobId = null;
+    let currentHistoryFilter = 'all';
+
+    // Toast alert helper
+    function showToast(msg, type = 'success') {
+      const toast = document.getElementById('toast');
+      const text = document.getElementById('toast-text');
+      const icon = document.getElementById('toast-icon');
+
+      text.innerText = msg;
+      if (type === 'error') {
+        icon.innerHTML = '<i class="fa-solid fa-circle-exclamation text-red-500"></i>';
+      } else {
+        icon.innerHTML = '<i class="fa-solid fa-circle-check text-green-500"></i>';
+      }
+
+      toast.classList.remove('translate-y-24', 'opacity-0');
+      setTimeout(() => {
+        toast.classList.add('translate-y-24', 'opacity-0');
+      }, 3500);
+    }
+
+    // On Load
+    window.addEventListener('DOMContentLoaded', async () => {
+      if (PARTNER_TOKEN) {
+        await initDashboard();
+      } else {
+        showScreen('auth');
+      }
+    });
+
+    // Screen display switcher
+    function showScreen(screen) {
+      document.getElementById('auth-screen').classList.add('hidden');
+      document.getElementById('activation-screen').classList.add('hidden');
+      document.getElementById('dashboard-screen').classList.add('hidden');
+      document.getElementById('nav-user-info').classList.add('hidden');
+
+      if (screen === 'auth') {
+        document.getElementById('auth-screen').classList.remove('hidden');
+      } else if (screen === 'activation') {
+        document.getElementById('activation-screen').classList.remove('hidden');
+        document.getElementById('nav-user-info').classList.remove('hidden');
+      } else if (screen === 'dashboard') {
+        document.getElementById('dashboard-screen').classList.remove('hidden');
+        document.getElementById('nav-user-info').classList.remove('hidden');
+      }
+    }
+
+    // --- AUTH FLOWS ---
+    function backToStep1() {
+      document.getElementById('auth-step-1').classList.remove('hidden');
+      document.getElementById('auth-step-login').classList.add('hidden');
+      document.getElementById('auth-step-register').classList.add('hidden');
+    }
+
+    async function checkAuth() {
+      const identifier = document.getElementById('auth-identifier').value.trim();
+      if (!identifier) return showToast('Vui lòng nhập số điện thoại hoặc email!', 'error');
+
+      const btn = document.getElementById('btn-check-auth');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> Đang kiểm tra...';
+
+      try {
+        const res = await fetch(`${API_BASE}/api/partner/auth/check`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ identifier })
+        });
+        const d = await res.json();
+        
+        if (d.success) {
+          if (d.data.exists) {
+            document.getElementById('auth-step-1').classList.add('hidden');
+            document.getElementById('auth-step-login').classList.remove('hidden');
+            document.getElementById('login-password').focus();
+          } else {
+            document.getElementById('auth-step-1').classList.add('hidden');
+            document.getElementById('auth-step-register').classList.remove('hidden');
+            document.getElementById('reg-fullname').focus();
+          }
+        } else {
+          showToast(d.message || 'Lỗi kiểm tra tài khoản', 'error');
+        }
+      } catch (err) {
+        showToast('Không thể kết nối đến máy chủ', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<span>Tiếp tục</span> <i class="fa-solid fa-arrow-right"></i>';
+      }
+    }
+
+    async function loginPartner() {
+      const identifier = document.getElementById('auth-identifier').value.trim();
+      const password = document.getElementById('login-password').value;
+      if (!password) return showToast('Vui lòng nhập mật khẩu', 'error');
+
+      const btn = document.getElementById('btn-login');
+      btn.disabled = true;
+      btn.innerText = 'Đang đăng nhập...';
+
+      try {
+        const res = await fetch(`${API_BASE}/api/partner/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ identifier, password })
+        });
+        const d = await res.json();
+        if (d.success) {
+          PARTNER_TOKEN = d.data.token;
+          localStorage.setItem('hocho_partner_token', PARTNER_TOKEN);
+          showToast('Đăng nhập thành công!');
+          await initDashboard();
+        } else {
+          showToast(d.message || 'Sai mật khẩu!', 'error');
+        }
+      } catch (err) {
+        showToast('Lỗi kết nối máy chủ', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerText = 'Đăng nhập';
+      }
+    }
+
+    async function registerPartner() {
+      const identifier = document.getElementById('auth-identifier').value.trim();
+      const fullname = document.getElementById('reg-fullname').value.trim();
+      const university = document.getElementById('reg-university').value.trim();
+      const bio = document.getElementById('reg-bio').value.trim();
+      const password = document.getElementById('reg-password').value;
+
+      if (!fullname || !university || !password) {
+        return showToast('Vui lòng điền đầy đủ các thông tin bắt buộc!', 'error');
+      }
+      if (password.length < 6) {
+        return showToast('Mật khẩu cần ít nhất 6 kí tự!', 'error');
+      }
+
+      const btn = document.getElementById('btn-register');
+      btn.disabled = true;
+      btn.innerText = 'Đang đăng ký...';
+
+      try {
+        const res = await fetch(`${API_BASE}/api/partner/auth/register`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ identifier, full_name: fullname, password, university, bio })
+        });
+        const d = await res.json();
+        if (d.success) {
+          PARTNER_TOKEN = d.data.token;
+          localStorage.setItem('hocho_partner_token', PARTNER_TOKEN);
+          showToast('Đăng ký thành công!');
+          await initDashboard();
+        } else {
+          showToast(d.message || 'Đăng ký không thành công', 'error');
+        }
+      } catch (err) {
+        showToast('Lỗi kết nối khi đăng ký', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerText = 'Hoàn tất Đăng ký & Đóng phí kích hoạt (200K)';
+      }
+    }
+
+    function logout() {
+      localStorage.removeItem('hocho_partner_token');
+      PARTNER_TOKEN = null;
+      partnerInfo = null;
+      activeJobId = null;
+      if (pollingInterval) clearInterval(pollingInterval);
+      showScreen('auth');
+      showToast('Đã đăng xuất tài khoản');
+    }
+
+    // --- DASHBOARD INITIALIZATION ---
+    async function initDashboard() {
+      try {
+        const res = await fetch(`${API_BASE}/api/partner/me`, {
+          headers: { 'Authorization': `Bearer ${PARTNER_TOKEN}` }
+        });
+        const d = await res.json();
+        if (d.success) {
+          partnerInfo = d.data;
+          document.getElementById('partner-name-display').innerText = partnerInfo.full_name;
+          
+          // Setup online toggle state
+          const onlineToggle = document.getElementById('online-toggle');
+          onlineToggle.checked = partnerInfo.is_online || false;
+          updateStatusBadge(partnerInfo.is_online);
+
+          if (partnerInfo.status === 'pending_payment') {
+            await showActivationScreen();
+          } else if (partnerInfo.status === 'pending_approval') {
+            showScreen('dashboard');
+            document.getElementById('partner-not-active-warning').classList.remove('hidden');
+            disableOnlineToggle();
+            await loadDashboardData();
+          } else if (partnerInfo.status === 'active') {
+            showScreen('dashboard');
+            document.getElementById('partner-not-active-warning').classList.add('hidden');
+            enableOnlineToggle();
+            await loadDashboardData();
+            // Start Polling every 10 seconds
+            if (pollingInterval) clearInterval(pollingInterval);
+            pollingInterval = setInterval(loadDashboardData, 10000);
+          }
+        } else {
+          // Token expired or invalid
+          logout();
+        }
+      } catch (err) {
+        showToast('Không thể đồng bộ dữ liệu đối tác', 'error');
+        logout();
+      }
+    }
+
+    function updateStatusBadge(isOnline) {
+      const badge = document.getElementById('partner-status-badge');
+      if (isOnline) {
+        badge.innerText = 'ONLINE';
+        badge.className = 'px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-green-100 text-green-700 border border-green-200';
+      } else {
+        badge.innerText = 'OFFLINE';
+        badge.className = 'px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-stone-100 text-stone-600 border border-stone-200';
+      }
+    }
+
+    function disableOnlineToggle() {
+      const toggle = document.getElementById('online-toggle');
+      toggle.disabled = true;
+      toggle.parentElement.classList.add('opacity-50', 'cursor-not-allowed');
+    }
+
+    function enableOnlineToggle() {
+      const toggle = document.getElementById('online-toggle');
+      toggle.disabled = false;
+      toggle.parentElement.classList.remove('opacity-50', 'cursor-not-allowed');
+    }
+
+    async function showActivationScreen() {
+      showScreen('activation');
+      try {
+        const res = await fetch(`${API_BASE}/api/partner/payment-plan`, {
+          headers: { 'Authorization': `Bearer ${PARTNER_TOKEN}` }
+        });
+        const d = await res.json();
+        if (d.success) {
+          const plan = d.data;
+          document.getElementById('activation-reg-id').innerText = plan.registerId;
+          document.getElementById('activation-memo').innerText = plan.registerId;
+          
+          // Generate SePay QR Code
+          const qrUrl = `https://qr.sepay.vn/img?acc=090888999&bank=MBBank&amount=200000&memo=${plan.registerId}`;
+          document.getElementById('activation-qr-img').src = qrUrl;
+        }
+      } catch (err) {
+        showToast('Không thể tải thông tin thanh toán', 'error');
+      }
+    }
+
+    async function confirmActivationPayment() {
+      try {
+        const res = await fetch(`${API_BASE}/api/partner/payment-confirm`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${PARTNER_TOKEN}`
+          }
+        });
+        const d = await res.json();
+        if (d.success) {
+          showToast('Đã gửi thông báo thanh toán thành công!');
+          await initDashboard();
+        } else {
+          showToast(d.message || 'Lỗi gửi xác nhận', 'error');
+        }
+      } catch (err) {
+        showToast('Không thể gửi xác nhận', 'error');
+      }
+    }
+
+    // Toggle Online Status
+    async function toggleOnlineStatus() {
+      const isOnline = document.getElementById('online-toggle').checked;
+      
+      // Get current GPS location (if browser supports)
+      let latitude = null;
+      let longitude = null;
+
+      if (isOnline && navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          async (pos) => {
+            latitude = pos.coords.latitude;
+            longitude = pos.coords.longitude;
+            await sendToggleRequest(isOnline, latitude, longitude);
+          },
+          (err) => {
+            console.warn('Geolocation denied or unavailable:', err.message);
+            showToast('Không định vị được GPS. Ghép đơn theo Đại học mặc định.', 'error');
+            sendToggleRequest(isOnline, null, null);
+          }
+        );
+      } else {
+        await sendToggleRequest(isOnline, null, null);
+      }
+    }
+
+    async function sendToggleRequest(isOnline, latitude, longitude) {
+      try {
+        const res = await fetch(`${API_BASE}/api/partner/toggle-status`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${PARTNER_TOKEN}`
+          },
+          body: JSON.stringify({ is_online: isOnline, latitude, longitude })
+        });
+        const d = await res.json();
+        if (d.success) {
+          updateStatusBadge(d.data.is_online);
+          showToast(d.data.is_online ? 'Bạn đã ONLINE và sẵn sàng nhận đơn!' : 'Đã OFFLINE');
+          await loadDashboardData();
+        } else {
+          document.getElementById('online-toggle').checked = !isOnline;
+          showToast(d.message || 'Lỗi cập nhật trạng thái', 'error');
+        }
+      } catch (err) {
+        document.getElementById('online-toggle').checked = !isOnline;
+        showToast('Lỗi mạng', 'error');
+      }
+    }
+
+    // --- MAIN POLLING DATA LOADER ---
+    async function loadDashboardData() {
+      if (!PARTNER_TOKEN) return;
+      try {
+        // 1. Sync Profile & Wallet
+        const resMe = await fetch(`${API_BASE}/api/partner/me`, {
+          headers: { 'Authorization': `Bearer ${PARTNER_TOKEN}` }
+        });
+        const dMe = await resMe.json();
+        if (dMe.success) {
+          partnerInfo = dMe.data;
+          updateWalletUI();
+        }
+
+        // 2. Load Jobs (based on current tab or active jobs)
+        await loadPendingJobs();
+        await loadActiveJob();
+        await loadWithdrawHistory();
+        await loadHistoryJobs();
+      } catch (err) {
+        console.error('Error loadDashboardData:', err);
+      }
+    }
+
+    // --- TAB SWITCHER ---
+    function switchTab(tab) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.tab-btn').forEach(el => {
+        el.className = 'tab-btn px-4 py-2.5 rounded-xl text-sm font-bold text-stone-500 hover:bg-stone-50 flex items-center gap-1.5 transition-all whitespace-nowrap';
+      });
+
+      const activeBtn = document.getElementById(`tab-btn-${tab}`);
+      const activeTab = document.getElementById(`tab-${tab}`);
+
+      if (activeTab) activeTab.classList.remove('hidden');
+      if (activeBtn) {
+        activeBtn.className = 'tab-btn px-4 py-2.5 rounded-xl text-sm font-extrabold text-green-700 bg-green-50 flex items-center gap-1.5 transition-all whitespace-nowrap';
+      }
+    }
+
+    // --- TAB: JOBS LIST (PENDING) ---
+    async function loadPendingJobs() {
+      if (partnerInfo?.status !== 'active') return;
+      try {
+        const res = await fetch(`${API_BASE}/api/order/pending-for-partner`, {
+          headers: { 'Authorization': `Bearer ${PARTNER_TOKEN}` }
+        });
+        const d = await res.json();
+        const listDiv = document.getElementById('pending-jobs-list');
+
+        if (d.success) {
+          const orders = d.data;
+          if (orders.length === 0) {
+            listDiv.innerHTML = `
+              <div class="col-span-full bg-white rounded-3xl border border-stone-200 p-8 text-center text-stone-400">
+                <i class="fa-solid fa-radar text-4xl text-stone-300 mb-3 animate-pulse"></i>
+                <p class="text-sm font-medium">Đang quét tìm đơn hàng gần bạn...</p>
+                <p class="text-xs text-stone-400 mt-1">Chưa có đơn hàng nào chờ ghép quanh đây.</p>
+              </div>
+            `;
+            return;
+          }
+
+          listDiv.innerHTML = orders.map(order => `
+            <div class="bg-white rounded-3xl border border-stone-200 p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow">
+              <div class="space-y-4">
+                <div class="flex justify-between items-start">
+                  <div>
+                    <span class="text-xs font-extrabold px-2.5 py-0.5 rounded-full bg-green-100 text-green-700 border border-green-200 uppercase">${order.order_code}</span>
+                    <h4 class="font-extrabold text-stone-800 text-base mt-2">${order.university}</h4>
+                  </div>
+                  <div class="text-right">
+                    <span class="text-xs text-stone-400 font-bold block">Thu nhập nhận</span>
+                    <span class="text-lg font-black text-green-600">${order.partner_earning.toLocaleString('vi-VN')}đ</span>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3 text-xs border-y border-stone-100 py-3 text-stone-600">
+                  <div><span class="text-stone-400 block font-semibold">Phòng / Lớp:</span> <strong class="text-stone-700 font-bold">${order.room_number} ${order.class_name ? '- ' + order.class_name : ''}</strong></div>
+                  <div><span class="text-stone-400 block font-semibold">Toà / Tầng:</span> <strong class="text-stone-700 font-bold">${order.building ? order.building : '—'} ${order.floor ? '(Tầng ' + order.floor + ')' : ''}</strong></div>
+                </div>
+
+                <div class="text-xs space-y-1">
+                  <span class="text-stone-400 font-semibold block">Lý do hỗ trợ / Lưu ý:</span>
+                  <p class="text-stone-700 font-medium italic bg-stone-50 border border-stone-150 p-2.5 rounded-xl">${order.requirements || 'Hỗ trợ lên lớp chép bài do ốm đau.'}</p>
+                </div>
+              </div>
+
+              <button onclick="acceptOrder('${order._id}')" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 rounded-xl mt-4 transition-colors text-xs shadow-md">
+                Nhận đơn hàng này
+              </button>
+            </div>
+          `).join('');
+
+        }
+      } catch (err) {
+        console.error('Lỗi loadPendingJobs:', err);
+      }
+    }
+
+    async function acceptOrder(orderId) {
+      if (!confirm('Bạn chắc chắn muốn nhận đơn hàng này?')) return;
+      try {
+        const res = await fetch(`${API_BASE}/api/order/accept`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${PARTNER_TOKEN}`
+          },
+          body: JSON.stringify({ order_id: orderId })
+        });
+        const d = await res.json();
+        if (d.success) {
+          showToast('Nhận đơn hàng thành công! Hãy đến lớp hỗ trợ ngay.');
+          switchTab('active-job');
+          await loadDashboardData();
+        } else {
+          showToast(d.message || 'Không thể nhận đơn hàng', 'error');
+        }
+      } catch (err) {
+        showToast('Lỗi kết nối máy chủ', 'error');
+      }
+    }
+
+    // --- TAB: ACTIVE JOB ---
+    async function loadActiveJob() {
+      if (partnerInfo?.status !== 'active') return;
+      try {
+        // Lấy lịch sử các đơn mà đối tác đã nhận đang trong tiến trình
+        const res = await fetch(`${API_BASE}/api/order/partner-history`, {
+          headers: { 'Authorization': `Bearer ${PARTNER_TOKEN}` }
+        });
+        const d = await res.json();
+        const detailDiv = document.getElementById('active-job-detail');
+        const activeIndicator = document.getElementById('active-job-indicator');
+
+        if (d.success) {
+          const orders = d.data;
+          // Tìm đơn có status không phải completed hay cancelled
+          const activeOrder = orders.find(o => ['accepted', 'heading', 'arrived', 'in_progress'].includes(o.status));
+
+          if (!activeOrder) {
+            activeJobId = null;
+            activeIndicator.classList.add('hidden');
+            detailDiv.innerHTML = `
+              <div class="text-center text-stone-400 py-12">
+                <i class="fa-solid fa-clipboard-check text-4xl mb-3"></i>
+                <p class="text-sm font-medium">Bạn hiện không có đơn hàng nào đang thực hiện.</p>
+                <p class="text-xs mt-1">Hãy nhận đơn mới từ Bảng tin đơn!</p>
+              </div>
+            `;
+            return;
+          }
+
+          activeJobId = activeOrder._id;
+          activeIndicator.classList.remove('hidden');
+
+          // Định nghĩa nút cập nhật trạng thái dựa vào status hiện tại
+          let btnHtml = '';
+          if (activeOrder.status === 'accepted') {
+            btnHtml = `<button onclick="updateActiveJobStatus('heading')" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-xl transition-colors shadow-md text-sm"><i class="fa-solid fa-person-walking mr-1.5"></i> Bắt đầu di chuyển</button>`;
+          } else if (activeOrder.status === 'heading') {
+            btnHtml = `<button onclick="updateActiveJobStatus('arrived')" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-xl transition-colors shadow-md text-sm"><i class="fa-solid fa-map-location-dot mr-1.5"></i> Đã đến nơi / Vào lớp</button>`;
+          } else if (activeOrder.status === 'arrived') {
+            btnHtml = `<button onclick="updateActiveJobStatus('in_progress')" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-xl transition-colors shadow-md text-sm"><i class="fa-solid fa-book-open-reader mr-1.5"></i> Bắt đầu ca học</button>`;
+          } else if (activeOrder.status === 'in_progress') {
+            btnHtml = `<button onclick="updateActiveJobStatus('completed')" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 px-4 rounded-xl transition-colors shadow-md text-sm"><i class="fa-solid fa-circle-check mr-1.5"></i> Hoàn thành ca học</button>`;
+          }
+
+          // Render Active Job Detail
+          detailDiv.innerHTML = `
+            <div class="space-y-4">
+              <div class="flex justify-between items-center border-b border-stone-100 pb-3">
+                <div>
+                  <span class="text-xs font-extrabold px-2.5 py-0.5 rounded-full bg-green-100 text-green-700 border border-green-200 uppercase">${activeOrder.order_code}</span>
+                  <div class="text-xs font-bold text-amber-600 mt-2 uppercase flex items-center gap-1">
+                    <span class="w-2 h-2 bg-amber-500 rounded-full animate-ping"></span>
+                    Trạng thái: ${activeOrder.status}
+                  </div>
+                </div>
+                <div class="text-right">
+                  <span class="text-xs text-stone-400 block font-bold">Thù lao nhận được</span>
+                  <span class="text-xl font-black text-green-600">${activeOrder.partner_earning.toLocaleString('vi-VN')}đ</span>
+                </div>
+              </div>
+
+              <div class="space-y-3 text-sm">
+                <div><span class="text-stone-400 font-bold text-xs block">Trường học:</span> <strong class="text-stone-700 font-bold text-base">${activeOrder.university}</strong></div>
+                
+                <div class="grid grid-cols-2 gap-4 bg-stone-50 border border-stone-150 p-3 rounded-2xl">
+                  <div><span class="text-stone-400 font-bold text-xs block">Phòng:</span> <strong class="text-stone-700 font-bold">${activeOrder.room_number}</strong></div>
+                  <div><span class="text-stone-400 font-bold text-xs block">Lớp:</span> <strong class="text-stone-700 font-bold">${activeOrder.class_name || '—'}</strong></div>
+                  <div><span class="text-stone-400 font-bold text-xs block">Toà nhà:</span> <strong class="text-stone-700 font-bold">${activeOrder.building || '—'}</strong></div>
+                  <div><span class="text-stone-400 font-bold text-xs block">Tầng:</span> <strong class="text-stone-700 font-bold">${activeOrder.floor || '—'}</strong></div>
+                </div>
+
+                <div>
+                  <span class="text-stone-400 font-bold text-xs block">Tên sinh viên cần hỗ trợ:</span>
+                  <strong class="text-stone-700">${activeOrder.customer_name}</strong>
+                </div>
+
+                <div>
+                  <span class="text-stone-400 font-bold text-xs block">Số điện thoại liên lạc:</span>
+                  <strong class="text-stone-700">${activeOrder.customer_phone || '—'}</strong>
+                </div>
+
+                <div>
+                  <span class="text-stone-400 font-bold text-xs block">Lý do hỗ trợ / Lưu ý đặc biệt:</span>
+                  <p class="text-stone-700 font-medium italic bg-stone-50 border border-stone-150 p-3 rounded-xl mt-1">${activeOrder.requirements || '—'}</p>
+                </div>
+              </div>
+
+              <div class="border-t border-stone-100 pt-4 mt-6">
+                ${btnHtml}
+              </div>
+            </div>
+          `;
+        }
+      } catch (err) {
+        console.error('Error loadActiveJob:', err);
+      }
+    }
+
+    async function updateActiveJobStatus(status) {
+      if (!activeJobId) return;
+      if (status === 'completed' && !confirm('Bạn chắc chắn đã hoàn thành buổi học này và muốn kết thúc?')) return;
+
+      try {
+        const res = await fetch(`${API_BASE}/api/order/update-status`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${PARTNER_TOKEN}`
+          },
+          body: JSON.stringify({ order_id: activeJobId, status })
+        });
+        const d = await res.json();
+        if (d.success) {
+          showToast(`Đã chuyển trạng thái đơn sang: ${status}`);
+          await loadDashboardData();
+        } else {
+          showToast(d.message || 'Lỗi cập nhật tiến trình', 'error');
+        }
+      } catch (err) {
+        showToast('Lỗi mạng', 'error');
+      }
+    }
+
+    // --- TAB: WALLET ---
+    function updateWalletUI() {
+      if (!partnerInfo) return;
+      document.getElementById('wallet-balance').innerText = partnerInfo.balance.toLocaleString('vi-VN') + 'đ';
+      document.getElementById('wallet-pending-balance').innerText = partnerInfo.pending_balance.toLocaleString('vi-VN') + 'đ';
+      document.getElementById('wallet-earnings-total').innerText = partnerInfo.earnings_total.toLocaleString('vi-VN') + 'đ';
+    }
+
+    async function loadWithdrawHistory() {
+      try {
+        const res = await fetch(`${API_BASE}/api/partner/withdraw-history`, {
+          headers: { 'Authorization': `Bearer ${PARTNER_TOKEN}` }
+        });
+        const d = await res.json();
+        const tbody = document.getElementById('withdraw-history-table');
+
+        if (d.success) {
+          const history = d.data;
+          if (history.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="4" class="px-4 py-8 text-center text-stone-400">Không có dữ liệu giao dịch</td></tr>`;
+            return;
+          }
+
+          tbody.innerHTML = history.map(item => {
+            const date = new Date(item.createdAt).toLocaleString('vi-VN', { dateStyle: 'short', timeStyle: 'short' });
+            let statusBadge = '';
+            if (item.status === 'pending') {
+              statusBadge = '<span class="px-2 py-0.5 rounded-full text-xs font-bold bg-amber-50 text-amber-700 border border-amber-200">Đang chờ</span>';
+            } else if (item.status === 'approved') {
+              statusBadge = '<span class="px-2 py-0.5 rounded-full text-xs font-bold bg-green-50 text-green-700 border border-green-200">Đã nhận</span>';
+            } else if (item.status === 'rejected') {
+              statusBadge = '<span class="px-2 py-0.5 rounded-full text-xs font-bold bg-red-50 text-red-700 border border-red-200" title="' + (item.admin_note || 'Bị từ chối') + '">Đã từ chối</span>';
+            }
+
+            return `
+              <tr class="hover:bg-stone-50 border-b border-stone-100">
+                <td class="px-4 py-3 text-stone-500 font-medium">${date}</td>
+                <td class="px-4 py-3 font-bold text-red-600">-${item.amount.toLocaleString('vi-VN')}đ</td>
+                <td class="px-4 py-3 text-xs text-stone-600">
+                  <div class="font-bold">${item.bank_name}</div>
+                  <div>TK: ${item.bank_account}</div>
+                  <div>Chủ TK: ${item.bank_owner}</div>
+                </td>
+                <td class="px-4 py-3 text-right">${statusBadge}</td>
+              </tr>
+            `;
+          }).join('');
+        }
+      } catch (err) {
+        console.error('Lỗi loadWithdrawHistory:', err);
+      }
+    }
+
+    async function requestWithdraw() {
+      const amount = parseInt(document.getElementById('withdraw-amount').value);
+      const bank_name = document.getElementById('withdraw-bank').value.trim();
+      const bank_account = document.getElementById('withdraw-account').value.trim();
+      const bank_owner = document.getElementById('withdraw-owner').value.trim();
+
+      if (!amount || !bank_name || !bank_account || !bank_owner) {
+        return showToast('Vui lòng nhập đầy đủ thông tin rút tiền!', 'error');
+      }
+      if (amount < 50000) {
+        return showToast('Số tiền rút tối thiểu là 50,000đ!', 'error');
+      }
+      if (amount > partnerInfo.balance) {
+        return showToast(`Số dư không đủ! Số dư hiện tại của bạn: ${partnerInfo.balance.toLocaleString('vi-VN')}đ`, 'error');
+      }
+
+      try {
+        const res = await fetch(`${API_BASE}/api/partner/withdraw`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${PARTNER_TOKEN}`
+          },
+          body: JSON.stringify({ amount, bank_name, bank_account, bank_owner })
+        });
+        const d = await res.json();
+        if (d.success) {
+          showToast('Đã gửi yêu cầu rút tiền! Admin đang duyệt.');
+          document.getElementById('withdraw-amount').value = '';
+          await loadDashboardData();
+        } else {
+          showToast(d.message || 'Lỗi gửi yêu cầu', 'error');
+        }
+      } catch (err) {
+        showToast('Lỗi mạng', 'error');
+      }
+    }
+
+    // --- TAB: LỊCH SỬ ĐƠN ---
+    function filterHistory(filter) {
+      currentHistoryFilter = filter;
+      document.querySelectorAll('.history-filter-btn').forEach(el => {
+        el.className = 'history-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-white text-stone-600 border border-stone-200 hover:bg-stone-50';
+      });
+      const activeBtn = document.getElementById(`btn-filter-${filter}`);
+      if (activeBtn) {
+        activeBtn.className = 'history-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-green-600 text-white shadow-sm';
+      }
+      loadHistoryJobs();
+    }
+
+    async function loadHistoryJobs() {
+      if (partnerInfo?.status !== 'active') return;
+      try {
+        const res = await fetch(`${API_BASE}/api/order/partner-history`, {
+          headers: { 'Authorization': `Bearer ${PARTNER_TOKEN}` }
+        });
+        const d = await res.json();
+        const listDiv = document.getElementById('history-jobs-list');
+
+        if (d.success) {
+          let orders = d.data;
+          
+          // Lọc theo mốc filter hiện tại
+          if (currentHistoryFilter === 'completed') {
+            orders = orders.filter(o => o.status === 'completed');
+          } else if (currentHistoryFilter === 'cancelled') {
+            orders = orders.filter(o => o.status === 'cancelled');
+          }
+
+          if (orders.length === 0) {
+            listDiv.innerHTML = `
+              <div class="col-span-full bg-white rounded-3xl border border-stone-200 p-8 text-center text-stone-400">
+                <i class="fa-solid fa-folder-open text-4xl text-stone-300 mb-2"></i>
+                <p class="text-sm font-medium">Chưa có lịch sử phù hợp bộ lọc này</p>
+              </div>
+            `;
+            return;
+          }
+
+          listDiv.innerHTML = orders.map(order => {
+            const dateStr = new Date(order.createdAt).toLocaleDateString('vi-VN', { dateStyle: 'long' });
+            
+            // Xử lý ngôi sao rating
+            let ratingHtml = '<span class="text-stone-300 text-xs font-medium">Khách chưa đánh giá</span>';
+            if (order.rating) {
+              let stars = '';
+              for (let i = 1; i <= 5; i++) {
+                if (i <= order.rating) {
+                  stars += '<i class="fa-solid fa-star text-amber-400"></i>';
+                } else {
+                  stars += '<i class="fa-regular fa-star text-stone-300"></i>';
+                }
+              }
+              ratingHtml = `
+                <div class="space-y-1">
+                  <div class="flex items-center gap-1 text-sm">${stars}</div>
+                  ${order.review ? `<p class="text-xs text-stone-500 italic bg-stone-50 p-2 border border-stone-150 rounded-lg mt-1">"${order.review}"</p>` : ''}
+                </div>
+              `;
+            }
+
+            let statusBadge = '';
+            if (order.status === 'completed') {
+              statusBadge = '<span class="px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-green-100 text-green-700 border border-green-200 uppercase">Hoàn thành</span>';
+            } else if (order.status === 'cancelled') {
+              statusBadge = '<span class="px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-red-100 text-red-700 border border-red-200 uppercase">Đã huỷ</span>';
+            } else {
+              statusBadge = `<span class="px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-amber-100 text-amber-700 border border-amber-200 uppercase">${order.status}</span>`;
+            }
+
+            return `
+              <div class="bg-white rounded-3xl border border-stone-200 p-5 flex flex-col justify-between shadow-sm">
+                <div class="space-y-3.5">
+                  <div class="flex justify-between items-start">
+                    <div>
+                      <span class="text-xs font-mono font-bold text-stone-400">${order.order_code}</span>
+                      <h4 class="font-extrabold text-stone-800 text-sm mt-1">${order.university}</h4>
+                      <span class="text-[10px] text-stone-400 font-bold block mt-0.5">${dateStr}</span>
+                    </div>
+                    <div class="text-right">
+                      ${statusBadge}
+                      <span class="text-sm font-black text-stone-700 block mt-1">+${order.partner_earning.toLocaleString('vi-VN')}đ</span>
+                    </div>
+                  </div>
+
+                  <div class="grid grid-cols-2 gap-2 text-xs border-y border-stone-50 py-2.5 text-stone-600">
+                    <div><span class="text-stone-400 font-medium">Lớp / Phòng:</span> <strong class="text-stone-700 font-semibold">${order.room_number} ${order.class_name ? '- ' + order.class_name : ''}</strong></div>
+                    <div><span class="text-stone-400 font-medium">Học viên:</span> <strong class="text-stone-700 font-semibold">${order.customer_name}</strong></div>
+                  </div>
+
+                  <div class="space-y-1">
+                    <span class="text-stone-400 text-xs font-bold block uppercase tracking-wider">Đánh giá từ khách</span>
+                    ${ratingHtml}
+                  </div>
+                </div>
+              </div>
+            `;
+          }).join('');
+
+        }
+      } catch (err) {
+        console.error('Lỗi loadHistoryJobs:', err);
+      }
+    }
+
+    // --- TAB: CHATBOT AI ---
+    function handleChatbotKeyPress(event) {
+      if (event.key === 'Enter') {
+        sendChatbotMsg();
+      }
+    }
+
+    async function sendChatbotMsg() {
+      const input = document.getElementById('chatbot-input');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const messagesDiv = document.getElementById('chatbot-messages');
+      
+      // User message
+      messagesDiv.innerHTML += `
+        <div class="flex gap-2.5 justify-end">
+          <div class="bg-green-600 text-white rounded-2xl rounded-tr-none p-3 max-w-[80%] shadow-sm">
+            ${text}
+          </div>
+          <div class="w-7 h-7 rounded-full bg-green-100 flex items-center justify-center text-xs text-green-700 shrink-0 font-bold">Tôi</div>
+        </div>
+      `;
+      
+      input.value = '';
+      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+      // Typing indicator
+      const typingId = 'typing-' + Date.now();
+      messagesDiv.innerHTML += `
+        <div class="flex gap-2.5 items-start" id="${typingId}">
+          <div class="w-7 h-7 rounded-full bg-stone-100 flex items-center justify-center text-xs text-stone-500 shrink-0">🤖</div>
+          <div class="bg-stone-100 text-stone-500 rounded-2xl rounded-tl-none p-3 italic">
+            Trợ lý đang suy nghĩ...
+          </div>
+        </div>
+      `;
+      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+      try {
+        const res = await fetch(`${API_BASE}/api/chatbot/ask`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: text })
+        });
+        const d = await res.json();
+        
+        // Remove typing
+        document.getElementById(typingId).remove();
+
+        if (d.success) {
+          messagesDiv.innerHTML += `
+            <div class="flex gap-2.5 items-start">
+              <div class="w-7 h-7 rounded-full bg-stone-100 flex items-center justify-center text-xs text-stone-500 shrink-0">🤖</div>
+              <div class="bg-stone-100 text-stone-800 rounded-2xl rounded-tl-none p-3 max-w-[80%]">
+                ${d.data.reply}
+              </div>
+            </div>
+          `;
+        } else {
+          messagesDiv.innerHTML += `
+            <div class="flex gap-2.5 items-start">
+              <div class="w-7 h-7 rounded-full bg-stone-100 flex items-center justify-center text-xs text-stone-500 shrink-0">🤖</div>
+              <div class="bg-red-50 text-red-800 rounded-2xl rounded-tl-none p-3 max-w-[80%] border border-red-200">
+                Xin lỗi, mình đang gặp sự cố nhỏ trong việc xử lý câu trả lời. Vui lòng thử lại sau ít phút!
+              </div>
+            </div>
+          `;
+        }
+      } catch (err) {
+        document.getElementById(typingId).remove();
+        messagesDiv.innerHTML += `
+          <div class="flex gap-2.5 items-start">
+            <div class="w-7 h-7 rounded-full bg-stone-100 flex items-center justify-center text-xs text-stone-500 shrink-0">🤖</div>
+            <div class="bg-red-50 text-red-800 rounded-2xl rounded-tl-none p-3 max-w-[80%] border border-red-200">
+              Không thể kết nối đến máy chủ chatbot. Vui lòng kiểm tra mạng của bạn!
+            </div>
+          </div>
+        `;
+      } finally {
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+      }
+    }
+  </script>
+</body>
+</html>

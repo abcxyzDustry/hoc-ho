@@ -22,9 +22,49 @@ const findReply = (text) => {
   return 'Mình chưa hiểu rõ câu hỏi này 🙏 Bạn có thể hỏi về: giá dịch vụ, huỷ đơn, rút tiền, thanh toán, hoặc tìm đối tác.';
 };
 
-router.post('/ask', (req, res) => {
+router.post('/ask', async (req, res) => {
   const { message } = req.body;
   if (!message) return res.status(400).json({ success: false, message: 'Thiếu nội dung câu hỏi' });
+
+  const apiKey = process.env.GROQ_API_KEY;
+  if (apiKey) {
+    try {
+      const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey}`
+        },
+        body: JSON.stringify({
+          model: 'llama3-8b-8192',
+          messages: [
+            {
+              role: 'system',
+              content: 'Bạn là trợ lý AI của HoCho.com - nền tảng hỗ trợ sinh viên ốm đau. Trả lời ngắn gọn bằng tiếng Việt về: giá 200k/buổi, đối tác nhận 140k, cách đặt đơn, thanh toán SePay QR. Không trả lời ngoài chủ đề HoCho.'
+            },
+            {
+              role: 'user',
+              content: message
+            }
+          ],
+          temperature: 0.7,
+          max_tokens: 1024
+        })
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        const reply = result.choices?.[0]?.message?.content;
+        if (reply) {
+          return res.json({ success: true, data: { reply } });
+        }
+      }
+    } catch (error) {
+      console.error('Error calling Groq API, fallback to rule-based chatbot:', error);
+    }
+  }
+
+  // Fallback rule-based
   res.json({ success: true, data: { reply: findReply(message) } });
 });
 

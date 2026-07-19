@@ -291,6 +291,162 @@ footer{background:rgba(22,163,74,.04);border-top:1px solid var(--border);padding
   .chatbot-window{right:12px;bottom:80px;width:calc(100vw - 24px);height:calc(100vh - 160px)}
   .chatbot-toggle{width:52px;height:52px;font-size:24px;bottom:16px;right:16px}
 }
+
+/* CUSTOMER DASHBOARD & AUTH MODALS CSS */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-out;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.modal-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 32px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 20px 40px -15px rgba(15,23,42,0.15);
+  position: relative;
+  animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 16px;
+  margin-bottom: 20px;
+}
+.modal-header h3 {
+  font-family: var(--font);
+  font-weight: 800;
+  font-size: 1.3rem;
+  color: var(--cream);
+}
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: var(--muted);
+  cursor: pointer;
+  transition: .15s;
+}
+.modal-close:hover {
+  color: var(--cream);
+}
+.form-group {
+  margin-bottom: 16px;
+  text-align: left;
+}
+.form-group label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--cream);
+  margin-bottom: 6px;
+}
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group input[type="tel"],
+.form-group input[type="number"],
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  font-family: var(--font);
+  font-size: 0.95rem;
+  background: #fff;
+  color: var(--cream);
+  transition: border-color .15s;
+}
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px rgba(22,163,74,0.1);
+}
+.auth-toggle-text {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+.auth-toggle-text a {
+  color: var(--green);
+  text-decoration: none;
+  font-weight: 700;
+}
+.auth-toggle-text a:hover {
+  text-decoration: underline;
+}
+.order-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.order-badge.waiting { background: #f1f5f9; color: #64748b; }
+.order-badge.matching { background: #fef9c3; color: #854d0e; }
+.order-badge.matched { background: #dbeafe; color: #1e40af; }
+.order-badge.in_progress { background: #ffedd5; color: #9a3412; }
+.order-badge.completed { background: #dcfce7; color: #166534; }
+.order-badge.cancelled { background: #fee2e2; color: #991b1b; }
+.order-card-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: transform .2s;
+}
+.order-card-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(15,23,42,0.04);
+}
+.star-rating {
+  direction: rtl;
+}
+.star-rating label {
+  font-size: 2.2rem;
+  color: #cbd5e1;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.star-rating label:hover,
+.star-rating label:hover ~ label,
+.star-rating input:checked ~ label {
+  color: #f59e0b;
+}
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
 </style>
 </head>
 <body>
@@ -302,17 +458,25 @@ footer{background:rgba(22,163,74,.04);border-top:1px solid var(--border);padding
       <div class="logo-icon">HC</div>
       <div class="logo-text">hocho</div>
     </a>
-    <div class="nav-links">
+    <div class="nav-links" id="nav-links-guest">
       <a href="#how">Cách hoạt động</a>
       <a href="#pricing">Giá dịch vụ</a>
       <a href="#partner">Trở thành đối tác</a>
       <a href="#terms">Điều khoản</a>
       <a href="#download">Tải app</a>
       <a href="register.html" class="btn-nav">Đăng ký đối tác</a>
+      <button class="btn-nav" id="nav-btn-login" style="background:linear-gradient(135deg, #10b981, #059669); margin-left: 8px;">Đăng nhập khách</button>
+    </div>
+    <div class="nav-links" id="nav-links-member" style="display: none;">
+      <a href="#" id="nav-tab-create" style="color: var(--green); font-weight: 800;">Đặt đơn hỗ trợ</a>
+      <a href="#" id="nav-tab-history" style="color: var(--muted); font-weight: 700;">Lịch sử đơn</a>
+      <span id="nav-user-name" style="font-weight: 700; font-size: 0.9rem; color: var(--cream); border-left: 1px solid var(--border); padding-left: 12px; margin-left: 4px;">Tài khoản</span>
+      <button class="btn-nav" id="nav-btn-logout" style="background: linear-gradient(135deg, #ef4444, #dc2626); margin-left: 8px; padding: 7px 16px;">Đăng xuất</button>
     </div>
   </div>
 </nav>
 
+<div id="landing-container">
 <!-- HERO -->
 <section class="hero">
   <div class="hero-inner">
@@ -620,6 +784,193 @@ footer{background:rgba(22,163,74,.04);border-top:1px solid var(--border);padding
   </div>
   <div class="footer-copy">© 2026 hocho · Hỗ trợ sinh viên — Nhân văn và trách nhiệm 💚</div>
 </footer>
+</div>
+<!-- DASHBOARD CONTAINER -->
+<div id="dashboard-container" style="display: none; max-width: 1100px; margin: 40px auto; padding: 0 24px; min-height: 70vh;">
+  <!-- Tab Đặt đơn -->
+  <div id="section-create-order" class="dashboard-section">
+    <div style="max-width: 650px; margin: 0 auto; background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 36px; box-shadow: 0 10px 30px rgba(0,0,0,0.03);">
+      <h2 style="font-family: var(--font); font-weight: 800; font-size: 1.8rem; color: var(--cream); margin-bottom: 24px; text-align: center;">Đặt đơn học hộ / hỗ trợ học tập</h2>
+      <form id="create-order-form">
+        <div class="form-group">
+          <label for="order-university">Trường đại học <span style="color: var(--coral);">*</span></label>
+          <input type="text" id="order-university" placeholder="Ví dụ: Đại học Bách Khoa, NEU..." required>
+        </div>
+        
+        <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div class="form-group">
+            <label for="order-class-name">Lớp / Môn học</label>
+            <input type="text" id="order-class-name" placeholder="Ví dụ: Triết học Mác-Lênin">
+          </div>
+          <div class="form-group">
+            <label for="order-building">Tòa nhà</label>
+            <input type="text" id="order-building" placeholder="Ví dụ: Nhà D3, Tòa A1">
+          </div>
+        </div>
+
+        <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div class="form-group">
+            <label for="order-floor">Tầng</label>
+            <input type="number" id="order-floor" placeholder="Ví dụ: 3">
+          </div>
+          <div class="form-group">
+            <label for="order-room-number">Số phòng <span style="color: var(--coral);">*</span></label>
+            <input type="text" id="order-room-number" placeholder="Ví dụ: 302" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="order-reason">Lý do cần hỗ trợ (ốm, tai nạn, việc gia đình...) <span style="color: var(--coral);">*</span></label>
+          <textarea id="order-reason" placeholder="Nhập lý do chi tiết..." required style="min-height: 80px; resize: vertical;"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="order-gender-needed">Yêu cầu giới tính đối tác</label>
+          <select id="order-gender-needed" style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 12px; font-family: var(--font); font-size: 0.95rem;">
+            <option value="any">Bất kỳ</option>
+            <option value="male">Nam</option>
+            <option value="female">Nữ</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label style="margin-bottom: 10px; display: block;">Tính cách mong muốn</label>
+          <div class="checkbox-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer;">
+              <input type="checkbox" name="personality" value="Vui vẻ" style="width: 18px; height: 18px; accent-color: var(--green);"> Vui vẻ
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer;">
+              <input type="checkbox" name="personality" value="Nhiệt tình" style="width: 18px; height: 18px; accent-color: var(--green);"> Nhiệt tình
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer;">
+              <input type="checkbox" name="personality" value="Nghiêm túc" style="width: 18px; height: 18px; accent-color: var(--green);"> Nghiêm túc
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer;">
+              <input type="checkbox" name="personality" value="Chăm chỉ" style="width: 18px; height: 18px; accent-color: var(--green);"> Chăm chỉ
+            </label>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary" style="width: 100%; margin-top: 24px; padding: 14px; font-size: 1.05rem;">Tạo đơn hỗ trợ</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Tab Lịch sử đơn -->
+  <div id="section-order-history" class="dashboard-section" style="display: none;">
+    <h2 style="font-family: var(--font); font-weight: 800; font-size: 1.8rem; color: var(--cream); margin-bottom: 24px; text-align: center;">Lịch sử đơn hỗ trợ</h2>
+    <div id="order-history-list" class="orders-grid" style="display: grid; grid-template-columns: 1fr; gap: 16px; max-width: 800px; margin: 0 auto;">
+      <div style="text-align: center; color: var(--muted); padding: 40px; font-weight: 600;">Bạn chưa đặt đơn nào.</div>
+    </div>
+  </div>
+</div>
+
+<!-- AUTH MODAL -->
+<div class="modal-overlay" id="auth-modal" style="display: none;">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h3 id="auth-modal-title">Đăng nhập khách hàng</h3>
+      <button class="modal-close" id="auth-modal-close">✕</button>
+    </div>
+    
+    <!-- Login Form -->
+    <form id="login-form">
+      <div class="form-group">
+        <label for="login-email">Email hoặc Số điện thoại</label>
+        <input type="text" id="login-email" placeholder="Nhập email hoặc sđt" required>
+      </div>
+      <div class="form-group">
+        <label for="login-password">Mật khẩu</label>
+        <input type="password" id="login-password" placeholder="Nhập mật khẩu" required>
+      </div>
+      <button type="submit" class="btn-primary" style="width: 100%; margin-top: 16px; padding: 12px 24px; font-size: 1rem;">Đăng nhập</button>
+      <p class="auth-toggle-text">Chưa có tài khoản? <a href="#" id="go-to-register">Đăng ký ngay</a></p>
+    </form>
+
+    <!-- Register Form -->
+    <form id="register-form" style="display: none;">
+      <div class="form-group">
+        <label for="register-name">Họ và tên</label>
+        <input type="text" id="register-name" placeholder="Nhập họ và tên" required>
+      </div>
+      <div class="form-group">
+        <label for="register-email">Email</label>
+        <input type="email" id="register-email" placeholder="Nhập email" required>
+      </div>
+      <div class="form-group">
+        <label for="register-phone">Số điện thoại</label>
+        <input type="tel" id="register-phone" placeholder="Nhập số điện thoại" required>
+      </div>
+      <div class="form-group">
+        <label for="register-password">Mật khẩu (ít nhất 6 ký tự)</label>
+        <input type="password" id="register-password" placeholder="Nhập mật khẩu" required minlength="6">
+      </div>
+      <button type="submit" class="btn-primary" style="width: 100%; margin-top: 16px; padding: 12px 24px; font-size: 1rem;">Đăng ký</button>
+      <p class="auth-toggle-text">Đã có tài khoản? <a href="#" id="go-to-login">Đăng nhập ngay</a></p>
+    </form>
+  </div>
+</div>
+
+<!-- PAYMENT QR MODAL -->
+<div class="modal-overlay" id="payment-modal" style="display: none;">
+  <div class="modal-card" style="max-width: 450px; text-align: center;">
+    <div class="modal-header">
+      <h3>Thanh toán đơn hàng</h3>
+      <button class="modal-close" id="payment-modal-close">✕</button>
+    </div>
+    <div style="padding: 16px 0;">
+      <p style="font-weight: 600; color: var(--muted); margin-bottom: 8px;">Vui lòng quét mã QR dưới đây để thanh toán</p>
+      <div style="font-size: 1.5rem; font-weight: 800; color: var(--green); margin-bottom: 16px;" id="payment-amount">0đ</div>
+      
+      <!-- QR Image container -->
+      <div style="background: #fff; padding: 12px; border-radius: 16px; border: 1px solid var(--border); display: inline-block; margin-bottom: 16px;">
+        <img id="payment-qr-img" src="" alt="QR Thanh toán" style="width: 220px; height: 220px; display: block;">
+      </div>
+      
+      <div style="background: rgba(22,163,74,0.06); border: 1px solid rgba(22,163,74,0.15); border-radius: 12px; padding: 12px; font-size: 0.85rem; text-align: left; margin-bottom: 20px; line-height: 1.5;">
+        <div style="margin-bottom: 4px;"><strong>Ngân hàng:</strong> MB Bank</div>
+        <div style="margin-bottom: 4px;"><strong>Chủ TK:</strong> HOCHO VIETNAM</div>
+        <div style="margin-bottom: 4px;"><strong>Số TK:</strong> 0987654321</div>
+        <div><strong>Nội dung:</strong> <span id="payment-transfer-content" style="font-weight: 800; color: var(--green); font-family: var(--mono);"></span></div>
+      </div>
+      
+      <button id="btn-confirm-payment" class="btn-primary" style="width: 100%; padding: 12px;">Đã thanh toán</button>
+      <p style="font-size: 0.8rem; color: var(--muted); margin-top: 12px;"><span class="spinner" style="display: inline-block; animation: spin 1s linear infinite; margin-right: 4px;">⏳</span> Hệ thống đang tự động kiểm tra giao dịch...</p>
+    </div>
+  </div>
+</div>
+
+<!-- RATING MODAL -->
+<div class="modal-overlay" id="rating-modal" style="display: none;">
+  <div class="modal-card" style="max-width: 450px;">
+    <div class="modal-header">
+      <h3>Đánh giá đối tác hỗ trợ</h3>
+      <button class="modal-close" id="rating-modal-close">✕</button>
+    </div>
+    <form id="rating-form" style="padding-top: 16px;">
+      <input type="hidden" id="rating-order-id">
+      
+      <div style="text-align: center; margin-bottom: 20px;">
+        <p style="font-weight: 600; color: var(--muted); margin-bottom: 12px;">Bạn đánh giá đối tác thế nào?</p>
+        <div class="star-rating" style="display: flex; justify-content: center; gap: 8px; font-size: 2rem; cursor: pointer; flex-direction: row-reverse;">
+          <input type="radio" id="star5" name="rating" value="5" style="display: none;"><label for="star5">★</label>
+          <input type="radio" id="star4" name="rating" value="4" style="display: none;"><label for="star4">★</label>
+          <input type="radio" id="star3" name="rating" value="3" style="display: none;"><label for="star3">★</label>
+          <input type="radio" id="star2" name="rating" value="2" style="display: none;"><label for="star2">★</label>
+          <input type="radio" id="star1" name="rating" value="1" style="display: none;"><label for="star1">★</label>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="rating-review">Ý kiến đóng góp (Review)</label>
+        <textarea id="rating-review" placeholder="Nhập nhận xét của bạn về đối tác..." style="min-height: 80px; resize: vertical;"></textarea>
+      </div>
+      
+      <button type="submit" class="btn-primary" style="width: 100%; margin-top: 16px; padding: 12px;">Gửi đánh giá</button>
+    </form>
+  </div>
+</div>
+
 
 <!-- ===== CHATBOT ===== -->
 <button class="chatbot-toggle" id="chatbotToggle" onclick="toggleChatbot()">
@@ -700,7 +1051,7 @@ async function askBot(question) {
 
   try {
     // Gọi API qua backend
-    const response = await fetch('/api/chatbot/chat', {
+    const response = await fetch('/api/chatbot/ask', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ 
@@ -767,7 +1118,501 @@ document.addEventListener('click', (e) => {
 });
 
 console.log('💚 HoCho Bot ready!');
-console.log('📌 Backend endpoint: /api/chatbot/chat');
+console.log('📌 Backend endpoint: /api/chatbot/ask');
+
+// ===== CUSTOMER AUTH & DASHBOARD LOGIC =====
+const API_BASE = window.location.origin;
+
+let currentToken = localStorage.getItem('customer_token') || null;
+let currentCustomer = null;
+let pollingIntervals = {};
+
+const btnNavLogin = document.getElementById('nav-btn-login');
+const btnNavLogout = document.getElementById('nav-btn-logout');
+const navLinksGuest = document.getElementById('nav-links-guest');
+const navLinksMember = document.getElementById('nav-links-member');
+const navUserName = document.getElementById('nav-user-name');
+
+const navTabCreate = document.getElementById('nav-tab-create');
+const navTabHistory = document.getElementById('nav-tab-history');
+
+const landingContainer = document.getElementById('landing-container');
+const dashboardContainer = document.getElementById('dashboard-container');
+const sectionCreateOrder = document.getElementById('section-create-order');
+const sectionOrderHistory = document.getElementById('section-order-history');
+
+const authModal = document.getElementById('auth-modal');
+const authModalTitle = document.getElementById('auth-modal-title');
+const authModalClose = document.getElementById('auth-modal-close');
+const loginForm = document.getElementById('login-form');
+const registerForm = document.getElementById('register-form');
+const goToRegister = document.getElementById('go-to-register');
+const goToLogin = document.getElementById('go-to-login');
+
+const createOrderForm = document.getElementById('create-order-form');
+const paymentModal = document.getElementById('payment-modal');
+const paymentModalClose = document.getElementById('payment-modal-close');
+const btnConfirmPayment = document.getElementById('btn-confirm-payment');
+
+const ratingModal = document.getElementById('rating-modal');
+const ratingModalClose = document.getElementById('rating-modal-close');
+const ratingForm = document.getElementById('rating-form');
+
+async function initSession() {
+  if (currentToken) {
+    try {
+      const response = await fetch(`${API_BASE}/api/customer/me`, {
+        headers: { 'Authorization': `Bearer ${currentToken}` }
+      });
+      const result = await response.json();
+      if (result.success) {
+        currentCustomer = result.data;
+        showDashboardView();
+      } else {
+        logout();
+      }
+    } catch (e) {
+      console.error('Verify token failed:', e);
+      logout();
+    }
+  } else {
+    showLandingView();
+  }
+}
+
+function showDashboardView() {
+  landingContainer.style.display = 'none';
+  dashboardContainer.style.display = 'block';
+  navLinksGuest.style.display = 'none';
+  navLinksMember.style.display = 'flex';
+  navUserName.textContent = currentCustomer ? currentCustomer.full_name : 'Khách hàng';
+  switchTab('create');
+}
+
+function showLandingView() {
+  landingContainer.style.display = 'block';
+  dashboardContainer.style.display = 'none';
+  navLinksGuest.style.display = 'flex';
+  navLinksMember.style.display = 'none';
+  
+  Object.values(pollingIntervals).forEach(clearInterval);
+  pollingIntervals = {};
+}
+
+function logout() {
+  localStorage.removeItem('customer_token');
+  currentToken = null;
+  currentCustomer = null;
+  showLandingView();
+}
+
+function switchTab(tab) {
+  if (tab === 'create') {
+    navTabCreate.style.color = 'var(--green)';
+    navTabCreate.style.fontWeight = '800';
+    navTabHistory.style.color = 'var(--muted)';
+    navTabHistory.style.fontWeight = '700';
+    
+    sectionCreateOrder.style.display = 'block';
+    sectionOrderHistory.style.display = 'none';
+  } else {
+    navTabCreate.style.color = 'var(--muted)';
+    navTabCreate.style.fontWeight = '700';
+    navTabHistory.style.color = 'var(--green)';
+    navTabHistory.style.fontWeight = '800';
+    
+    sectionCreateOrder.style.display = 'none';
+    sectionOrderHistory.style.display = 'block';
+    loadOrderHistory();
+  }
+}
+
+btnNavLogin.addEventListener('click', (e) => {
+  e.preventDefault();
+  openAuthModal('login');
+});
+
+btnNavLogout.addEventListener('click', (e) => {
+  e.preventDefault();
+  logout();
+});
+
+navTabCreate.addEventListener('click', (e) => {
+  e.preventDefault();
+  switchTab('create');
+});
+
+navTabHistory.addEventListener('click', (e) => {
+  e.preventDefault();
+  switchTab('history');
+});
+
+document.querySelector('.hero-btns .btn-primary').addEventListener('click', (e) => {
+  if (!currentToken) {
+    e.preventDefault();
+    openAuthModal('login');
+  } else {
+    e.preventDefault();
+    showDashboardView();
+    switchTab('create');
+  }
+});
+
+function openAuthModal(type) {
+  authModal.style.display = 'flex';
+  if (type === 'login') {
+    authModalTitle.textContent = 'Đăng nhập khách hàng';
+    loginForm.style.display = 'block';
+    registerForm.style.display = 'none';
+  } else {
+    authModalTitle.textContent = 'Đăng ký khách hàng';
+    loginForm.style.display = 'none';
+    registerForm.style.display = 'block';
+  }
+}
+
+authModalClose.addEventListener('click', () => {
+  authModal.style.display = 'none';
+});
+
+goToRegister.addEventListener('click', (e) => {
+  e.preventDefault();
+  openAuthModal('register');
+});
+
+goToLogin.addEventListener('click', (e) => {
+  e.preventDefault();
+  openAuthModal('login');
+});
+
+loginForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const identifier = document.getElementById('login-email').value.trim();
+  const password = document.getElementById('login-password').value;
+  
+  try {
+    const res = await fetch(`${API_BASE}/api/customer/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ identifier, password })
+    });
+    const result = await res.json();
+    if (result.success) {
+      currentToken = result.data.token;
+      localStorage.setItem('customer_token', currentToken);
+      currentCustomer = result.data.customer;
+      authModal.style.display = 'none';
+      loginForm.reset();
+      showDashboardView();
+    } else {
+      alert(result.message || 'Đăng nhập thất bại, vui lòng thử lại.');
+    }
+  } catch (err) {
+    console.error(err);
+    alert('Không thể kết nối tới máy chủ.');
+  }
+});
+
+registerForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const full_name = document.getElementById('register-name').value.trim();
+  const email = document.getElementById('register-email').value.trim();
+  const phone = document.getElementById('register-phone').value.trim();
+  const password = document.getElementById('register-password').value;
+  
+  if (password.length < 6) {
+    alert('Mật khẩu phải có ít nhất 6 ký tự.');
+    return;
+  }
+
+  const identifier = email || phone;
+
+  try {
+    const res = await fetch(`${API_BASE}/api/customer/auth/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ identifier, full_name, password })
+    });
+    const result = await res.json();
+    if (result.success) {
+      currentToken = result.data.token;
+      localStorage.setItem('customer_token', currentToken);
+      currentCustomer = result.data.customer;
+      authModal.style.display = 'none';
+      registerForm.reset();
+      showDashboardView();
+    } else {
+      alert(result.message || 'Đăng ký thất bại, vui lòng thử lại.');
+    }
+  } catch (err) {
+    console.error(err);
+    alert('Không thể kết nối tới máy chủ.');
+  }
+});
+
+createOrderForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  
+  const university = document.getElementById('order-university').value.trim();
+  const class_name = document.getElementById('order-class-name').value.trim();
+  const building = document.getElementById('order-building').value.trim();
+  const floor = document.getElementById('order-floor').value.trim();
+  const room_number = document.getElementById('order-room-number').value.trim();
+  const reason = document.getElementById('order-reason').value.trim();
+  const gender_needed = document.getElementById('order-gender-needed').value;
+  
+  const personality_needed = [];
+  document.querySelectorAll('input[name="personality"]:checked').forEach(cb => {
+    personality_needed.push(cb.value);
+  });
+  
+  try {
+    const res = await fetch(`${API_BASE}/api/order/create`, {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${currentToken}`
+      },
+      body: JSON.stringify({
+        university, class_name, building, floor, room_number,
+        reason, gender_needed, personality_needed
+      })
+    });
+    
+    const result = await res.json();
+    if (result.success) {
+      createOrderForm.reset();
+      const orderData = result.data;
+      if (orderData.sepay_amount > 0) {
+        openPaymentModal(orderData.order_id, orderData.order_code, orderData.sepay_amount);
+      } else {
+        alert(result.message || 'Tạo đơn thành công!');
+        switchTab('history');
+      }
+    } else {
+      alert(result.message || 'Tạo đơn thất bại.');
+    }
+  } catch (err) {
+    console.error(err);
+    alert('Lỗi kết nối tới máy chủ khi đặt đơn.');
+  }
+});
+
+let activePaymentOrderId = null;
+
+window.openPaymentModal = function(orderId, orderCode, amount) {
+  activePaymentOrderId = orderId;
+  paymentModal.style.display = 'flex';
+  
+  document.getElementById('payment-amount').textContent = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
+  document.getElementById('payment-transfer-content').textContent = orderCode;
+  
+  const qrUrl = `https://img.vietqr.io/image/MB-0987654321-compact.png?amount=${amount}&addInfo=${orderCode}&accountName=HOCHO%20VIETNAM`;
+  document.getElementById('payment-qr-img').src = qrUrl;
+  
+  startStatusPolling(orderId);
+}
+
+paymentModalClose.addEventListener('click', () => {
+  paymentModal.style.display = 'none';
+  if (activePaymentOrderId) {
+    clearInterval(pollingIntervals[activePaymentOrderId]);
+    delete pollingIntervals[activePaymentOrderId];
+  }
+  switchTab('history');
+});
+
+btnConfirmPayment.addEventListener('click', async () => {
+  if (!activePaymentOrderId) return;
+  
+  try {
+    const res = await fetch(`${API_BASE}/api/order/confirm-payment`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${currentToken}`
+      },
+      body: JSON.stringify({ order_id: activePaymentOrderId })
+    });
+    const result = await res.json();
+    alert(result.message || 'Gửi yêu cầu thanh toán thành công. Đang chờ hệ thống duyệt!');
+    paymentModal.style.display = 'none';
+    if (pollingIntervals[activePaymentOrderId]) {
+      clearInterval(pollingIntervals[activePaymentOrderId]);
+      delete pollingIntervals[activePaymentOrderId];
+    }
+    switchTab('history');
+  } catch (err) {
+    console.error(err);
+    alert('Lỗi khi gửi yêu cầu xác nhận thanh toán.');
+  }
+});
+
+function startStatusPolling(orderId) {
+  if (pollingIntervals[orderId]) return;
+  
+  pollingIntervals[orderId] = setInterval(async () => {
+    try {
+      const res = await fetch(`${API_BASE}/api/order/status?order_id=${orderId}`, {
+        headers: { 'Authorization': `Bearer ${currentToken}` }
+      });
+      const result = await res.json();
+      if (result.success && result.data) {
+        const order = result.data;
+        if (order.status !== 'waiting' || order.payment_status === 'paid') {
+          clearInterval(pollingIntervals[orderId]);
+          delete pollingIntervals[orderId];
+          alert(`Đơn hàng ${order.order_code} đã được thanh toán thành công! Hệ thống đang tìm đối tác.`);
+          paymentModal.style.display = 'none';
+          switchTab('history');
+        }
+      }
+    } catch (e) {
+      console.error('Polling status error:', e);
+    }
+  }, 4000);
+}
+
+async function loadOrderHistory() {
+  const container = document.getElementById('order-history-list');
+  container.innerHTML = '<div style="text-align: center; color: var(--muted); padding: 40px; font-weight: 600;">Đang tải danh sách đơn...</div>';
+  
+  try {
+    const res = await fetch(`${API_BASE}/api/order/my-orders`, {
+      headers: { 'Authorization': `Bearer ${currentToken}` }
+    });
+    const result = await res.json();
+    if (result.success && result.data && result.data.length > 0) {
+      container.innerHTML = '';
+      result.data.forEach(order => {
+        let statusText = 'Không rõ';
+        let badgeClass = 'waiting';
+        const st = order.status;
+        
+        if (st === 'waiting') {
+          statusText = 'Chờ thanh toán';
+          badgeClass = 'waiting';
+        } else if (st === 'matching') {
+          statusText = 'Đang tìm đối tác';
+          badgeClass = 'matching';
+        } else if (['accepted', 'heading', 'arrived'].includes(st)) {
+          statusText = 'Đã ghép đối tác';
+          badgeClass = 'matched';
+        } else if (st === 'in_progress') {
+          statusText = 'Đang thực hiện';
+          badgeClass = 'in_progress';
+        } else if (st === 'completed') {
+          statusText = 'Hoàn thành';
+          badgeClass = 'completed';
+        } else if (['cancelled', 'rejected'].includes(st)) {
+          statusText = 'Đã hủy';
+          badgeClass = 'cancelled';
+        }
+        
+        const dateStr = new Date(order.created_at).toLocaleString('vi-VN');
+        
+        let partnerInfo = 'Đang tìm đối tác...';
+        if (order.partner) {
+          partnerInfo = `<strong>${order.partner.full_name}</strong> (${order.partner.rating || 5}★)`;
+        }
+        
+        let ratingBtnHtml = '';
+        if (st === 'completed' && !order.rating) {
+          ratingBtnHtml = `<button onclick="openRatingModal('${order.id}')" class="btn-primary" style="margin-top: 10px; padding: 6px 14px; font-size: 0.8rem; border-radius: 8px;">Đánh giá đối tác</button>`;
+        } else if (st === 'completed' && order.rating) {
+          ratingBtnHtml = `<div style="margin-top: 8px; font-size: 0.85rem; color: var(--lime); font-weight: 700;">Đã đánh giá: ${order.rating}★ ${order.review ? `("${order.review}")` : ''}</div>`;
+        }
+        
+        let payBtnHtml = '';
+        if (st === 'waiting' && order.payment_status === 'unpaid') {
+          const payAmount = order.price - (order.wallet_applied || 0);
+          payBtnHtml = `<button onclick="openPaymentModal('${order.id}', '${order.order_code}', ${payAmount})" class="btn-primary" style="margin-top: 10px; padding: 6px 14px; font-size: 0.8rem; border-radius: 8px; background: linear-gradient(135deg, var(--gold), #d97706)">Thanh toán ngay</button>`;
+        } else if (st === 'waiting' && order.payment_status === 'pending') {
+          payBtnHtml = `<div style="margin-top: 8px; font-size: 0.82rem; color: #d97706; font-weight: 700;">⌛ Đang chờ Admin xác nhận thanh toán</div>`;
+        }
+        
+        const cardHtml = `
+          <div class="order-card-item">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-bottom: 4px;">
+              <span style="font-family: var(--mono); font-weight: 800; font-size: 0.95rem; color: var(--green);">${order.order_code}</span>
+              <span class="order-badge ${badgeClass}">${statusText}</span>
+            </div>
+            <div style="font-size: 0.9rem; line-height: 1.6; display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+              <div><strong>Trường:</strong> ${order.university}</div>
+              <div><strong>Môn học:</strong> ${order.class_name || 'N/A'}</div>
+              <div><strong>Phòng:</strong> ${order.room_number} (Tầng ${order.floor || 'N/A'}, Tòa ${order.building || 'N/A'})</div>
+              <div><strong>Đối tác:</strong> ${partnerInfo}</div>
+              <div style="grid-column: span 2;"><strong>Ngày đặt:</strong> ${dateStr}</div>
+              <div style="grid-column: span 2; font-style: italic; color: var(--muted); background: rgba(0,0,0,0.02); padding: 6px 10px; border-radius: 8px; margin-top: 4px;"><strong>Lý do:</strong> ${order.requirements || 'N/A'}</div>
+            </div>
+            <div style="display: flex; gap: 10px; justify-content: flex-end;">
+              ${payBtnHtml}
+              ${ratingBtnHtml}
+            </div>
+          </div>
+        `;
+        
+        container.insertAdjacentHTML('beforeend', cardHtml);
+      });
+    } else {
+      container.innerHTML = '<div style="text-align: center; color: var(--muted); padding: 40px; font-weight: 600;">Bạn chưa đặt đơn nào.</div>';
+    }
+  } catch (err) {
+    console.error(err);
+    container.innerHTML = '<div style="text-align: center; color: var(--coral); padding: 40px; font-weight: 600;">Lỗi khi tải lịch sử đơn hỗ trợ.</div>';
+  }
+}
+
+window.openRatingModal = function(orderId) {
+  document.getElementById('rating-order-id').value = orderId;
+  ratingModal.style.display = 'flex';
+  
+  document.querySelectorAll('input[name="rating"]').forEach(input => input.checked = false);
+  document.getElementById('rating-review').value = '';
+}
+
+ratingModalClose.addEventListener('click', () => {
+  ratingModal.style.display = 'none';
+});
+
+ratingForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const order_id = document.getElementById('rating-order-id').value;
+  const ratingInput = document.querySelector('input[name="rating"]:checked');
+  const review = document.getElementById('rating-review').value.trim();
+  
+  if (!ratingInput) {
+    alert('Vui lòng chọn số sao đánh giá (1-5 sao).');
+    return;
+  }
+  
+  const rating = ratingInput.value;
+  
+  try {
+    const res = await fetch(`${API_BASE}/api/order/rate`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${currentToken}`
+      },
+      body: JSON.stringify({ order_id, rating, review })
+    });
+    const result = await res.json();
+    if (result.success) {
+      alert('Cảm ơn bạn đã gửi đánh giá!');
+      ratingModal.style.display = 'none';
+      loadOrderHistory();
+    } else {
+      alert(result.message || 'Gửi đánh giá thất bại.');
+    }
+  } catch (err) {
+    console.error(err);
+    alert('Lỗi khi gửi đánh giá tới máy chủ.');
+  }
+});
+
+initSession();
+
 </script>
 
 </body>

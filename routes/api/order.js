@@ -12,13 +12,66 @@ const require = createRequire(import.meta.url);
 const { nanoid } = require('nanoid');
 const router = express.Router();
 
+// Helper gửi thông báo qua Discord Webhook
+const sendDiscordNotification = async (payload) => {
+  const webhookUrl = process.env.DISCORD_WEBHOOK_URL;
+  if (!webhookUrl) {
+    console.warn('⚠️ DISCORD_WEBHOOK_URL is not set. Skipping Discord notification.');
+    return;
+  }
+
+  const appUrl = process.env.APP_URL || 'https://hocho.com';
+  const adminUrl = `${appUrl}/admin`;
+  let embed = {
+    timestamp: new Date().toISOString()
+  };
+
+  const formattedAmount = payload.amount ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(payload.amount) : '200.000đ';
+
+  if (payload.event === 'new_order') {
+    embed.title = '🔔 ĐƠN HÀNG MỚI ĐÃ ĐƯỢC TẠO';
+    embed.description = `Có một đơn hàng mới vừa được tạo trên hệ thống.\n\n👉 [Đi tới Admin Dashboard](${adminUrl}) để quản lý.`;
+    embed.color = 3447003; // Blue
+    embed.fields = [
+      { name: 'Mã đơn', value: payload.order_code || 'N/A', inline: true },
+      { name: 'Tên KH', value: payload.customer_name || 'N/A', inline: true },
+      { name: 'Trường', value: payload.school || 'N/A', inline: true },
+      { name: 'Lý do hỗ trợ', value: payload.reason || 'N/A', inline: false },
+      { name: 'Số tiền', value: formattedAmount, inline: true },
+      { name: 'Thời gian đặt', value: payload.time || new Date().toLocaleString('vi-VN'), inline: true }
+    ];
+  } else if (payload.event === 'payment_claimed') {
+    embed.title = '⏳ KHÁCH HÀNG BÁO ĐÃ THANH TOÁN';
+    embed.description = `Khách hàng đã bấm nút **"Đã thanh toán"**.\n\n⚠️ Admin vui lòng kiểm tra tài khoản ngân hàng và xác nhận đơn.\n\n👉 [Đi tới Admin Dashboard](${adminUrl}) để xác nhận.`;
+    embed.color = 15844367; // Yellow
+    embed.fields = [
+      { name: 'Mã đơn', value: payload.order_code || 'N/A', inline: true },
+      { name: 'Số tiền', value: formattedAmount, inline: true }
+    ];
+  }
+
+  try {
+    const response = await fetch(webhookUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ embeds: [embed] })
+    });
+    if (!response.ok) {
+      console.error('❌ Failed to post to Discord webhook:', await response.text());
+    }
+  } catch (err) {
+    console.error('❌ Error sending Discord notification from order.js helper:', err);
+  }
+};
+
 // ── TẠO ĐƠN (khách đã đăng nhập) ──
 router.post('/create', authCustomer, async (req, res) => {
   try {
     const {
       university, class_name, building, floor, room_number,
       requirements, personality_needed, gender_needed,
-      student_card_photo_id, latitude, longitude
+      student_card_photo_id, latitude, longitude,
+      reason // Nhận lý do học hộ gửi từ form
     } = req.body;
 
     if (!university || !room_number) {
@@ -34,6 +87,9 @@ router.post('/create', authCustomer, async (req, res) => {
     const walletApplied = Math.min(customer.wallet_balance || 0, price);
     const sepayAmount = price - walletApplied;
 
+    // Ưu tiên sử dụng 'reason' nếu được truyền, fallback là 'requirements'
+    const requirementsValue = reason || requirements || '';
+
     const orderCode = 'HC-' + Date.now() + '-' + nanoid(4).toUpperCase();
     const order = await Order.create({
       order_code:       orderCode,
@@ -46,7 +102,7 @@ router.post('/create', authCustomer, async (req, res) => {
       building:         building || '',
       floor:            floor || '',
       room_number,
-      requirements:     requirements || '',
+      requirements:     requirementsValue,
       personality_needed: personality_needed || [],
       gender_needed:    gender_needed || 'any',
       student_card_photo_id: student_card_photo_id || undefined,
@@ -73,6 +129,17 @@ router.post('/create', authCustomer, async (req, res) => {
         order_id: order._id, note: `Dùng ví hocho thanh toán đơn ${orderCode}`
       });
     }
+
+    // Gửi Discord notification về đơn hàng mới vừa tạo
+    sendDiscordNotification({
+      event: 'new_order',
+      order_code: orderCode,
+      customer_name: customer.full_name,
+      school: university,
+      reason: requirementsValue || 'Không có',
+      amount: price,
+      time: new Date().toLocaleString('vi-VN')
+    });
 
     res.status(201).json({
       success: true,
@@ -107,6 +174,13 @@ router.post('/confirm-payment', authCustomer, async (req, res) => {
     order.payment_status = 'pending'; // khách tự khai đã CK — chờ admin xác nhận
     order.payment_claimed_at = new Date();
     await order.save();
+
+    // Gửi Discord notification báo khách đã bấm "Đã thanh toán"
+    sendDiscordNotification({
+      event: 'payment_claimed',
+      order_code: order.order_code,
+      amount: order.price
+    });
 
     res.json({
       success: true,
@@ -278,7 +352,7 @@ router.post('/heading', authPartner, async (req, res) => {
   }
 });
 
-// ── ĐỐI TÁC: ĐÃ ĐẾN NƠI ──
+// ── ĐỐI TÁC: ĐÀ ĐẾN NƠI ──
 router.post('/arrived', authPartner, async (req, res) => {
   try {
     const { order_id } = req.body;
@@ -349,6 +423,49 @@ router.post('/complete', authPartner, async (req, res) => {
   }
 });
 
+// ── ĐỐI TÁC: CẬP NHẬT TRẠNG THÁI ĐƠN (HỖ TRỢ PARTNER.HTML) ──
+router.post('/update-status', authPartner, async (req, res) => {
+  try {
+    const { order_id, status } = req.body;
+    if (!order_id || !status) return res.status(400).json({ success: false, message: 'Thiếu thông tin' });
+
+    let updateData = { status };
+    if (status === 'heading') updateData.heading_at = new Date();
+    else if (status === 'arrived') updateData.arrived_at = new Date();
+    else if (status === 'in_progress') updateData.started_at = new Date();
+    else if (status === 'completed') {
+      updateData.completed_at = new Date();
+      updateData.chat_active = false;
+      updateData.payment_status = 'paid';
+    }
+
+    const order = await Order.findOneAndUpdate(
+      { _id: order_id, partner_id: req.partnerId },
+      updateData,
+      { new: true }
+    );
+    if (!order) return res.status(404).json({ success: false, message: 'Không tìm thấy đơn hoặc bạn không có quyền' });
+
+    if (status === 'completed') {
+      await Partner.findByIdAndUpdate(req.partnerId, {
+        $inc: {
+          completed_orders: 1,
+          earnings_total:   order.partner_earning,
+          pending_balance:  order.partner_earning
+        }
+      });
+      if (order.student_card_photo_id) {
+        await StudentCardPhoto.findByIdAndDelete(order.student_card_photo_id);
+      }
+    }
+
+    res.json({ success: true, message: `Đã cập nhật trạng thái đơn thành ${status}`, data: { status: order.status } });
+  } catch (err) {
+    console.error('❌ [update-status]', err);
+    res.status(500).json({ success: false, message: 'Lỗi server: ' + err.message });
+  }
+});
+
 // ── HUỶ ĐƠN — HOÀN TIỀN VÀO VÍ HOCHO (không hoàn trực tiếp ra ngân hàng) ──
 router.post('/cancel', authCustomer, async (req, res) => {
   try {
@@ -370,7 +487,7 @@ router.post('/cancel', authCustomer, async (req, res) => {
     if (refundAmount > 0) {
       await Customer.findByIdAndUpdate(req.customerId, { $inc: { wallet_balance: refundAmount } });
       await WalletTransaction.create({
-        customer_id: req.customerId, type: 'refund', amount: refundAmount,
+        customer_id: req.customerId, type: 'refund', amount: -refundAmount,
         order_id: order._id, note: `Hoàn tiền đơn huỷ ${order.order_code}`
       });
     }
@@ -391,25 +508,59 @@ router.post('/cancel', authCustomer, async (req, res) => {
 router.post('/rate', authCustomer, async (req, res) => {
   try {
     const { order_id, rating, review } = req.body;
-    if (!order_id || !rating) return res.status(400).json({ success: false, message: 'Thiếu thông tin' });
-
-    const order = await Order.findOneAndUpdate(
-      { _id: order_id, customer_id: req.customerId },
-      { rating, review: review || '' }, { new: true }
-    );
-    if (!order) return res.status(404).json({ success: false, message: 'Không tìm thấy đơn' });
-
-    if (order.partner_id) {
-      const partner = await Partner.findById(order.partner_id);
-      if (partner && partner.completed_orders > 0) {
-        const newRating = ((partner.rating * (partner.completed_orders - 1)) + rating) / partner.completed_orders;
-        await Partner.findByIdAndUpdate(order.partner_id, { rating: Math.round(newRating * 10) / 10 });
-      }
+    if (!order_id || rating === undefined || rating === null) {
+      return res.status(400).json({ success: false, message: 'Thiếu order_id hoặc rating' });
     }
 
-    res.json({ success: true, message: 'Cảm ơn bạn đã đánh giá!' });
+    const parsedRating = Number(rating);
+    if (isNaN(parsedRating) || parsedRating < 1 || parsedRating > 5) {
+      return res.status(400).json({ success: false, message: 'Đánh giá phải từ 1 đến 5 sao' });
+    }
+
+    // Validation: customer_id phải khớp
+    const order = await Order.findById(order_id);
+    if (!order) {
+      return res.status(404).json({ success: false, message: 'Không tìm thấy đơn hàng' });
+    }
+
+    if (!order.customer_id || order.customer_id.toString() !== req.customerId.toString()) {
+      return res.status(403).json({ success: false, message: 'Không có quyền đánh giá đơn hàng này' });
+    }
+
+    // Validation: order phải completed
+    if (order.status !== 'completed') {
+      return res.status(400).json({ success: false, message: 'Chỉ có thể đánh giá đơn hàng đã hoàn thành' });
+    }
+
+    // Validation: chưa được rate
+    if (order.rating !== undefined && order.rating !== null) {
+      return res.status(400).json({ success: false, message: 'Đơn hàng này đã được đánh giá trước đó' });
+    }
+
+    // Lưu order.rating và order.review
+    order.rating = parsedRating;
+    order.review = review || '';
+    await order.save();
+
+    // Cập nhật Partner.rating = average của tất cả đơn completed có rating
+    if (order.partner_id) {
+      const completedRatedOrders = await Order.find({
+        partner_id: order.partner_id,
+        status: 'completed',
+        rating: { $exists: true, $ne: null }
+      });
+
+      let avgRating = 5;
+      if (completedRatedOrders.length > 0) {
+        const sum = completedRatedOrders.reduce((acc, curr) => acc + curr.rating, 0);
+        avgRating = Math.round((sum / completedRatedOrders.length) * 10) / 10;
+      }
+      await Partner.findByIdAndUpdate(order.partner_id, { rating: avgRating });
+    }
+
+    res.json({ success: true, message: 'Đánh giá đối tác thành công' });
   } catch (err) {
-    console.error('❌ [routes/api/order.js]', err);
+    console.error('❌ [routes/api/order.js - rate]', err);
     res.status(500).json({ success: false, message: 'Lỗi server: ' + err.message });
   }
 });
@@ -417,12 +568,42 @@ router.post('/rate', authCustomer, async (req, res) => {
 // ── LỊCH SỬ ĐƠN (khách) ──
 router.get('/my-orders', authCustomer, async (req, res) => {
   try {
-    const orders = await Order.find({ customer_id: req.customerId })
-      .populate('partner_id', 'full_name phone rating avatar_url')
-      .sort({ createdAt: -1 }).limit(20);
-    res.json({ success: true, data: orders });
+    const { status } = req.query;
+    const query = { customer_id: req.customerId };
+    if (status) {
+      query.status = status;
+    }
+
+    const orders = await Order.find(query)
+      .populate('partner_id', 'full_name rating avatar_url')
+      .sort({ createdAt: -1 });
+
+    const formattedOrders = orders.map(order => ({
+      id: order._id,
+      order_code: order.order_code,
+      status: order.status,
+      payment_status: order.payment_status,
+      university: order.university,
+      class_name: order.class_name,
+      building: order.building,
+      floor: order.floor,
+      room_number: order.room_number,
+      requirements: order.requirements,
+      price: order.price,
+      rating: order.rating,
+      review: order.review,
+      created_at: order.createdAt,
+      completed_at: order.completed_at,
+      partner: order.partner_id ? {
+        full_name: order.partner_id.full_name,
+        rating: order.partner_id.rating,
+        avatar_url: order.partner_id.avatar_url
+      } : null
+    }));
+
+    res.json({ success: true, data: formattedOrders });
   } catch (err) {
-    console.error('❌ [routes/api/order.js]', err);
+    console.error('❌ [routes/api/order.js - my-orders]', err);
     res.status(500).json({ success: false, message: 'Lỗi server: ' + err.message });
   }
 });
@@ -437,6 +618,44 @@ router.get('/partner-orders', authPartner, async (req, res) => {
     res.json({ success: true, data: orders });
   } catch (err) {
     console.error('❌ [routes/api/order.js]', err);
+    res.status(500).json({ success: false, message: 'Lỗi server: ' + err.message });
+  }
+});
+
+// ── LỊCH SỬ ĐƠN DÀNH CHO ĐỐI TÁC ──
+router.get('/partner-history', authPartner, async (req, res) => {
+  try {
+    const { status } = req.query;
+    const query = { partner_id: req.partnerId };
+    if (status) {
+      query.status = status;
+    }
+
+    const orders = await Order.find(query)
+      .populate('customer_id', 'full_name')
+      .sort({ createdAt: -1 });
+
+    const formattedOrders = orders.map(order => ({
+      id: order._id,
+      order_code: order.order_code,
+      status: order.status,
+      university: order.university,
+      room_number: order.room_number,
+      requirements: order.requirements,
+      price: order.price,
+      partner_earning: order.partner_earning,
+      rating: order.rating,
+      review: order.review,
+      created_at: order.createdAt,
+      completed_at: order.completed_at,
+      customer: order.customer_id ? {
+        full_name: order.customer_id.full_name
+      } : null
+    }));
+
+    res.json({ success: true, data: formattedOrders });
+  } catch (err) {
+    console.error('❌ [routes/api/order.js - partner-history]', err);
     res.status(500).json({ success: false, message: 'Lỗi server: ' + err.message });
   }
 });
